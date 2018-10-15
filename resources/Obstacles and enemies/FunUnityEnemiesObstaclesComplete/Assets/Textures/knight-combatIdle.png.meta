@@ -1,0 +1,1084 @@
+fileFormatVersion: 2
+guid: 81eac3c3a0ed72c4ab786db872b99c34
+timeCreated: 1485022853
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: knight-combatIdle_0
+    21300002: knight-combatIdle_1
+    21300004: knight-combatIdle_2
+    21300006: knight-combatIdle_3
+    21300008: knight-combatIdle_4
+    21300010: knight-combatIdle_5
+    21300012: knight-combatIdle_6
+    21300014: knight-combatIdle_7
+    21300016: knight-combatIdle_8
+    21300018: knight-combatIdle_9
+    21300020: knight-combatIdle_10
+    21300022: knight-combatIdle_11
+    21300024: knight-combatIdle_12
+    21300026: knight-combatIdle_13
+    21300028: knight-combatIdle_14
+    21300030: knight-combatIdle_15
+    21300032: knight-combatIdle_16
+    21300034: knight-combatIdle_17
+    21300036: knight-combatIdle_18
+    21300038: knight-combatIdle_19
+    21300040: knight-combatIdle_20
+    21300042: knight-combatIdle_21
+    21300044: knight-combatIdle_22
+    21300046: knight-combatIdle_23
+    21300048: knight-combatIdle_24
+    21300050: knight-combatIdle_25
+    21300052: knight-combatIdle_26
+    21300054: knight-combatIdle_27
+    21300056: knight-combatIdle_28
+    21300058: knight-combatIdle_29
+    21300060: knight-combatIdle_30
+    21300062: knight-combatIdle_31
+    21300064: knight-combatIdle_32
+    21300066: knight-combatIdle_33
+    21300068: knight-combatIdle_34
+    21300070: knight-combatIdle_35
+    21300072: knight-combatIdle_36
+    21300074: knight-combatIdle_37
+    21300076: knight-combatIdle_38
+    21300078: knight-combatIdle_39
+    21300080: knight-combatIdle_40
+    21300082: knight-combatIdle_41
+    21300084: knight-combatIdle_42
+    21300086: knight-combatIdle_43
+    21300088: knight-combatIdle_44
+    21300090: knight-combatIdle_45
+    21300092: knight-combatIdle_46
+    21300094: knight-combatIdle_47
+    21300096: knight-combatIdle_48
+    21300098: knight-combatIdle_49
+    21300100: knight-combatIdle_50
+    21300102: knight-combatIdle_51
+    21300104: knight-combatIdle_52
+    21300106: knight-combatIdle_53
+    21300108: knight-combatIdle_54
+    21300110: knight-combatIdle_55
+    21300112: knight-combatIdle_56
+    21300114: knight-combatIdle_57
+    21300116: knight-combatIdle_58
+    21300118: knight-combatIdle_59
+    21300120: knight-combatIdle_60
+    21300122: knight-combatIdle_61
+    21300124: knight-combatIdle_62
+    21300126: knight-combatIdle_63
+    21300128: knight-combatIdle_64
+    21300130: knight-combatIdle_65
+    21300132: knight-combatIdle_66
+    21300134: knight-combatIdle_67
+    21300136: knight-combatIdle_68
+    21300138: knight-combatIdle_69
+    21300140: knight-combatIdle_70
+    21300142: knight-combatIdle_71
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: knight-combatIdle_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_1
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_2
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_3
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_4
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_5
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_6
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_7
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_8
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_9
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_10
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_11
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 861
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_13
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_14
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_15
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_16
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_17
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_18
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_19
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_20
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_21
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_22
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_23
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 695
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_24
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_25
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_26
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_27
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_28
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_29
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_30
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_31
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_32
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_33
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_34
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_35
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 529
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_36
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_37
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_38
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_39
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_40
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_41
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_42
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_43
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_44
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_45
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_46
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_47
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 363
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_48
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_49
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_50
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_51
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_52
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_53
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_54
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_55
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_56
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_57
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_58
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_59
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 197
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_60
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_61
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_62
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_63
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_64
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_65
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_66
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_67
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_68
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_69
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_70
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight-combatIdle_71
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 31
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
