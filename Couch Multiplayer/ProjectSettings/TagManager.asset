@@ -11,11 +11,12 @@ TagManager:
   - Obstacle
   - Bullet
   - BombPickup
-  - ExplosionFX
   - HealthBar
   - Ball
   - Hand
   - Goal
+  - Score1
+  - Score2
   layers:
   - Default
   - TransparentFX

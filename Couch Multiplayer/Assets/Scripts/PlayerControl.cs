@@ -156,12 +156,17 @@ public class PlayerControl : MonoBehaviour
         holding = true;
 
     }
-    void throwBall()
+    public void throwBall()
     {
         GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        int multi = 1;
+        if (facingRight == false)
+        {
+            multi = -1;
+        }
         ball.transform.parent = null;
         ball.GetComponent<Rigidbody2D>().simulated = true;
-        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(200f, 200f));
+        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(multi * 400f, 400f));
         holding = false;
 
     }

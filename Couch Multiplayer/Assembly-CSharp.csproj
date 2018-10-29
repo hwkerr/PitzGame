@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Remover.cs" />
     <Compile Include="Assets\Scripts\Rocket.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
+    <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScoreShadow.cs" />
     <Compile Include="Assets\Scripts\SetParticleSortingLayer.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
