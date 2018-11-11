@@ -1,0 +1,11 @@
+PitzGame Changelog
+
+v1
+-basic game
+-one character implemented
+ +basic movement/animation
+ +can grab and release Grabbable objects (such as the ball)
+ +debug mode (PageUp/PageDown) allows freely changing between player states / animations
+-ball
+ +can be grabbed and released
+ +ball does not collide with the grabbing object until ball is released and the ball interacts with a different collider
