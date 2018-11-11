@@ -34,6 +34,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     protected bool holding = false;
 
+    public bool hitstun = false;
+
     // Use this for initialization
     protected virtual void Start () {
         BTTN_HORIZONTAL = "Horizontal";
@@ -56,6 +58,19 @@ public abstract class DefaultPlayer : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void GetHit(Damager damager)
+    {
+        hitstun = true;
+        currentState = State.Air;
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(50, 50));
+        Invoke("RecoverFromHitstun", 2);
+    }
+
+    public void RecoverFromHit()
+    {
+        hitstun = false;
+    }
 
     // Tells m_grabber to pick up an item
     public void pickUpBall()
