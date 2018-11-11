@@ -26,7 +26,7 @@ public class MalePlayer : DefaultPlayer {
     {
         runSpeed = 40f;
         crouchSpeed = 0f;
-        jumpForce = 600f;
+        jumpForce = 900f;
     }
 
     protected override Collider2D[] Init_StateIdle()
