@@ -35,6 +35,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     protected bool holding = false;
 
     public bool hitstun = false;
+    private Damager lastDamager;
 
     // Use this for initialization
     protected virtual void Start () {
@@ -61,10 +62,13 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     public void GetHit(Damager damager)
     {
-        hitstun = true;
-        currentState = State.Air;
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(50, 50));
-        Invoke("RecoverFromHitstun", 2);
+        if (!hitstun || (hitstun && !damager.Equals(lastDamager)))
+        {
+            hitstun = true;
+            currentState = State.Air;
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(50, 50));
+            Invoke("RecoverFromHit", 2);
+        }
     }
 
     public void RecoverFromHit()

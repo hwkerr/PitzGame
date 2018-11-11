@@ -18,7 +18,9 @@ public class Damager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject incoming = collision.transform.parent.gameObject;
-        incoming.GetComponent<DefaultPlayer>().GetHit(this);
+        GameObject incoming = collision.gameObject;
+        DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
+        if (incomingPlayer != null)
+            incomingPlayer.GetHit(this);
     }
 }
