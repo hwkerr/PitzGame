@@ -57,58 +57,62 @@ public class PlayerMovement : MonoBehaviour {
     // This is the sequence normally executed during the Update function
     protected void normalUpdate () {
 
-        horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
-        speed = Mathf.Abs(horizontalMove);
-
-        animator.SetFloat("Speed", speed);
-
-        DefaultPlayer.State myState = player.GetState();
-
-        if (Input.GetButtonDown(player.BTTN_JUMP))
+        if (!player.hitstun)
         {
-            jump = true;
-            //SetState(STATE_AIR);
-        }
+            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
+            speed = Mathf.Abs(horizontalMove);
 
-        if (!controller.m_Grounded) //Finds out when the player is aerial
-        {
-            SetState(DefaultPlayer.State.Air);
-        }
-        else //if (controller.m_Grounded)
-        {
-            if (Input.GetButtonDown(player.BTTN_CROUCH))
+            animator.SetFloat("Speed", speed);
+
+            DefaultPlayer.State myState = player.GetState();
+
+            if (Input.GetButtonDown(player.BTTN_JUMP))
             {
-                crouch = true;
-                SetState(DefaultPlayer.State.Crouch);
-            } else if (Input.GetButtonUp(player.BTTN_CROUCH))
-            {
-                crouch = false;
+                jump = true;
+                //SetState(STATE_AIR);
             }
 
-            if (!crouch)
+            if (!controller.m_Grounded) //Finds out when the player is aerial
             {
-                if (speed > 0.01)
-                    SetState(DefaultPlayer.State.Walk);
-                else
-                    SetState(DefaultPlayer.State.Idle);
+                SetState(DefaultPlayer.State.Air);
             }
-        }
-
-        if (player.GetState() == DefaultPlayer.State.Idle)
-        {
-            if (Input.GetButtonDown(player.BTTN_FIRE1))
+            else //if (controller.m_Grounded)
             {
-                SetState(DefaultPlayer.State.Stab);
-                busy = true;
-                busyCounter = 0;
-                duration = 30;
-            }
-        }
+                if (Input.GetButtonDown(player.BTTN_CROUCH))
+                {
+                    crouch = true;
+                    SetState(DefaultPlayer.State.Crouch);
+                }
+                else if (Input.GetButtonUp(player.BTTN_CROUCH))
+                {
+                    crouch = false;
+                }
 
-        if (Input.GetButtonDown(player.BTTN_INTERACT) /*&& !player.holding && canPickup()*/)
-            player.pickUpBall();
-        else if (Input.GetButtonDown(player.BTTN_THROW) /*&& player.holding*/)
-            player.throwBall();
+                if (!crouch)
+                {
+                    if (speed > 0.01)
+                        SetState(DefaultPlayer.State.Walk);
+                    else
+                        SetState(DefaultPlayer.State.Idle);
+                }
+            }
+
+            if (player.GetState() == DefaultPlayer.State.Idle)
+            {
+                if (Input.GetButtonDown(player.BTTN_FIRE1))
+                {
+                    SetState(DefaultPlayer.State.Stab);
+                    busy = true;
+                    busyCounter = 0;
+                    duration = 30;
+                }
+            }
+
+            if (Input.GetButtonDown(player.BTTN_INTERACT) /*&& !player.holding && canPickup()*/)
+                player.pickUpBall();
+            else if (Input.GetButtonDown(player.BTTN_THROW) /*&& player.holding*/)
+                player.throwBall();
+        }
     }
 
     protected void testUpdate()
