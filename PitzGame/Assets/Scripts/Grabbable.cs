@@ -60,6 +60,7 @@ public class Grabbable : MonoBehaviour
             attackRecoveryCounter = totalAttackRecovery = duration;
             m_Rigidbody2D.velocity = knockbackVector;
         }
+        EnableGrabberCollisions();
     }
 
     public void RecoverFromHit()
@@ -115,11 +116,16 @@ public class Grabbable : MonoBehaviour
     public virtual void launch(float force_x, float force_y)
     {
         releaseFromEntity();
-        m_Rigidbody2D.AddForce(new Vector2(force_x, force_y));
+        m_Rigidbody2D.velocity = new Vector2(force_x, force_y);
     }
 
     // Re-enable collisions between this item and the most recent grabber 
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        EnableGrabberCollisions();
+    }
+
+    private void EnableGrabberCollisions()
     {
         if (attachedToGrabber != null)
         {

@@ -23,7 +23,7 @@ public class Grabber : MonoBehaviour {
 	}
 
     // Picks up any item that is within range
-    public void pickUpItem()
+    public void PickUpItem()
     {
         //Grabbable item = targetInRange;
         if (canPickup && !holding)
@@ -35,11 +35,20 @@ public class Grabber : MonoBehaviour {
     }
 
     // Releases any held item
-    public void releaseItem()
+    public void ReleaseItem()
     {
         if (holding)
         {
             heldItem.releaseFromEntity();
+            holding = false;
+        }
+    }
+
+    public void ThrowItem(float force_x, float force_y)
+    {
+        if (holding)
+        {
+            heldItem.launch(force_x, force_y);
             holding = false;
         }
     }

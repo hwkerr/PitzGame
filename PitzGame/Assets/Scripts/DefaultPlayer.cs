@@ -40,7 +40,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     [HideInInspector] public bool isCrouching = false, isJumping = false;
 
     public bool inHitstun = false;
-    [HideInInspector] public bool justHit = false;
     [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
     [HideInInspector] public Damager lastDamager;
 
@@ -79,7 +78,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     {
         if (!inHitstun && !damager.Equals(lastDamager))
         {
-            justHit = true;
             lastDamager = damager;
 
             inHitstun = true;
@@ -107,7 +105,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
         attackRecoveryCounter = 0;
         lastDamager = null;
         inHitstun = false;
-        justHit = false;
     }
 
     // @requires inHitstun = true
@@ -118,15 +115,28 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     // Tells m_grabber to pick up an item
     // Note: Should I get the caller of this function to just find the Grabber and call pickUpItem() from there?
-    public void PickUpBall()
+    public void PickUpItem()
     {
-        m_grabber.pickUpItem();
+        m_grabber.PickUpItem();
     }
 
-    // Throws the ball
-    public void ThrowBall()
+    public void ReleaseItem()
     {
-        m_grabber.releaseItem();
+        m_grabber.ReleaseItem();
+    }
+
+    // @ensures the item is thrown with parameter input forces (force_x and force_y)
+    //          the item is thrown in the direction that the player is facing
+    //          the item retains player x momentum and positive y momentum
+    public void ThrowItem(float force_x, float force_y)
+    {
+        float dir = -1;
+        if (controller.FacingRight())
+            dir = 1;
+        force_x = force_x * dir + m_Rigidbody2D.velocity.x;
+        if (m_Rigidbody2D.velocity.y > 0)
+            force_y += m_Rigidbody2D.velocity.y / 2;
+        m_grabber.ThrowItem(force_x, force_y);
     }
     
     // Sets the controller so that this class can control parameters like speed, jumpForce, etc.
