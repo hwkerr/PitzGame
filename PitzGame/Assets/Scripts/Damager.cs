@@ -39,8 +39,14 @@ public class Damager : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject incoming = collision.gameObject;
-        PlayerMovement incomingPlayer = incoming.GetComponent<PlayerMovement>();
+        DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
         if (incomingPlayer != null)
-            incomingPlayer.OnGetHit(this, GetKnockbackVector(incoming.transform), duration);
+            incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+        else
+        {
+            Grabbable grabbable = incoming.GetComponent<Grabbable>();
+            if (grabbable != null)
+                grabbable.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+        }
     }
 }

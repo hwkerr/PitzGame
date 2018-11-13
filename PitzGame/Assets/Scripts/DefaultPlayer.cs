@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class DefaultPlayer : MonoBehaviour {
 
-    private CharacterController2D controller;
-    protected Rigidbody2D m_rigidbody2D;
+    protected CharacterController2D controller;
+    protected Rigidbody2D m_Rigidbody2D;
     protected Grabber m_grabber;
 
     protected Dictionary<State, Collider2D[]> animColliders;
 
+    [HideInInspector]
     public string BTTN_HORIZONTAL,
         BTTN_JUMP,
         BTTN_CROUCH,
@@ -33,10 +34,15 @@ public abstract class DefaultPlayer : MonoBehaviour {
         MaxState
     }
 
-    public State currentState, lastState;
+    public State currentState;
+    [HideInInspector] public State lastState;
+
+    [HideInInspector] public bool isCrouching = false, isJumping = false;
 
     public bool inHitstun = false;
-    public Damager lastDamager;
+    [HideInInspector] public bool justHit = false;
+    [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
+    [HideInInspector] public Damager lastDamager;
 
     // Use this for initialization
     protected virtual void Start () {
@@ -50,7 +56,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
         lastState = State.Idle;
         currentState = State.Idle;
 
-        m_rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_grabber = GetComponentInChildren<Grabber>();
 
         Init_AllColliders();
@@ -59,21 +65,55 @@ public abstract class DefaultPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-    // @requires !inHitstun
-    public void GetHit(Damager damager)
-    {
-        if (!damager.Equals(lastDamager))
+        if (inHitstun)
         {
+            //Debug.Log(attackRecoveryCounter);
+            attackRecoveryCounter--;
+            if (attackRecoveryCounter <= 0)
+                RecoverFromHit();
+        }
+    }
+
+    // Testing this function in DefaultPlayer instead of PlayerMovement
+    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
+    {
+        if (!inHitstun && !damager.Equals(lastDamager))
+        {
+            justHit = true;
             lastDamager = damager;
+
+            inHitstun = true;
+            
+            if (isCrouching)
+            {
+                attackRecoveryCounter = totalAttackRecovery = groundedAttackRecovery;
+                m_Rigidbody2D.velocity = new Vector2(knockbackVector.x, 0f);
+            }
+            else
+            {
+                attackRecoveryCounter = totalAttackRecovery = duration;
+                if (knockbackVector.x > 0)
+                    controller.FaceLeft();
+                else
+                    controller.FaceRight();
+                m_Rigidbody2D.velocity = knockbackVector;
+            }
+            isJumping = false;
         }
     }
 
     public void RecoverFromHit()
     {
+        attackRecoveryCounter = 0;
         lastDamager = null;
+        inHitstun = false;
+        justHit = false;
+    }
+
+    // @requires inHitstun = true
+    public void GroundedRecovery()
+    {
+        attackRecoveryCounter = groundedAttackRecovery;
     }
 
     // Tells m_grabber to pick up an item

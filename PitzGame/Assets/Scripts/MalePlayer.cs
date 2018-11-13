@@ -16,11 +16,11 @@ public class MalePlayer : DefaultPlayer {
         BTTN_THROW = "Throw_P2";
     }
 
-    // Update is called once per frame
+    /*// Update is called once per frame
     void Update()
     {
         
-    }
+    }*/
 
     protected override void Init_StatValues()
     {

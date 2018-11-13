@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockback: 10
-  m_Angle: 0
+  m_Angle: 45
   duration: 100
 --- !u!212 &658189591
 SpriteRenderer:
@@ -751,7 +751,12 @@ MonoBehaviour:
   groundedAttackRecovery: 20
   currentState: 0
   lastState: 0
+  isCrouching: 0
+  isJumping: 0
   inHitstun: 0
+  justHit: 0
+  totalAttackRecovery: 0
+  attackRecoveryCounter: 0
   lastDamager: {fileID: 0}
 --- !u!50 &1260717982
 Rigidbody2D:
@@ -1002,6 +1007,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrabbable: 1
+  hittable: 1
+  inHitstun: 0
+  totalAttackRecovery: 0
+  attackRecoveryCounter: 0
   currentState: 2
 --- !u!1001 &1653547446
 Prefab:

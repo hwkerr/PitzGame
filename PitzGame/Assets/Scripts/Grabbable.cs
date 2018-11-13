@@ -6,11 +6,16 @@ using UnityEngine;
 
 public class Grabbable : MonoBehaviour
 {
-    public bool isGrabbable = false;
+    public bool isGrabbable = false,
+        hittable = true;
 
     protected Grabber attachedToGrabber;
     protected FollowObject followScript;
-    
+
+    public bool inHitstun = false;
+    [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
+    protected Damager lastDamager;
+
     protected Rigidbody2D m_Rigidbody2D;
     protected Collider2D m_Collider2D;
 
@@ -36,7 +41,32 @@ public class Grabbable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (inHitstun)
+        {
+            //Debug.Log(attackRecoveryCounter);
+            attackRecoveryCounter--;
+            if (attackRecoveryCounter <= 0)
+                RecoverFromHit();
+        }
+    }
+
+    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
+    {
+        duration = 0;
+        if (!damager.Equals(lastDamager))
+        {
+            lastDamager = damager;
+            inHitstun = true;
+            attackRecoveryCounter = totalAttackRecovery = duration;
+            m_Rigidbody2D.velocity = knockbackVector;
+        }
+    }
+
+    public void RecoverFromHit()
+    {
+        attackRecoveryCounter = 0;
+        lastDamager = null;
+        inHitstun = false;
     }
 
     // @Ensures No physics changes result from collisions between newPlayer and this ball
