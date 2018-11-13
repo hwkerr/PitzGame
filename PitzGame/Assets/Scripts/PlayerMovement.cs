@@ -14,11 +14,13 @@ public class PlayerMovement : MonoBehaviour {
     private float horizontalMove = 0f;
 
     protected bool busy = false,
+        inHitstun = false,
         jump = false,
         crouch = false;
     protected float speed = 0;
     protected int busyCounter,
         duration;
+    protected int hitstunCounter = 0;
 
     private bool debug;
 
@@ -32,6 +34,8 @@ public class PlayerMovement : MonoBehaviour {
         runSpeed = 40f;
         //animColliders = controller.Init_AllColliders();
         debug = false;
+
+        Debug.Log("Current Issue: none?, Next Goal: Add knockback to Ball");
     }
 
     // Update is called once per frame
@@ -49,15 +53,15 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         if (debug)
-            testUpdate();
+            TestUpdate();
         else
-            normalUpdate();
+            NormalUpdate();
     }
 
     // This is the sequence normally executed during the Update function
-    protected void normalUpdate () {
+    protected void NormalUpdate () {
 
-        if (!player.hitstun)
+        if (!inHitstun)
         {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
@@ -108,14 +112,24 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            if (Input.GetButtonDown(player.BTTN_INTERACT) /*&& !player.holding && canPickup()*/)
-                player.pickUpBall();
-            else if (Input.GetButtonDown(player.BTTN_THROW) /*&& player.holding*/)
-                player.throwBall();
+            if (Input.GetButtonDown(player.BTTN_INTERACT))
+                player.PickUpBall();
+            else if (Input.GetButtonDown(player.BTTN_THROW))
+                player.ThrowBall();
+        }
+        else // (inHitstun)
+        {
+            Debug.Log(hitstunCounter);
+            horizontalMove = 0;
+            hitstunCounter--;
+            if (hitstunCounter == 0)
+            {
+                RecoverFromHit();
+            }
         }
     }
 
-    protected void testUpdate()
+    protected void TestUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
             SetState((DefaultPlayer.State) 0);
@@ -131,14 +145,60 @@ public class PlayerMovement : MonoBehaviour {
             SetState((DefaultPlayer.State) 5);
         else if (Input.GetKeyDown(KeyCode.Alpha6))
             SetState((DefaultPlayer.State) 6);
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            SetState((DefaultPlayer.State)7);
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            SetState((DefaultPlayer.State)8);
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+            SetState((DefaultPlayer.State)9);
     }
 
     public void OnLanding()
     {
-        if (speed > 0.01)
-            SetState(DefaultPlayer.State.Walk);
-        else
-            SetState(DefaultPlayer.State.Idle);
+        hitstunCounter = player.groundedAttackRecovery;
+        if (!inHitstun)
+        {
+            if (speed > 0.01)
+                SetState(DefaultPlayer.State.Walk);
+            else
+                SetState(DefaultPlayer.State.Idle);
+        }
+    }
+
+    public void OnGetHit(Damager damager, Vector2 knockbackVector, int framelength)
+    {
+        Debug.Log("Hit");
+        if (!inHitstun)
+        {
+            if (crouch)
+            {
+                inHitstun = true;
+                hitstunCounter = player.groundedAttackRecovery;
+                controller.SetVelocity(new Vector2(knockbackVector.x, 0f));
+            }
+            else
+            {
+                inHitstun = true;
+                hitstunCounter = framelength;
+                SetState(DefaultPlayer.State.Hitstun);
+                if (knockbackVector.x > 0)
+                    controller.FaceLeft();
+                else
+                    controller.FaceRight();
+                controller.SetVelocity(knockbackVector);
+            }
+            player.GetHit(damager);
+            jump = false;
+            //crouch = false;
+        }
+    }
+
+    private void RecoverFromHit()
+    {
+        inHitstun = false;
+        player.RecoverFromHit();
+        if (!Input.GetButton(player.BTTN_CROUCH))
+            crouch = false;
     }
 
     void OnGUI()
@@ -155,20 +215,19 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (!busy)
+        if (!busy && !inHitstun)
         {
             controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
             jump = false;
         }
-
     }
 
-    // @Requires newState < STATE_MAX_SIZE
-    // @Ensures currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
+    // @Requires newState < State.MaxState
+    // @Ensures player.currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
     protected void SetState(DefaultPlayer.State newState)
     {
         //Debug.Log("PlayerMovement: State = " + newState);
-        if ((int) newState < player.MAX_STATE)
+        if (newState < DefaultPlayer.State.MaxState)
         {
             animator.SetInteger("State", (int)newState);
             player.SetState(newState);

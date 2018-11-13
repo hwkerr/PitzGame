@@ -5,7 +5,8 @@ using UnityEngine;
 public abstract class DefaultPlayer : MonoBehaviour {
 
     private CharacterController2D controller;
-    private Grabber m_grabber;
+    protected Rigidbody2D m_rigidbody2D;
+    protected Grabber m_grabber;
 
     protected Dictionary<State, Collider2D[]> animColliders;
 
@@ -19,6 +20,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public float runSpeed,
         crouchSpeed,
         jumpForce;
+    public int groundedAttackRecovery;
 
     public enum State
     {
@@ -26,16 +28,15 @@ public abstract class DefaultPlayer : MonoBehaviour {
         Crouch,
         Walk,
         Air,
-        Stab
+        Stab,
+        Hitstun,
+        MaxState
     }
-    public readonly int MAX_STATE = 4;
 
-    protected State currentState, lastState;
+    public State currentState, lastState;
 
-    protected bool holding = false;
-
-    public bool hitstun = false;
-    private Damager lastDamager;
+    public bool inHitstun = false;
+    public Damager lastDamager;
 
     // Use this for initialization
     protected virtual void Start () {
@@ -49,6 +50,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
         lastState = State.Idle;
         currentState = State.Idle;
 
+        m_rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_grabber = GetComponentInChildren<Grabber>();
 
         Init_AllColliders();
@@ -60,48 +62,30 @@ public abstract class DefaultPlayer : MonoBehaviour {
 		
 	}
 
+    // @requires !inHitstun
     public void GetHit(Damager damager)
     {
-        if (!hitstun || (hitstun && !damager.Equals(lastDamager)))
+        if (!damager.Equals(lastDamager))
         {
-            hitstun = true;
-            currentState = State.Air;
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(50, 50));
-            Invoke("RecoverFromHit", 2);
+            lastDamager = damager;
         }
     }
 
     public void RecoverFromHit()
     {
-        hitstun = false;
+        lastDamager = null;
     }
 
     // Tells m_grabber to pick up an item
-    public void pickUpBall()
+    // Note: Should I get the caller of this function to just find the Grabber and call pickUpItem() from there?
+    public void PickUpBall()
     {
         m_grabber.pickUpItem();
-
-        //BallController ball = GameObject.FindGameObjectWithTag("Ball").GetComponent<BallController>();
-        //ball.followPlayer(this);
-        //holding = true;
     }
 
-    // @Requires holding = true
-    // throws the ball
-    public void throwBall()
+    // Throws the ball
+    public void ThrowBall()
     {
-        /* Logan's Code
-        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
-        ball.transform.parent = null;
-        ball.GetComponent<Rigidbody2D>().simulated = true;
-        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(200f, 200f));
-        holding = false;
-        */
-
-        //BallController ball = GameObject.FindGameObjectWithTag("Ball").GetComponent<BallController>();
-        //ball.launch();
-        //holding = false;
-
         m_grabber.releaseItem();
     }
     
@@ -117,12 +101,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
         return currentState;
     }
 
-    // @Requires newState < MAX_STATE
+    // @Requires newState < State.MaxState
     // @Ensures currentState = #newState
     public void SetState(State newState)
     {
         lastState = currentState;
-        if (currentState != newState)
+        if (newState != currentState)
         {
             for (int i = 0; i < animColliders[currentState].Length; i++)
                 animColliders[currentState][i].enabled = false;
@@ -136,7 +120,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
     {
         runSpeed = 40f;
         crouchSpeed = 0f;
-        jumpForce = 600f;
+        jumpForce = 15f;
+        groundedAttackRecovery = 20;
     }
 
     // @Ensures all of the colliders for this GameObject are declared with set values
@@ -145,6 +130,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
         animColliders = new Dictionary<State, Collider2D[]>();
 
         animColliders.Add(State.Idle, Init_StateIdle());
+        animColliders.Add(State.Hitstun, Init_StateHitstun());
         animColliders.Add(State.Crouch, Init_StateCrouch());
         animColliders.Add(State.Walk, Init_StateWalk());
         animColliders.Add(State.Air, Init_StateAir());
@@ -154,6 +140,10 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @Ensures Colliders for character state: idle are added to the gameObject
     // @returns Init_StateIdle = an array consisting of all colliders for the state: idle
     protected abstract Collider2D[] Init_StateIdle();
+
+    // @Ensures Colliders for character state: hitstun are added to the gameObject
+    // @returns Init_StateIdle = an array consisting of all colliders for the state: hitstun
+    protected abstract Collider2D[] Init_StateHitstun();
 
     // @Ensures Colliders for character state: crouch are added to the gameObject
     // @returns Init_StateCrouch = an array consisting of all colliders for the state: crouch
