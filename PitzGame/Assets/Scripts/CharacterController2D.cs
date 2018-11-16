@@ -136,10 +136,32 @@ public class CharacterController2D : MonoBehaviour
         {
             // Add a vertical force to the player.
             m_Grounded = false;
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce);
         }
     }
 
+    public void SetVelocity(Vector2 velVector)
+    {
+        m_Rigidbody2D.velocity = velVector;
+    }
+
+    public void FaceRight()
+    {
+        if (!m_FacingRight)
+            Flip();
+    }
+
+    public void FaceLeft()
+    {
+        if (m_FacingRight)
+            Flip();
+    }
+
+    // temp function until I combine DefaultPlayer with CharacterController2D
+    public bool FacingRight()
+    {
+        return m_FacingRight;
+    }
 
     private void Flip()
     {

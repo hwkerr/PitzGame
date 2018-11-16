@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour {
     private float horizontalMove = 0f;
 
     protected bool busy = false,
+        inHitstun = false,
+        hitstunFirstLoopComplete = false,
         jump = false,
         crouch = false;
     protected float speed = 0;
@@ -29,9 +31,15 @@ public class PlayerMovement : MonoBehaviour {
 
         player.Init_AllColliders();
         runSpeed = player.runSpeed;
-        runSpeed = 40f;
-        //animColliders = controller.Init_AllColliders();
         debug = false;
+
+        player.SetController(controller);
+
+        //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
+        //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
+        //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown");
+        Debug.Log("Current Task: Add a second player to the scene (prefab?)");
+        Debug.Log("Current Issue: ?");
     }
 
     // Update is called once per frame
@@ -49,15 +57,26 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         if (debug)
-            testUpdate();
+            TestUpdate();
         else
-            normalUpdate();
+            NormalUpdate();
     }
 
     // This is the sequence normally executed during the Update function
-    protected void normalUpdate () {
+    protected void NormalUpdate () {
 
-        if (!player.hitstun)
+        if (player.inHitstun && !hitstunFirstLoopComplete)
+        {
+            hitstunFirstLoopComplete = true;
+            
+            inHitstun = true;
+            if (!crouch)
+            {
+                SetState(DefaultPlayer.State.Hitstun);
+            }
+        }
+
+        if (!inHitstun)
         {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
@@ -80,12 +99,12 @@ public class PlayerMovement : MonoBehaviour {
             {
                 if (Input.GetButtonDown(player.BTTN_CROUCH))
                 {
-                    crouch = true;
+                    player.isCrouching = crouch = true;
                     SetState(DefaultPlayer.State.Crouch);
                 }
                 else if (Input.GetButtonUp(player.BTTN_CROUCH))
                 {
-                    crouch = false;
+                    player.isCrouching = crouch = false;
                 }
 
                 if (!crouch)
@@ -108,14 +127,24 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            if (Input.GetButtonDown(player.BTTN_INTERACT) /*&& !player.holding && canPickup()*/)
-                player.pickUpBall();
-            else if (Input.GetButtonDown(player.BTTN_THROW) /*&& player.holding*/)
-                player.throwBall();
+            if (Input.GetButtonDown(player.BTTN_INTERACT))
+                player.PickUpItem();
+            else if (Input.GetButtonDown(player.BTTN_THROW))
+                player.ThrowItem(5, 5);
+        }
+        else // (inHitstun)
+        {
+            if (player.attackRecoveryCounter <= 0)
+            {
+                inHitstun = false;
+                hitstunFirstLoopComplete = false;
+                if (!Input.GetButton(player.BTTN_CROUCH))
+                    player.isCrouching = crouch = false;
+            }
         }
     }
 
-    protected void testUpdate()
+    protected void TestUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
             SetState((DefaultPlayer.State) 0);
@@ -131,14 +160,28 @@ public class PlayerMovement : MonoBehaviour {
             SetState((DefaultPlayer.State) 5);
         else if (Input.GetKeyDown(KeyCode.Alpha6))
             SetState((DefaultPlayer.State) 6);
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            SetState((DefaultPlayer.State) 7);
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            SetState((DefaultPlayer.State) 8);
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+            SetState((DefaultPlayer.State) 9);
     }
 
     public void OnLanding()
     {
-        if (speed > 0.01)
-            SetState(DefaultPlayer.State.Walk);
-        else
+        if (inHitstun)
+        {
+            player.GroundedRecovery();
             SetState(DefaultPlayer.State.Idle);
+        }
+        else // (!busy)
+        {
+            if (speed > 0.01)
+                SetState(DefaultPlayer.State.Walk);
+            else
+                SetState(DefaultPlayer.State.Idle);
+        }
     }
 
     void OnGUI()
@@ -155,20 +198,19 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (!busy)
+        if (!busy && !inHitstun)
         {
             controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
             jump = false;
         }
-
     }
 
-    // @Requires newState < STATE_MAX_SIZE
-    // @Ensures currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
+    // @Requires newState < State.MaxState
+    // @Ensures player.currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
     protected void SetState(DefaultPlayer.State newState)
     {
         //Debug.Log("PlayerMovement: State = " + newState);
-        if ((int) newState < player.MAX_STATE)
+        if (newState < DefaultPlayer.State.MaxState)
         {
             animator.SetInteger("State", (int)newState);
             player.SetState(newState);
