@@ -121,4 +121,17 @@ public class MalePlayer : DefaultPlayer {
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
+
+    public override GameObject AttackBasic()
+    {
+        if (AttackPrefab.GetComponent<Collider2D>() == null)
+        {
+            Collider2D attackBox = AttackPrefab.AddComponent<PolygonCollider2D>();
+            attackBox.isTrigger = true;
+            Debug.Log("Another one");
+        }
+        AttackPrefab.GetComponent<FollowObject>().Follow(transform, new Vector3(0.7f, 0f));
+        AttackPrefab.GetComponent<Damager>().IgnoreObject(gameObject);
+        return Instantiate(AttackPrefab);
+    }
 }

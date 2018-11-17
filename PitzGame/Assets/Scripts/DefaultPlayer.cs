@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class DefaultPlayer : MonoBehaviour {
 
+    public GameObject AttackPrefab;
+
     protected CharacterController2D controller;
     protected Rigidbody2D m_Rigidbody2D;
     protected Grabber m_grabber;
@@ -179,17 +181,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
         groundedAttackRecovery = 20;
     }
 
-    /*protected void SetStateColliders(State state)
-    {
-        Collider2D[] myColliders = GetStateColliders(state);
-        for (int i = 0; i < myHitboxes.Length; i++)
-        {
-            myHitboxes[i] = myColliders[i];
-        }
-    }*/
-
     // @Requires state < State.MaxState;
-    // @returns GetStateColliders = an array consisting of all colliders for the specified state
+    // @Ensures The Collider2D objects in myHitboxes[] are modified for the specified state
     protected void SetStateColliders(State state)
     {
         if (state == State.Idle)
@@ -229,4 +222,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @Ensures Initializes collider values for character state: hitstun
     // @returns SetCollidersIdle = an array consisting of all colliders for the state: hitstun
     protected abstract void SetCollidersHitstun(Collider2D[] hitboxColliders);
+
+
+    // @Ensures this DefaultPlayer has a new Damager object
+    public abstract GameObject AttackBasic();
 }

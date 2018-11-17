@@ -238,6 +238,11 @@ Prefab:
       propertyPath: m_Name
       value: MalePlayer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114086276104603618, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: playerNum
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
   m_IsPrefabAsset: 0
@@ -566,6 +571,11 @@ Prefab:
     - target: {fileID: 4641289347446318, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086276104603618, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: playerNum
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}

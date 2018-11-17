@@ -9,6 +9,7 @@ public class Damager : MonoBehaviour {
     public float knockback;
     public float m_Angle;
     public int duration;
+    public GameObject ignoreObject;
 
     private float force_x,
         force_y;
@@ -26,6 +27,11 @@ public class Damager : MonoBehaviour {
 		
 	}
 
+    public void IgnoreObject(GameObject obj)
+    {
+        ignoreObject = obj;
+    }
+
     public Vector2 GetKnockbackVector(Transform obj)
     {
         float relative_force_x;
@@ -39,14 +45,17 @@ public class Damager : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject incoming = collision.gameObject;
-        DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
-        if (incomingPlayer != null)
-            incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
-        else
+        if (incoming != ignoreObject)
         {
-            Grabbable grabbable = incoming.GetComponent<Grabbable>();
-            if (grabbable != null)
-                grabbable.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+            DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
+            if (incomingPlayer != null)
+                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+            else
+            {
+                Grabbable grabbable = incoming.GetComponent<Grabbable>();
+                if (grabbable != null)
+                    grabbable.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+            }
         }
     }
 }

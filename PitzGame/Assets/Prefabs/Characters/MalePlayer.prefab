@@ -231,13 +231,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca17d3ae6c3f26e4fba3ac318f605077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackPrefab: {fileID: 1828303575979932, guid: f2a38393300197c45ab6ccff7678dd8b,
+    type: 2}
   BTTN_HORIZONTAL: Horizontal_P2
   BTTN_JUMP: Jump_P2
   BTTN_CROUCH: Crouch_P2
   BTTN_FIRE1: Fire1_P2
   BTTN_INTERACT: Interact_P2
   BTTN_THROW: Throw_P2
-  playerNum: 2
+  playerNum: 0
   runSpeed: 40
   crouchSpeed: 0
   jumpForce: 15
@@ -280,6 +282,7 @@ MonoBehaviour:
   animator: {fileID: 95536467189304686}
   player: {fileID: 114086276104603618}
   runSpeed: 40
+  attack1: {fileID: 0}
 --- !u!114 &114656567892905154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,6 +311,7 @@ MonoBehaviour:
   m_CrouchSpeed: 0
   m_MovementSmoothing: 0.05
   m_AirControl: 1
+  m_AerialTurning: 0
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4112

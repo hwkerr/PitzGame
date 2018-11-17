@@ -19,10 +19,11 @@ public class PlayerMovement : MonoBehaviour {
         jump = false,
         crouch = false;
     protected float speed = 0;
-    protected int busyCounter,
-        duration;
+    protected int duration;
 
     private bool debug;
+
+    public GameObject attack1;
 
     // Use this for initialization
     protected void Start () {
@@ -37,9 +38,9 @@ public class PlayerMovement : MonoBehaviour {
 
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
-        //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown");
-        Debug.Log("Current Task: Restructure player colliders so that it only has one for each body part but changes stats for each state");
-        Debug.Log("Current Issue: ?");
+        //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown?");
+        Debug.Log("Current Task: Give players attacks");
+        Debug.Log("Current Issue: Need to create attack on the side that player is facing");
     }
 
     // Update is called once per frame
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        if (!inHitstun)
+        if (!inHitstun && !busy)
         {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
@@ -121,8 +122,10 @@ public class PlayerMovement : MonoBehaviour {
                 if (Input.GetButtonDown(player.BTTN_FIRE1))
                 {
                     SetState(DefaultPlayer.State.Stab);
+                    if (attack1 != null)
+                        Destroy(attack1);
+                    attack1 = player.AttackBasic();
                     busy = true;
-                    busyCounter = 0;
                     duration = 30;
                 }
             }
@@ -132,16 +135,33 @@ public class PlayerMovement : MonoBehaviour {
             else if (Input.GetButtonDown(player.BTTN_THROW))
                 player.ThrowItem(5, 5);
         }
-        else // (inHitstun)
+        else if (inHitstun)
         {
+            // If it has been enough time since player has been hit
             if (player.attackRecoveryCounter <= 0)
             {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;
                 if (!Input.GetButton(player.BTTN_CROUCH))
                     player.isCrouching = crouch = false;
+                FinishAttack();
             }
         }
+        else if (busy)
+        {
+            Debug.Log(duration);
+            duration--;
+            if (duration <= 0)
+            {
+                FinishAttack();
+            }
+        }
+    }
+
+    protected void FinishAttack()
+    {
+        busy = false;
+        Destroy(attack1);
     }
 
     protected void TestUpdate()
