@@ -14,22 +14,23 @@ public class Ball : Grabbable {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
-
-        /*if (transform.position.x < -9.46)
-        {
-            ResetBall();
-        }
-        if (transform.position.x > 9.44)
-        {
-            ResetBall();
-        }*/
     }
 
-    void ResetBall()
+    // @Ensures this Ball stops all movement
+    //          this Ball resets its position to the position (0, 5)
+    public void ResetBall()
+    {
+        ResetBall(0, 5);
+    }
+
+    // @Ensures this Ball resets all momentum
+    //          transform.position.x = x
+    //          transform.position.y = y
+    public void ResetBall(float x, float y)
     {
         m_Rigidbody2D.angularVelocity = 0;
         m_Rigidbody2D.rotation = 0;
-        transform.position = new Vector2(0, 5);
+        transform.position = new Vector2(x, y);
         m_Rigidbody2D.velocity = Vector2.zero;
     }
 }

@@ -79,6 +79,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
         }
     }
 
+    // @returns An integer value corresponding to the player's current health
+    // @Ensures GetHealth() >= 0
     public int GetHealth()
     {
         if (health > 0)
@@ -86,7 +88,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
         else return 0;
     }
 
-    // Testing this function in DefaultPlayer instead of PlayerMovement
     public void OnTakeDamage(Damager damager, Vector2 knockbackVector, float damage, int duration)
     {
         if (!(inHitstun && damager.Equals(lastDamager)))
@@ -142,7 +143,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     }
 
     // Tells m_grabber to pick up an item
-    // Note: Should I get the caller of this function to just find the Grabber and call pickUpItem() from there?
     public void PickUpItem()
     {
         m_grabber.PickUpItem();
