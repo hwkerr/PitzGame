@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MalePlayer : DefaultPlayer {
 
+    /** @Requires myHitboxes[0] is type CircleCollider2D
+     *  @Requires myHitboxes[1] is type CapsuleCollider2D
+     */
+    
     // Use this for initialization
     protected override void Start()
     {
@@ -20,7 +24,7 @@ public class MalePlayer : DefaultPlayer {
     {
         runSpeed = 40f;
         crouchSpeed = 0f;
-        jumpForce = 15f;
+        jumpForce = 16f; //15f if double jump, 16f or 17f if only one jump
         groundedAttackRecovery = 20;
     }
 
@@ -37,20 +41,6 @@ public class MalePlayer : DefaultPlayer {
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
-
-    /*protected override void SetCollidersIdle(Collider2D[] hitboxColliders)
-    {
-        CircleCollider2D head = gameObject.AddComponent<CircleCollider2D>();
-        head.offset = new Vector2(0.01f, 0.10f);
-        head.radius = 0.26f;
-        hitboxColliders[0] = head;
-
-        CapsuleCollider2D torso = gameObject.AddComponent<CapsuleCollider2D>();
-        torso.offset = new Vector2(0.03f, -0.28f);
-        torso.size = new Vector2(0.21f, 0.39f);
-        torso.direction = CapsuleDirection2D.Vertical;
-        hitboxColliders[1] = torso;
-    }*/
 
     protected override void SetCollidersCrouch(Collider2D[] hitboxColliders)
     {
@@ -124,14 +114,15 @@ public class MalePlayer : DefaultPlayer {
 
     public override GameObject AttackBasic()
     {
-        if (AttackPrefab.GetComponent<Collider2D>() == null)
-        {
-            Collider2D attackBox = AttackPrefab.AddComponent<PolygonCollider2D>();
-            attackBox.isTrigger = true;
-            Debug.Log("Another one");
-        }
-        AttackPrefab.GetComponent<FollowObject>().Follow(transform, new Vector3(0.7f, 0f));
-        AttackPrefab.GetComponent<Damager>().IgnoreObject(gameObject);
-        return Instantiate(AttackPrefab);
+        float dir = -1;
+        if (controller.FacingRight())
+            dir = 1;
+
+        GameObject AttackPrefabClone = Instantiate(AttackPrefab);
+        Collider2D attackBox = AttackPrefabClone.AddComponent<PolygonCollider2D>();
+        attackBox.isTrigger = true;
+        AttackPrefabClone.GetComponent<FollowObject>().Follow(transform, new Vector3(0.7f * dir, 0f));
+        AttackPrefabClone.GetComponent<Damager>().IgnoreObject(gameObject);
+        return AttackPrefabClone;
     }
 }

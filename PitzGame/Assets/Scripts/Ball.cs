@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Ball : Grabbable {
 
-    /* Remove most things in this class and put them in Grabbable
-     * The only things in this class are things specific to the ball (like scoring in a goal)
-     */
-
     private CircleCollider2D m_collider;
     
     // Use this for initialization
@@ -16,36 +12,20 @@ public class Ball : Grabbable {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (transform.position.x < -9.46)
+	protected override void Update () {
+        base.Update();
+
+        /*if (transform.position.x < -9.46)
         {
-            resetBall();
+            ResetBall();
         }
         if (transform.position.x > 9.44)
         {
-            resetBall();
-        }
-
-        /*if (following)
-        {
-            m_transform.position = grabber.transform.position;
+            ResetBall();
         }*/
     }
-    
-    //when character is grounded, the outer circle is touching the ground already
-    // @Ensures once this ball collides with something other than the thrower, the thrower can be hit again
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        /*Debug.Log("Ball Triggered");
-        if (launching && collision.gameObject.layer != 13)
-        {
-            //player.gameObject.layer = 9;
-            launching = false;
-        }
-        launching = false;*/
-    }
 
-    void resetBall()
+    void ResetBall()
     {
         m_Rigidbody2D.angularVelocity = 0;
         m_Rigidbody2D.rotation = 0;

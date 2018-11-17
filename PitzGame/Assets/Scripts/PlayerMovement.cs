@@ -36,11 +36,16 @@ public class PlayerMovement : MonoBehaviour {
 
         player.SetController(controller);
 
+        //Debug.Log("Bug: When hit from one Damager to another, player is first in State.hitstun but on second hit is in State.Idle");
+
+        //Debug.Log("Future Task: Add a hitbox to the ball when (it is thrown / has a certain speed)?");
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
-        //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown?");
-        Debug.Log("Current Task: Give players attacks");
-        Debug.Log("Current Issue: Need to create attack on the side that player is facing");
+        //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
+        //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
+        //Debug.Log("Future Task: Update to use new sprites");
+        Debug.Log("Current Task: ?");
+        Debug.Log("Current Issue: ?");
     }
 
     // Update is called once per frame

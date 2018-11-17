@@ -12,7 +12,7 @@ public class Grabbable : MonoBehaviour
     protected Grabber attachedToGrabber;
     protected FollowObject followScript;
 
-    public bool inHitstun = false;
+    [HideInInspector] public bool inHitstun = false;
     [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
     protected Damager lastDamager;
 
@@ -39,7 +39,7 @@ public class Grabbable : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (inHitstun)
         {

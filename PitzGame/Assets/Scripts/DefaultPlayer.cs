@@ -22,10 +22,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     public int playerNum;
 
+    // Character-Specific Stats
     public float runSpeed,
         crouchSpeed,
         jumpForce;
     public int groundedAttackRecovery;
+
 
     public enum State
     {
@@ -41,6 +43,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public State currentState;
     [HideInInspector] public State lastState;
 
+    [Range(0, 100)] public float health = 100;
+
     [SerializeField] private Collider2D[] myHitboxes;
 
     [HideInInspector] public bool isCrouching = false, isJumping = false;
@@ -53,6 +57,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
     protected virtual void Start () {
         lastState = State.Idle;
         currentState = State.Idle;
+
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
         m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_grabber = GetComponentInChildren<Grabber>();
@@ -73,15 +79,25 @@ public abstract class DefaultPlayer : MonoBehaviour {
         }
     }
 
-    // Testing this function in DefaultPlayer instead of PlayerMovement
-    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
+    public int GetHealth()
     {
-        if (!inHitstun && !damager.Equals(lastDamager))
+        if (health > 0)
+            return Mathf.RoundToInt(health);
+        else return 0;
+    }
+
+    // Testing this function in DefaultPlayer instead of PlayerMovement
+    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, float damage, int duration)
+    {
+        if (!(inHitstun && damager.Equals(lastDamager)))
         {
             lastDamager = damager;
 
             inHitstun = true;
-            
+
+            if (health == 0) DeathSequence();
+            health -= damage;
+            if (health < 0) health = 0;
             if (isCrouching)
             {
                 attackRecoveryCounter = totalAttackRecovery = groundedAttackRecovery;
@@ -105,6 +121,18 @@ public abstract class DefaultPlayer : MonoBehaviour {
         attackRecoveryCounter = 0;
         lastDamager = null;
         inHitstun = false;
+    }
+
+    public void DeathSequence()
+    {
+        m_Rigidbody2D.simulated = false;
+        GetComponent<Animator>().SetBool("Death", true);
+        Invoke("Perish", 0.6f);
+    }
+
+    private void Perish()
+    {
+        Destroy(gameObject);
     }
 
     // @requires inHitstun = true

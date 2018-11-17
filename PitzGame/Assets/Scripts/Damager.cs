@@ -49,7 +49,7 @@ public class Damager : MonoBehaviour {
         {
             DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
             if (incomingPlayer != null)
-                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), 10f, duration);
             else
             {
                 Grabbable grabbable = incoming.GetComponent<Grabbable>();

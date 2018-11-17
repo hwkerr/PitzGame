@@ -311,7 +311,7 @@ MonoBehaviour:
   m_CrouchSpeed: 0
   m_MovementSmoothing: 0.05
   m_AirControl: 1
-  m_AerialTurning: 0
+  m_AerialTurning: 1
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4112
