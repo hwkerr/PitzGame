@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour {
         Debug.Log("Press PageUp to enable Debug Mode");
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-        player.Init_AllColliders();
+        //player.Init_AllColliders();
         runSpeed = player.runSpeed;
         debug = false;
 
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
         //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown");
-        Debug.Log("Current Task: Add a second player to the scene (prefab?)");
+        Debug.Log("Current Task: Restructure player colliders so that it only has one for each body part but changes stats for each state");
         Debug.Log("Current Issue: ?");
     }
 
