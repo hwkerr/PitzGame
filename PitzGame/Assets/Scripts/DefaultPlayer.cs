@@ -80,7 +80,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     }
 
     // @returns An integer value corresponding to the player's current health
-    // @Ensures GetHealth() >= 0
+    // @Ensures GetHealth >= 0
     public int GetHealth()
     {
         if (health > 0)
