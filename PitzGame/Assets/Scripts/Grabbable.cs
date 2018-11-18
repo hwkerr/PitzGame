@@ -50,6 +50,11 @@ public class Grabbable : MonoBehaviour
         }
     }
 
+    public void reset()
+    {
+
+    }
+
     public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
     {
         duration = 0;
