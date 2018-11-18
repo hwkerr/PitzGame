@@ -24,7 +24,7 @@ public class MalePlayer : DefaultPlayer {
     {
         runSpeed = 40f;
         crouchSpeed = 0f;
-        jumpForce = 16f; //15f if double jump, 16f or 17f if only one jump
+        jumpForce = 20f; //15f if double jump, 16f or 17f if only one jump
         groundedAttackRecovery = 20;
     }
 
