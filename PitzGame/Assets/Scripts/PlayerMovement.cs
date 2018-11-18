@@ -19,26 +19,32 @@ public class PlayerMovement : MonoBehaviour {
         jump = false,
         crouch = false;
     protected float speed = 0;
-    protected int busyCounter,
-        duration;
+    protected int duration;
 
     private bool debug;
+
+    public GameObject attack1;
 
     // Use this for initialization
     protected void Start () {
         Debug.Log("Press PageUp to enable Debug Mode");
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-        player.Init_AllColliders();
+        //player.Init_AllColliders();
         runSpeed = player.runSpeed;
         debug = false;
 
         player.SetController(controller);
 
+        //Debug.Log("Bug: When hit from one Damager to another, player is first in State.hitstun but on second hit is in State.Idle");
+
+        //Debug.Log("Future Task: Add a hitbox to the ball when (it is thrown / has a certain speed)?");
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
-        //Debug.Log("Future Task: Add a hitbox to the ball when it is thrown");
-        Debug.Log("Current Task: Add a second player to the scene (prefab?)");
+        //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
+        //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
+        //Debug.Log("Future Task: Update to use new sprites");
+        Debug.Log("Current Task: ?");
         Debug.Log("Current Issue: ?");
     }
 
@@ -76,7 +82,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        if (!inHitstun)
+        if (!inHitstun && !busy)
         {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
@@ -121,8 +127,10 @@ public class PlayerMovement : MonoBehaviour {
                 if (Input.GetButtonDown(player.BTTN_FIRE1))
                 {
                     SetState(DefaultPlayer.State.Stab);
+                    if (attack1 != null)
+                        Destroy(attack1);
+                    attack1 = player.AttackBasic();
                     busy = true;
-                    busyCounter = 0;
                     duration = 30;
                 }
             }
@@ -132,16 +140,33 @@ public class PlayerMovement : MonoBehaviour {
             else if (Input.GetButtonDown(player.BTTN_THROW))
                 player.ThrowItem(5, 5);
         }
-        else // (inHitstun)
+        else if (inHitstun)
         {
+            // If it has been enough time since player has been hit
             if (player.attackRecoveryCounter <= 0)
             {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;
                 if (!Input.GetButton(player.BTTN_CROUCH))
                     player.isCrouching = crouch = false;
+                FinishAttack();
             }
         }
+        else if (busy)
+        {
+            Debug.Log(duration);
+            duration--;
+            if (duration <= 0)
+            {
+                FinishAttack();
+            }
+        }
+    }
+
+    protected void FinishAttack()
+    {
+        busy = false;
+        Destroy(attack1);
     }
 
     protected void TestUpdate()

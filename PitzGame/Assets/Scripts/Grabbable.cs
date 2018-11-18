@@ -12,7 +12,7 @@ public class Grabbable : MonoBehaviour
     protected Grabber attachedToGrabber;
     protected FollowObject followScript;
 
-    public bool inHitstun = false;
+    [HideInInspector] public bool inHitstun = false;
     [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
     protected Damager lastDamager;
 
@@ -39,11 +39,10 @@ public class Grabbable : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (inHitstun)
         {
-            //Debug.Log(attackRecoveryCounter);
             attackRecoveryCounter--;
             if (attackRecoveryCounter <= 0)
                 RecoverFromHit();
@@ -77,7 +76,7 @@ public class Grabbable : MonoBehaviour
 
     // @Ensures No physics changes result from collisions between newPlayer and this ball
     //          The physics for this ball are frozen
-    public void followEntity(Grabber newGrabber)
+    public void FollowEntity(Grabber newGrabber)
     {
         // Re-enable collisions for previous grabber
         if (attachedToGrabber != null)
@@ -103,7 +102,7 @@ public class Grabbable : MonoBehaviour
         followScript.enabled = true;
     }
 
-    public void releaseFromEntity()
+    public void ReleaseFromEntity()
     {
         if (currentState == State.following)
         {
@@ -118,9 +117,9 @@ public class Grabbable : MonoBehaviour
     }
 
     // @Ensures This item will shoot out from the player in a [specified] direction
-    public virtual void launch(float force_x, float force_y)
+    public virtual void Launch(float force_x, float force_y)
     {
-        releaseFromEntity();
+        ReleaseFromEntity();
         m_Rigidbody2D.velocity = new Vector2(force_x, force_y);
     }
 
@@ -139,23 +138,4 @@ public class Grabbable : MonoBehaviour
                 Physics2D.IgnoreCollision(m_Collider2D, grabbingObject[i], false);
         }
     }
-
-    /*
-    // @Ensures once this ball collides with something other than the thrower, the thrower can be hit again
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Item Triggered (Enter)");
-        if (launching && collision.gameObject.layer != 13)
-        {
-            grabber.gameObject.layer = 9;
-            launching = false;
-        }
-    }
-
-    // @Ensures once this ball collides with something other than the thrower, the thrower can be hit again
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        Debug.Log("Item Triggered (Exit)");
-    }
-    */
 }

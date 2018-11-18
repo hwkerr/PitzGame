@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class DefaultPlayer : MonoBehaviour {
 
+    public GameObject AttackPrefab;
+
     protected CharacterController2D controller;
     protected Rigidbody2D m_Rigidbody2D;
     protected Grabber m_grabber;
@@ -18,10 +20,14 @@ public abstract class DefaultPlayer : MonoBehaviour {
         BTTN_INTERACT,
         BTTN_THROW;
 
+    public int playerNum;
+
+    // Character-Specific Stats
     public float runSpeed,
         crouchSpeed,
         jumpForce;
     public int groundedAttackRecovery;
+
 
     public enum State
     {
@@ -37,28 +43,28 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public State currentState;
     [HideInInspector] public State lastState;
 
+    [Range(0, 100)] public float health = 100;
+
+    [SerializeField] private Collider2D[] myHitboxes;
+
     [HideInInspector] public bool isCrouching = false, isJumping = false;
 
-    public bool inHitstun = false;
+    [HideInInspector] public bool inHitstun = false;
     [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
     [HideInInspector] public Damager lastDamager;
 
     // Use this for initialization
     protected virtual void Start () {
-        BTTN_HORIZONTAL = "Horizontal";
-        BTTN_JUMP = "Jump";
-        BTTN_CROUCH = "Crouch";
-        BTTN_FIRE1 = "Fire1";
-        BTTN_INTERACT = "Interact";
-        BTTN_THROW = "Throw";
-
         lastState = State.Idle;
         currentState = State.Idle;
+
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
         m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_grabber = GetComponentInChildren<Grabber>();
 
-        Init_AllColliders();
+        //Init_AllColliders();
+        Init_Buttons(playerNum);
         Init_StatValues();
     }
 	
@@ -73,15 +79,26 @@ public abstract class DefaultPlayer : MonoBehaviour {
         }
     }
 
-    // Testing this function in DefaultPlayer instead of PlayerMovement
-    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
+    // @returns An integer value corresponding to the player's current health
+    // @Ensures GetHealth >= 0
+    public int GetHealth()
     {
-        if (!inHitstun && !damager.Equals(lastDamager))
+        if (health > 0)
+            return Mathf.RoundToInt(health);
+        else return 0;
+    }
+
+    public void OnTakeDamage(Damager damager, Vector2 knockbackVector, float damage, int duration)
+    {
+        if (!(inHitstun && damager.Equals(lastDamager)))
         {
             lastDamager = damager;
 
             inHitstun = true;
-            
+
+            if (health == 0) DeathSequence();
+            health -= damage;
+            if (health < 0) health = 0;
             if (isCrouching)
             {
                 attackRecoveryCounter = totalAttackRecovery = groundedAttackRecovery;
@@ -107,6 +124,18 @@ public abstract class DefaultPlayer : MonoBehaviour {
         inHitstun = false;
     }
 
+    public void DeathSequence()
+    {
+        m_Rigidbody2D.simulated = false;
+        GetComponent<Animator>().SetBool("Death", true);
+        Invoke("Perish", 0.6f);
+    }
+
+    private void Perish()
+    {
+        Destroy(gameObject);
+    }
+
     // @requires inHitstun = true
     public void GroundedRecovery()
     {
@@ -114,7 +143,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     }
 
     // Tells m_grabber to pick up an item
-    // Note: Should I get the caller of this function to just find the Grabber and call pickUpItem() from there?
     public void PickUpItem()
     {
         m_grabber.PickUpItem();
@@ -158,12 +186,19 @@ public abstract class DefaultPlayer : MonoBehaviour {
         lastState = currentState;
         if (newState != currentState)
         {
-            for (int i = 0; i < animColliders[currentState].Length; i++)
-                animColliders[currentState][i].enabled = false;
-            for (int i = 0; i < animColliders[newState].Length; i++)
-                animColliders[newState][i].enabled = true;
+            SetStateColliders(newState);
         }
         currentState = newState;
+    }
+
+    protected virtual void Init_Buttons(int playerNum)
+    {
+        BTTN_HORIZONTAL = "Horizontal_P" + playerNum;
+        BTTN_JUMP = "Jump_P" + playerNum;
+        BTTN_CROUCH = "Crouch_P" + playerNum;
+        BTTN_FIRE1 = "Fire1_P" + playerNum;
+        BTTN_INTERACT = "Interact_P" + playerNum;
+        BTTN_THROW = "Throw_P" + playerNum;
     }
 
     protected virtual void Init_StatValues()
@@ -174,40 +209,49 @@ public abstract class DefaultPlayer : MonoBehaviour {
         groundedAttackRecovery = 20;
     }
 
-    // @Ensures all of the colliders for this GameObject are declared with set values
-    public void Init_AllColliders()
+    // @Requires state < State.MaxState;
+    // @Ensures The Collider2D objects in myHitboxes[] are modified for the specified state
+    protected void SetStateColliders(State state)
     {
-        animColliders = new Dictionary<State, Collider2D[]>();
-
-        animColliders.Add(State.Idle, Init_StateIdle());
-        animColliders.Add(State.Hitstun, Init_StateHitstun());
-        animColliders.Add(State.Crouch, Init_StateCrouch());
-        animColliders.Add(State.Walk, Init_StateWalk());
-        animColliders.Add(State.Air, Init_StateAir());
-        animColliders.Add(State.Stab, Init_StateStab());
+        if (state == State.Idle)
+            SetCollidersIdle(myHitboxes);
+        else if (state == State.Crouch)
+            SetCollidersCrouch(myHitboxes);
+        else if (state == State.Walk)
+            SetCollidersWalk(myHitboxes);
+        else if (state == State.Air)
+            SetCollidersAir(myHitboxes);
+        else if (state == State.Stab)
+            SetCollidersStab(myHitboxes);
+        else if (state == State.Hitstun)
+            SetCollidersHitstun(myHitboxes);
     }
 
-    // @Ensures Colliders for character state: idle are added to the gameObject
-    // @returns Init_StateIdle = an array consisting of all colliders for the state: idle
-    protected abstract Collider2D[] Init_StateIdle();
+    // @Ensures Initializes collider values for character state: idle
+    // @returns SetCollidersIdle = an array consisting of all colliders for the state: idle
+    protected abstract void SetCollidersIdle(Collider2D[] hitboxColliders);
 
-    // @Ensures Colliders for character state: hitstun are added to the gameObject
-    // @returns Init_StateIdle = an array consisting of all colliders for the state: hitstun
-    protected abstract Collider2D[] Init_StateHitstun();
+    // @Ensures Initializes collider values for character state: crouch
+    // @returns SetCollidersCrouch = an array consisting of all colliders for the state: crouch
+    protected abstract void SetCollidersCrouch(Collider2D[] hitboxColliders);
 
-    // @Ensures Colliders for character state: crouch are added to the gameObject
-    // @returns Init_StateCrouch = an array consisting of all colliders for the state: crouch
-    protected abstract Collider2D[] Init_StateCrouch();
+    // @Ensures Initializes collider values for character state: walk
+    // @returns SetCollidersWalk = an array consisting of all colliders for the state: walk
+    protected abstract void SetCollidersWalk(Collider2D[] hitboxColliders);
 
-    // @Ensures Colliders for character state: walk are added to the gameObject
-    // @returns Init_StateWalk = an array consisting of all colliders for the state: walk
-    protected abstract Collider2D[] Init_StateWalk();
+    // @Ensures Initializes collider values for character state: air
+    // @returns SetCollidersAir = an array consisting of all colliders for the state: air
+    protected abstract void SetCollidersAir(Collider2D[] hitboxColliders);
 
-    // @Ensures Colliders for character state: air are added to the gameObject
-    // @returns Init_StateAir = an array consisting of all colliders for the state: air
-    protected abstract Collider2D[] Init_StateAir();
+    // @Ensures Initializes collider values for character state: stab
+    // @returns SetCollidersStab = an array consisting of all colliders for the state: stab
+    protected abstract void SetCollidersStab(Collider2D[] hitboxColliders);
 
-    // @Ensures Colliders for character state: stab are added to the gameObject
-    // @returns Init_StateStab = an array consisting of all colliders for the state: stab
-    protected abstract Collider2D[] Init_StateStab();
+    // @Ensures Initializes collider values for character state: hitstun
+    // @returns SetCollidersIdle = an array consisting of all colliders for the state: hitstun
+    protected abstract void SetCollidersHitstun(Collider2D[] hitboxColliders);
+
+
+    // @Ensures this DefaultPlayer has a new Damager object
+    public abstract GameObject AttackBasic();
 }

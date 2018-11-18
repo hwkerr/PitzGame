@@ -28,7 +28,7 @@ public class Grabber : MonoBehaviour {
         //Grabbable item = targetInRange;
         if (canPickup && !holding)
         {
-            targetInRange.followEntity(this);
+            targetInRange.FollowEntity(this);
             holding = true;
             heldItem = targetInRange;
         }
@@ -39,7 +39,7 @@ public class Grabber : MonoBehaviour {
     {
         if (holding)
         {
-            heldItem.releaseFromEntity();
+            heldItem.ReleaseFromEntity();
             holding = false;
         }
     }
@@ -48,7 +48,7 @@ public class Grabber : MonoBehaviour {
     {
         if (holding)
         {
-            heldItem.launch(force_x, force_y);
+            heldItem.Launch(force_x, force_y);
             holding = false;
         }
     }

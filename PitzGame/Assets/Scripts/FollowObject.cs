@@ -11,14 +11,20 @@ public class FollowObject : MonoBehaviour
     void Awake()
     {
         // Setting up the reference.
-        if (following != null)
-            following = transform.parent.gameObject.transform;
+        //if (following != null)
+        //    following = transform.parent.gameObject.transform;
     }
 
     void Update()
     {
-        // Set the position to the player's position with the offset.
+        // Set the position to the object being followed's position plus the offset.
         if (following != null)
             transform.position = following.position + offset;
+    }
+
+    public void Follow(Transform transformToFollow, Vector3 offset)
+    {
+        following = transformToFollow;
+        this.offset = offset;
     }
 }
