@@ -33,4 +33,14 @@ public class Ball : Grabbable {
         transform.position = new Vector2(x, y);
         m_Rigidbody2D.velocity = Vector2.zero;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // if the ball crosses the goal, then reset
+        // scoring is handled in the goal class
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            ResetBall();
+        }
+    }
 }
