@@ -36,6 +36,8 @@ public class Ball : Grabbable {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // if the ball crosses the goal, then reset
+        // scoring is handled in the goal class
         if (collision.gameObject.CompareTag("Goal"))
         {
             ResetBall();
