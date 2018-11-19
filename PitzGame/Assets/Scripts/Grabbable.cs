@@ -129,7 +129,7 @@ public class Grabbable : MonoBehaviour
         EnableGrabberCollisions();
     }
 
-    private void EnableGrabberCollisions()
+    protected void EnableGrabberCollisions()
     {
         if (attachedToGrabber != null)
         {
