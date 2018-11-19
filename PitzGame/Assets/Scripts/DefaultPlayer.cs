@@ -127,6 +127,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public void DeathSequence()
     {
         m_Rigidbody2D.simulated = false;
+        ReleaseItem();
         GetComponent<Animator>().SetBool("Death", true);
         Invoke("Perish", 0.6f);
     }

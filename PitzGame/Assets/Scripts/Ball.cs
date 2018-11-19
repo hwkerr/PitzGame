@@ -32,5 +32,6 @@ public class Ball : Grabbable {
         m_Rigidbody2D.rotation = 0;
         transform.position = new Vector2(x, y);
         m_Rigidbody2D.velocity = Vector2.zero;
+        EnableGrabberCollisions(); //Without this, the scorer won't be able to initially touch the ball (unless ball was scored with a rebound)
     }
 }
