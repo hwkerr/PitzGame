@@ -16,6 +16,7 @@ public class Damager : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {
+        transform.position = new Vector2(-1000f, -1000f);
         myHurtbox = gameObject.GetComponent<Collider2D>();
         
         force_x = knockback * Mathf.Cos(m_Angle * Mathf.Deg2Rad);
