@@ -17,6 +17,7 @@ public class Goal: MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        // if the ball goes in the goal, add one to score
         if (collision.gameObject.tag.Equals("Pickup"))  
         {
             this.score++;
