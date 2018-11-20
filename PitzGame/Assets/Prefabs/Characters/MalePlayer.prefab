@@ -89,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1384024561141186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.46, z: 0}
+  m_LocalPosition: {x: 0, y: -0.751, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4641289347446318}
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1634298237548798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: -0.54542315, z: 0}
+  m_LocalPosition: {x: 1.44, y: -0.54542315, z: 0}
   m_LocalScale: {x: -2, y: 2, z: 1}
   m_Children:
   - {fileID: 4001469397654268}
@@ -118,7 +118,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710227795485550}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: -0.154, z: 0.042968757}
+  m_LocalPosition: {x: -0, y: -0.551, z: 0.042968757}
   m_LocalScale: {x: -0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4641289347446318}
@@ -131,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1785639836110230}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.33, z: 0}
+  m_LocalPosition: {x: 0, y: -0.108, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4641289347446318}
@@ -169,9 +169,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01, y: 0.1}
+  m_Offset: {x: 0.07, y: -0.28}
   serializedVersion: 2
-  m_Radius: 0.26
+  m_Radius: 0.2
 --- !u!58 &58973753201219288
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -186,7 +186,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.17
 --- !u!70 &70348476247269516
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -199,8 +199,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03, y: -0.28}
-  m_Size: {x: 0.21, y: 0.39}
+  m_Offset: {x: 0.08, y: -0.6}
+  m_Size: {x: 0.15, y: 0.3}
   m_Direction: 0
 --- !u!95 &95536467189304686
 Animator:
@@ -246,6 +246,7 @@ MonoBehaviour:
   groundedAttackRecovery: 20
   currentState: 0
   lastState: 0
+  health: 100
   myHitboxes:
   - {fileID: 58683497895353116}
   - {fileID: 70348476247269516}
@@ -319,6 +320,7 @@ MonoBehaviour:
   m_CeilingCheck: {fileID: 4786085526846380}
   m_CrouchDisableCollider: {fileID: 0}
   m_Grounded: 0
+  m_FacingRight: 1
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -375,7 +377,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: e3cec684b8d13b949bb11de74bbeb09d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 283e62beca98b4d4a98c0aad0eba77b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

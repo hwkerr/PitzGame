@@ -31,13 +31,13 @@ public class MalePlayer : DefaultPlayer {
     protected override void SetCollidersIdle(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.01f, 0.10f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(0.07f, -0.28f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.03f, -0.28f);
-        torso.size = new Vector2(0.21f, 0.39f);
+        torso.offset = new Vector2(0.08f, -0.60f);
+        torso.size = new Vector2(0.15f, 0.30f);
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
@@ -45,13 +45,13 @@ public class MalePlayer : DefaultPlayer {
     protected override void SetCollidersCrouch(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.03f, -0.22f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(0.00f, -0.55f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.15f, -0.38f);
-        torso.size = new Vector2(0.39f, 0.21f);
+        torso.offset = new Vector2(0.16f, -0.68f);
+        torso.size = new Vector2(0.30f, 0.15f);
         torso.direction = CapsuleDirection2D.Horizontal;
         hitboxColliders[1] = torso;
     }
@@ -59,13 +59,13 @@ public class MalePlayer : DefaultPlayer {
     protected override void SetCollidersWalk(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.01f, 0.10f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(0.01f, -0.28f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(-0.03f, -0.28f);
-        torso.size = new Vector2(0.21f, 0.39f);
+        torso.offset = new Vector2(0.02f, -0.6f);
+        torso.size = new Vector2(0.15f, 0.30f);
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
@@ -73,13 +73,13 @@ public class MalePlayer : DefaultPlayer {
     protected override void SetCollidersAir(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.05f, 0.09f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(0.05f, -0.28f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(-0.06f, -0.27f);
-        torso.size = new Vector2(0.23f, 0.39f);
+        torso.offset = new Vector2(0.05f, -0.57f);
+        torso.size = new Vector2(0.18f, 0.27f);
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
@@ -87,27 +87,27 @@ public class MalePlayer : DefaultPlayer {
     protected override void SetCollidersStab(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.01f, 0.10f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(-0.13f, -0.34f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(-0.03f, -0.28f);
-        torso.size = new Vector2(0.21f, 0.39f);
-        torso.direction = CapsuleDirection2D.Vertical;
+        torso.offset = new Vector2(0.00f, -0.63f);
+        torso.size = new Vector2(0.26f, 0.24f);
+        torso.direction = CapsuleDirection2D.Horizontal;
         hitboxColliders[1] = torso;
     }
 
     protected override void SetCollidersHitstun(Collider2D[] hitboxColliders)
     {
         CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.05f, 0.09f);
-        head.radius = 0.26f;
+        head.offset = new Vector2(0.05f, -0.28f);
+        head.radius = 0.20f;
         hitboxColliders[0] = head;
 
         CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(-0.06f, -0.27f);
-        torso.size = new Vector2(0.23f, 0.39f);
+        torso.offset = new Vector2(0.05f, -0.57f);
+        torso.size = new Vector2(0.18f, 0.27f);
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
     }
