@@ -392,6 +392,11 @@ Prefab:
       propertyPath: m_FacingRight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
   m_IsPrefabAsset: 0
@@ -461,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599af3ed9ceae48a5b4d6e912b658dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
 --- !u!1 &972859972
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599af3ed9ceae48a5b4d6e912b658dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
 --- !u!1 &1053277951
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,6 +720,11 @@ Prefab:
         type: 2}
       propertyPath: health
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
