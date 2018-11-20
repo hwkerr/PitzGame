@@ -34,14 +34,4 @@ public class Ball : Grabbable {
         m_Rigidbody2D.velocity = Vector2.zero;
         EnableGrabberCollisions(); //Without this, the scorer won't be able to initially touch the ball (unless ball was scored with a rebound)
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // if the ball crosses the goal, then reset
-        // scoring is handled in the goal class
-        if (collision.gameObject.CompareTag("Goal"))
-        {
-            ResetBall();
-        }
-    }
 }

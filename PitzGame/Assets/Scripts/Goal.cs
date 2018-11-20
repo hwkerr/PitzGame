@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Goal: MonoBehaviour {
 
-    private int score; 
+    public enum Side { Left, Right }
+    [SerializeField] public Side side;
+    [SerializeField] private int score;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,16 +18,18 @@ public class Goal: MonoBehaviour {
 		
 	}
 
-    private void OnCollisionExit2D(Collision2D collision)
+    // if the ball goes in the goal, add one to score and reset ball
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // if the ball goes in the goal, add one to score
-        if (collision.gameObject.tag.Equals("Pickup"))  
+        Ball incomingBall = collision.gameObject.GetComponent<Ball>();
+        if (incomingBall != null)
         {
+            incomingBall.ResetBall();
             this.score++;
         }
     }
 
-    public int getScore()
+    public int GetScore()
     {
         return this.score;
     }
