@@ -44,8 +44,8 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
         //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
         //Debug.Log("Future Task: Update to use new sprites");
-        Debug.Log("Current Task: ?");
-        Debug.Log("Current Issue: ?");
+        Debug.Log("Current Task: Better attack system (control everything in DefaultPlayer");
+        Debug.Log("Current Issue: Need to switch to controlling animations manually (so they can be advanced according to attack stats)");
     }
 
     // Update is called once per frame
@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour {
                     SetState(DefaultPlayer.State.Stab);
                     if (attack1 != null)
                         Destroy(attack1);
-                    attack1 = player.AttackBasic();
+                    attack1 = player.SimpleAttack(0);
                     busy = true;
                     duration = 30;
                 }
@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour {
         else if (inHitstun)
         {
             // If it has been enough time since player has been hit
-            if (player.attackRecoveryCounter <= 0)
+            if (player.hitRecoveryCounter <= 0)
             {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;

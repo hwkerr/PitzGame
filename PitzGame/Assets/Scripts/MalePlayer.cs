@@ -25,7 +25,26 @@ public class MalePlayer : DefaultPlayer {
         runSpeed = 40f;
         crouchSpeed = 0f;
         jumpForce = 20f; //15f if double jump, 16f or 17f if only one jump
-        groundedAttackRecovery = 20;
+        groundedHitRecovery = 20;
+    }
+
+    protected override Attack GetAttackStabO1(GameObject AttackObject)
+    {
+        CapsuleCollider2D collider = AttackObject.AddComponent<CapsuleCollider2D>();
+        Vector2 offset = new Vector2(0.96f, -1.04f);
+        collider.size = new Vector2(1.16f, 0.28f);
+        collider.direction = CapsuleDirection2D.Horizontal;
+
+        return new Attack(collider, offset);
+    }
+
+    protected override Attack GetAttack2(GameObject AttackObject)
+    {
+        CircleCollider2D collider = AttackObject.AddComponent<CircleCollider2D>();
+        Vector2 offset = new Vector2(-1f, 0f);
+        collider.radius = 5f;
+
+        return new Attack(collider, offset);
     }
 
     protected override void SetCollidersIdle(Collider2D[] hitboxColliders)
@@ -110,19 +129,5 @@ public class MalePlayer : DefaultPlayer {
         torso.size = new Vector2(0.18f, 0.27f);
         torso.direction = CapsuleDirection2D.Vertical;
         hitboxColliders[1] = torso;
-    }
-
-    public override GameObject AttackBasic()
-    {
-        float dir = -1;
-        if (controller.FacingRight())
-            dir = 1;
-
-        GameObject AttackPrefabClone = Instantiate(AttackPrefab);
-        Collider2D attackBox = AttackPrefabClone.AddComponent<PolygonCollider2D>();
-        attackBox.isTrigger = true;
-        AttackPrefabClone.GetComponent<FollowObject>().Follow(transform, new Vector3(0.7f * dir, 0f));
-        AttackPrefabClone.GetComponent<Damager>().IgnoreObject(gameObject);
-        return AttackPrefabClone;
     }
 }

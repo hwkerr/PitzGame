@@ -26,7 +26,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public float runSpeed,
         crouchSpeed,
         jumpForce;
-    public int groundedAttackRecovery;
+    public int groundedHitRecovery;
 
 
     public enum State
@@ -49,8 +49,13 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     [HideInInspector] public bool isCrouching = false, isJumping = false;
 
+    public Attack.State attackState;
+    public bool attacking = false;
+    public int attackRecoveryCounter;
+    public Attack currentAttack;
+
     [HideInInspector] public bool inHitstun = false;
-    [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
+    [HideInInspector] public int totalHitRecovery, hitRecoveryCounter;
     [HideInInspector] public Damager lastDamager;
 
     // Use this for initialization
@@ -72,10 +77,34 @@ public abstract class DefaultPlayer : MonoBehaviour {
 	void Update () {
         if (inHitstun)
         {
-            //Debug.Log(attackRecoveryCounter);
+            //Debug.Log(hitRecoveryCounter);
+            hitRecoveryCounter--;
+            if (hitRecoveryCounter <= 0)
+                RecoverFromHit();
+        }
+
+        if (attacking && currentAttack != null)
+        {
             attackRecoveryCounter--;
             if (attackRecoveryCounter <= 0)
-                RecoverFromHit();
+            {
+                attackState++;
+                if (attackState == Attack.State.Hit)
+                {
+                    attackRecoveryCounter = currentAttack.hitDuration;
+                    currentAttack.EnableCollider(true);
+                }
+                else if (attackState == Attack.State.Endlag)
+                {
+                    attackRecoveryCounter = currentAttack.endlag;
+                    currentAttack.EnableCollider(false);
+                }
+                else //if (attackState == Attack.State.Startup)
+                {
+                    attacking = false;
+                    currentAttack = null;
+                }
+            }
         }
     }
 
@@ -101,12 +130,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
             if (health < 0) health = 0;
             if (isCrouching)
             {
-                attackRecoveryCounter = totalAttackRecovery = groundedAttackRecovery;
+                hitRecoveryCounter = totalHitRecovery = groundedHitRecovery;
                 m_Rigidbody2D.velocity = new Vector2(knockbackVector.x, 0f);
             }
             else
             {
-                attackRecoveryCounter = totalAttackRecovery = duration;
+                hitRecoveryCounter = totalHitRecovery = duration;
                 if (knockbackVector.x > 0)
                     controller.FaceLeft();
                 else
@@ -119,7 +148,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     public void RecoverFromHit()
     {
-        attackRecoveryCounter = 0;
+        hitRecoveryCounter = 0;
         lastDamager = null;
         inHitstun = false;
     }
@@ -140,7 +169,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @requires inHitstun = true
     public void GroundedRecovery()
     {
-        attackRecoveryCounter = groundedAttackRecovery;
+        hitRecoveryCounter = groundedHitRecovery;
     }
 
     // Tells m_grabber to pick up an item
@@ -207,8 +236,43 @@ public abstract class DefaultPlayer : MonoBehaviour {
         runSpeed = 40f;
         crouchSpeed = 0f;
         jumpForce = 15f;
-        groundedAttackRecovery = 20;
+        groundedHitRecovery = 20;
     }
+
+    // @Ensures this DefaultPlayer has a new Damager object
+    public GameObject SimpleAttack(int attackNum)
+    {
+        float dir = -1;
+        if (controller.FacingRight())
+            dir = 1;
+
+        GameObject AttackPrefabClone = Instantiate(AttackPrefab);
+        Attack theAttack = GetAttackCollider(AttackPrefabClone, attackNum);
+        AttackPrefabClone.GetComponent<Damager>().IgnoreObject(gameObject);
+        Collider2D collider = theAttack.GetCollider();
+        collider.enabled = false;
+        AttackPrefabClone.GetComponent<FollowObject>().Follow(transform, theAttack.GetDirectedOffset(dir));
+
+        currentAttack = theAttack;
+        attacking = true;
+        attackState = Attack.State.Startup;
+        attackRecoveryCounter = theAttack.startup;
+
+        return AttackPrefabClone;
+    }
+
+    protected Attack GetAttackCollider(GameObject AttackObject, int attackNum)
+    {
+        if (attackNum == 0)
+            return GetAttackStabO1(AttackObject);
+        else
+            return GetAttack2(AttackObject);
+    }
+
+    protected abstract Attack GetAttackStabO1(GameObject AttackObject);
+
+    protected abstract Attack GetAttack2(GameObject AttackObject);
+
 
     // @Requires state < State.MaxState;
     // @Ensures The Collider2D objects in myHitboxes[] are modified for the specified state
@@ -251,8 +315,4 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @Ensures Initializes collider values for character state: hitstun
     // @returns SetCollidersIdle = an array consisting of all colliders for the state: hitstun
     protected abstract void SetCollidersHitstun(Collider2D[] hitboxColliders);
-
-
-    // @Ensures this DefaultPlayer has a new Damager object
-    public abstract GameObject AttackBasic();
 }
