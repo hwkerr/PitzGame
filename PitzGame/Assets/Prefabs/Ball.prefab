@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4332590319922438}
   - component: {fileID: 58769870133233580}
-  - component: {fileID: 114220990467716860}
   m_Layer: 11
   m_Name: GrabRadius
   m_TagString: Grabbable
@@ -123,20 +122,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
---- !u!114 &114220990467716860
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1258364009022136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a8c3a70dc772d4ea91215f76b0ace5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0}
-  following: {fileID: 4153933455001928}
+  m_Radius: 2
 --- !u!114 &114913344817097458
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -98,7 +98,7 @@ public class Grabbable : MonoBehaviour
 
         // Begin following newGrabber
         followScript.following = attachedToGrabber.transform;
-        followScript.offset = new Vector2(0f, -0.5f);
+        followScript.offset = new Vector2(0f, 0.5f);
         followScript.enabled = true;
     }
 

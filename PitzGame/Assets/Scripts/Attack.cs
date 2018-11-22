@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour {
+public class Attack : Move {
 
     private Collider2D m_Collider2D;
     private Vector2 offset;
@@ -15,6 +15,15 @@ public class Attack : MonoBehaviour {
         Endlag
     }
     
+    public Attack(Collider2D collider)
+    {
+        collider.isTrigger = true;
+        m_Collider2D = collider;
+        offset = Vector2.zero;
+
+        startup = hitDuration = endlag = 5;
+    }
+
     public Attack(Collider2D collider, Vector2 offset)
     {
         collider.isTrigger = true;
@@ -23,16 +32,6 @@ public class Attack : MonoBehaviour {
 
         startup = hitDuration = endlag = 5;
     }
-    
-    // Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public Collider2D GetCollider()
     {
@@ -52,6 +51,16 @@ public class Attack : MonoBehaviour {
     public int GetTotalDuration()
     {
         return startup + hitDuration + endlag;
+    }
+
+    public int GetFrame(State state)
+    {
+        if (state == State.Startup)
+            return startup;
+        else if (state == State.Hit)
+            return startup + hitDuration;
+        else //if (state == State.Endlag)
+            return startup + hitDuration + endlag;
     }
 
     // @param decision = whether to enable or disable the collider

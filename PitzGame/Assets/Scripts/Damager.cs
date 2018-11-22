@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Damager : MonoBehaviour {
 
-    Collider2D myHurtbox;
+    Collider2D myHurtbox; //@requires myHurtbox.isTrigger = true
 
     public float knockback;
     public float m_Angle;
+    public float damage;
     public int duration;
-    public GameObject ignoreObject;
+    private GameObject ignoreObject;
 
     private float force_x,
         force_y;
     
     // Use this for initialization
 	void Start () {
-        transform.position = new Vector2(-1000f, -1000f);
         myHurtbox = gameObject.GetComponent<Collider2D>();
         
         force_x = knockback * Mathf.Cos(m_Angle * Mathf.Deg2Rad);
@@ -45,12 +45,17 @@ public class Damager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Collider2D[] colliders = ignoreObject.GetComponentsInChildren<Collider2D>();
+        bool isIgnoredObject = false;
+        for (int i = 0; i < colliders.Length; i++)
+            if (collision == colliders[i])
+                isIgnoredObject = true;
         GameObject incoming = collision.gameObject;
-        if (incoming != ignoreObject)
+        if (!isIgnoredObject)
         {
             DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
             if (incomingPlayer != null)
-                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), 10f, duration);
+                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), damage, duration);
             else
             {
                 Grabbable grabbable = incoming.GetComponent<Grabbable>();

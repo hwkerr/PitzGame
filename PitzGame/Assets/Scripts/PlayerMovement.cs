@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public CharacterController2D controller;
-    public Animator animator;
     public DefaultPlayer player;
     
     protected SpriteRenderer spriteRenderer; // For different colliders on each frame of an animation
+    private AnimationController anim;
 
     public float runSpeed;
     private float horizontalMove = 0f;
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
         jump = false,
         crouch = false;
     protected float speed = 0;
-    protected int duration;
+    protected int minDuration;
 
     private bool debug;
 
@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: Update to use new sprites");
         Debug.Log("Current Task: Better attack system (control everything in DefaultPlayer");
         Debug.Log("Current Issue: Need to switch to controlling animations manually (so they can be advanced according to attack stats)");
+        Debug.Log("Current Issue: The player has child objects for Head and Torso (each with a transform and collider)");
     }
 
     // Update is called once per frame
@@ -87,8 +88,6 @@ public class PlayerMovement : MonoBehaviour {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
 
-            animator.SetFloat("Speed", speed);
-
             DefaultPlayer.State myState = player.GetState();
 
             if (Input.GetButtonDown(player.BTTN_JUMP))
@@ -127,11 +126,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (Input.GetButtonDown(player.BTTN_FIRE1))
                 {
                     SetState(DefaultPlayer.State.Stab);
-                    if (attack1 != null)
-                        Destroy(attack1);
-                    attack1 = player.SimpleAttack(0);
+                    //if (attack1 != null)
+                    //    Destroy(attack1);
+                    //attack1 = player.SimpleAttack(0);
                     busy = true;
-                    duration = 30;
+                    minDuration = player.GetStateDuration(DefaultPlayer.State.Stab);
+                    Debug.Log("min duration: " + minDuration);
                 }
             }
 
@@ -154,9 +154,9 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (busy)
         {
-            Debug.Log(duration);
-            duration--;
-            if (duration <= 0)
+            //Debug.Log(minDuration);
+            minDuration--;
+            if (minDuration <= 0)
             {
                 FinishAttack();
             }
@@ -231,13 +231,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     // @Requires newState < State.MaxState
-    // @Ensures player.currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
+    // @Ensures player.currentState == #newState && currentColliders = colliders[newState]
     protected void SetState(DefaultPlayer.State newState)
     {
         //Debug.Log("PlayerMovement: State = " + newState);
         if (newState < DefaultPlayer.State.MaxState)
         {
-            animator.SetInteger("State", (int)newState);
             player.SetState(newState);
         }
     }
