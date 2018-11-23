@@ -50,7 +50,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     [HideInInspector] public bool isCrouching = false, isJumping = false;
 
-    protected int animKeyframe, animCounter, animWait, minDuration;
+    protected int animKeyframe, animCounter;
 
     public Attack.State attackState;
     public bool attacking = false;
@@ -179,6 +179,11 @@ public abstract class DefaultPlayer : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public void ResetPlayer()
+    {
+        health = 100;
+    }
+
     // @requires inHitstun = true
     public void GroundedRecovery()
     {
@@ -229,7 +234,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
         lastState = currentState;
         if (newState != currentState)
         {
-            animWait = SetSpecificState(newState);
+            SetSpecificState(newState);
             animCounter = 0;
         }
         currentState = newState;
@@ -283,7 +288,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     // @Requires state < State.MaxState;
     // @Ensures The Head, Torso, and Sword objects are modified for the specified state
-    protected int SetSpecificState(State state)
+    protected void SetSpecificState(State state)
     {
         animKeyframe = 0;
         anim.Set((int)state);
@@ -300,14 +305,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
             SetStateStab(frame);
         else if (state == State.Hitstun)
             SetStateHitstun(frame);
-        return anim.GetCurrentDuration();
     }
 
     protected int State_AdvanceSprite()
     {
-        animKeyframe++;
         anim.Advance();
-        int frame = animKeyframe;
+        int frame = anim.GetKeyframe();
         if (currentState == State.Idle)
             SetStateIdle(frame);
         else if (currentState == State.Crouch)

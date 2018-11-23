@@ -131,7 +131,6 @@ public class PlayerMovement : MonoBehaviour {
                     //attack1 = player.SimpleAttack(0);
                     busy = true;
                     minDuration = player.GetStateDuration(DefaultPlayer.State.Stab);
-                    Debug.Log("min duration: " + minDuration);
                 }
             }
 
