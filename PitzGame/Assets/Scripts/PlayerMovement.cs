@@ -44,9 +44,9 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
         //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
         //Debug.Log("Future Task: Update to use new sprites");
-        Debug.Log("Current Task: Better attack system (control everything in DefaultPlayer");
-        Debug.Log("Current Issue: Need to switch to controlling animations manually (so they can be advanced according to attack stats)");
-        Debug.Log("Current Issue: The player has child objects for Head and Torso (each with a transform and collider)");
+        Debug.Log("Current Task: ?");
+        Debug.Log("Current Issue: Player not recovering upon landing from attack");
+        Debug.Log("Current Issue: Player being sent wrong direction if hit too close to hilt (set most attacks to have fixed direction)");
     }
 
     // Update is called once per frame
@@ -87,8 +87,6 @@ public class PlayerMovement : MonoBehaviour {
         {
             horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
             speed = Mathf.Abs(horizontalMove);
-
-            DefaultPlayer.State myState = player.GetState();
 
             if (Input.GetButtonDown(player.BTTN_JUMP))
             {

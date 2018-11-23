@@ -45,15 +45,21 @@ public class Damager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Collider2D[] colliders = ignoreObject.GetComponentsInChildren<Collider2D>();
         bool isIgnoredObject = false;
-        for (int i = 0; i < colliders.Length; i++)
-            if (collision == colliders[i])
-                isIgnoredObject = true;
+        if (ignoreObject != null)
+        {
+            Collider2D[] colliders = ignoreObject.GetComponentsInChildren<Collider2D>();
+            for (int i = 0; i < colliders.Length; i++)
+                if (collision == colliders[i])
+                    isIgnoredObject = true;
+        }
         GameObject incoming = collision.gameObject;
         if (!isIgnoredObject)
         {
             DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
+            if (incomingPlayer == null)
+                incomingPlayer = incoming.GetComponentInParent<DefaultPlayer>();
+            
             if (incomingPlayer != null)
                 incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), damage, duration);
             else

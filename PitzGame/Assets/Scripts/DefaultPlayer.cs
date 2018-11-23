@@ -133,6 +133,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     {
         if (!(inHitstun && damager.Equals(lastDamager)))
         {
+
             ReleaseItem();
             lastDamager = damager;
 
