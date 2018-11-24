@@ -133,15 +133,14 @@ public abstract class DefaultPlayer : MonoBehaviour {
     {
         if (!(inHitstun && damager.Equals(lastDamager)))
         {
-
             ReleaseItem();
             lastDamager = damager;
-
             inHitstun = true;
 
             if (health == 0) DeathSequence();
             health -= damage;
             if (health < 0) health = 0;
+
             if (isCrouching)
             {
                 hitRecoveryCounter = totalHitRecovery = groundedHitRecovery;
@@ -158,6 +157,13 @@ public abstract class DefaultPlayer : MonoBehaviour {
             }
             isJumping = false;
         }
+    }
+
+    // @requires inHitstun = true
+    public void GroundedRecovery()
+    {
+        Debug.Log("DPlayer.GroundedRecovery");
+        hitRecoveryCounter = groundedHitRecovery;
     }
 
     public void RecoverFromHit()
@@ -183,12 +189,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public void ResetPlayer()
     {
         health = 100;
-    }
-
-    // @requires inHitstun = true
-    public void GroundedRecovery()
-    {
-        hitRecoveryCounter = groundedHitRecovery;
     }
 
     // Tells m_grabber to pick up an item

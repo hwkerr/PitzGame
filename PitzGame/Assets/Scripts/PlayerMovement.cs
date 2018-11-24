@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     protected float speed = 0;
     protected int minDuration;
 
-    private bool debug;
+    private bool debug, displayText;
 
     public GameObject attack1;
 
@@ -42,8 +42,7 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
-        //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
-        //Debug.Log("Future Task: Update to use new sprites");
+        //Debug.Log("Future Task: Create ECB for characters (currently when head is hanging on a ledge, player is grounded)");
         Debug.Log("Current Task: ?");
         Debug.Log("Current Issue: Player not recovering upon landing from attack");
         Debug.Log("Current Issue: Player being sent wrong direction if hit too close to hilt (set most attacks to have fixed direction)");
@@ -71,6 +70,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // This is the sequence normally executed during the Update function
     protected void NormalUpdate () {
+        displayText = inHitstun;
 
         if (player.inHitstun && !hitstunFirstLoopComplete)
         {
@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour {
                 hitstunFirstLoopComplete = false;
                 if (!Input.GetButton(player.BTTN_CROUCH))
                     player.isCrouching = crouch = false;
-                FinishAttack();
+                //FinishAttack();
             }
         }
         else if (busy)
@@ -192,8 +192,11 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnLanding()
     {
+        Debug.Log("PlayerMovement.OnLanding");
+        Debug.Log("inHitstun = " + inHitstun);
         if (inHitstun)
         {
+            Debug.Log("PlayerMovement.OnLanding.if(inHitstun)");
             player.GroundedRecovery();
             SetState(DefaultPlayer.State.Idle);
         }
@@ -215,6 +218,10 @@ public class PlayerMovement : MonoBehaviour {
             GUI.Label(new Rect(10, 40, 400, 20), "Press a number key to switch to its corresponding state");
 
             GUI.Label(new Rect(10, 340, 300, 20), "Player 1: WASD+ZX, Player 2: IJKL+M,");
+        }
+        if (displayText)
+        {
+            GUI.Label(new Rect(10, 10, 100, 20), "inHitstun");
         }
     }
 
