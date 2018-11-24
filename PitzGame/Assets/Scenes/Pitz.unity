@@ -395,12 +395,32 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1634298237548798, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114086276104603618, guid: a28ab8a0dde347246a25af15304c540c,
         type: 2}
       propertyPath: m_JumpForce
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.9532672
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}

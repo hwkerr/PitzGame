@@ -36,10 +36,8 @@ public class PlayerMovement : MonoBehaviour {
 
         //Debug.Log("Future Task: Add a hitbox to the ball when (it is thrown / has a certain speed)?");
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
-        //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
-        //Debug.Log("Future Task: Add something to prevent player from entering goal");
-        Debug.Log("Current Task: Create ECB for characters (currently when head is hanging on a ledge, player is grounded)");
+        Debug.Log("Current Task: Create Environmental Collision Box for characters (for interactions with stage)");
         Debug.Log("Current Issue: ?");
     }
 
