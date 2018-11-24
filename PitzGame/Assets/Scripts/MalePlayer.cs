@@ -7,24 +7,13 @@ public class MalePlayer : DefaultPlayer {
     /** @Requires myHitboxes[0] is type CircleCollider2D
      *  @Requires myHitboxes[1] is type CapsuleCollider2D
      */
-    
-    // Use this for initialization
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    /*// Update is called once per frame
-    void Update()
-    {
-        
-    }*/
 
     protected override void Init_StatValues()
     {
-        runSpeed = 40f;
-        crouchSpeed = 0f;
-        jumpForce = 20f; //15f if double jump, 16f or 17f if only one jump
+        m_RunSpeed = 40f;
+        m_CrouchSpeed = 0f;
+        m_JumpForce = 15f; //15f if double jump, 16f or 17f if only one jump
+        m_aerialJumps = 1;
         groundedHitRecovery = 20;
     }
 

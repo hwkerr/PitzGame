@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DefaultPlayer : MonoBehaviour {
+public abstract class DefaultPlayer : CharacterController2D {
 
     public GameObject AttackPrefab;
 
@@ -11,8 +11,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     [SerializeField] protected GameObject m_Sword;
 
     protected AnimationController anim;
-    protected CharacterController2D controller;
-    protected Rigidbody2D m_Rigidbody2D;
     protected Grabber m_grabber;
 
     [HideInInspector]
@@ -23,7 +21,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
         BTTN_INTERACT,
         BTTN_THROW;
 
-    public int playerNum;
+    [Range(1,4)] public int playerNum;
 
     // Character-Specific Stats
     public float runSpeed,
@@ -48,7 +46,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     [Range(0, 100)] public float health = 100;
 
-    [HideInInspector] public bool isCrouching = false, isJumping = false;
+    [HideInInspector] public bool isJumping = false;
 
     protected int animKeyframe, animCounter;
 
@@ -68,7 +66,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
         anim = gameObject.GetComponent<AnimationController>();
-        m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_grabber = GetComponentInChildren<Grabber>();
 
         m_Sword.GetComponent<Damager>().IgnoreObject(gameObject);
@@ -141,7 +138,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
             health -= damage;
             if (health < 0) health = 0;
 
-            if (isCrouching)
+            if (m_Grounded)
             {
                 hitRecoveryCounter = totalHitRecovery = groundedHitRecovery;
                 m_Rigidbody2D.velocity = new Vector2(knockbackVector.x, 0f);
@@ -150,9 +147,9 @@ public abstract class DefaultPlayer : MonoBehaviour {
             {
                 hitRecoveryCounter = totalHitRecovery = duration;
                 if (knockbackVector.x > 0)
-                    controller.FaceLeft();
+                    FaceLeft();
                 else
-                    controller.FaceRight();
+                    FaceRight();
                 m_Rigidbody2D.velocity = knockbackVector;
             }
             isJumping = false;
@@ -162,7 +159,6 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @requires inHitstun = true
     public void GroundedRecovery()
     {
-        Debug.Log("DPlayer.GroundedRecovery");
         hitRecoveryCounter = groundedHitRecovery;
     }
 
@@ -208,18 +204,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public void ThrowItem(float force_x, float force_y)
     {
         float dir = -1;
-        if (controller.FacingRight())
+        if (m_FacingRight)
             dir = 1;
         force_x = force_x * dir + m_Rigidbody2D.velocity.x;
         if (m_Rigidbody2D.velocity.y > 0)
             force_y += m_Rigidbody2D.velocity.y / 2;
         m_grabber.ThrowItem(force_x, force_y);
-    }
-    
-    // Sets the controller so that this class can control parameters like speed, jumpForce, etc.
-    public void SetController(CharacterController2D acontroller)
-    {
-        controller = acontroller;
     }
 
     // @returns GetState = currentState
@@ -263,7 +253,7 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public GameObject SpecialAttack(int attackNum)
     {
         float dir = -1;
-        if (controller.FacingRight())
+        if (m_FacingRight)
             dir = 1;
 
         GameObject AttackPrefabClone = Instantiate(AttackPrefab);
@@ -355,4 +345,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
     // @Ensures Initializes collider values for character state: hitstun
     // @returns SetStateIdle = duration of the specified keyframe
     protected abstract void SetStateHitstun(int keyframe);
+
+    public void OnGUI()
+    {
+        if (true)
+        {
+            GUI.Label(new Rect(250 + 25 * transform.position.x, 155 + -25 * transform.position.y, 100, 20), (int)health + "HP");
+        }
+    }
 }

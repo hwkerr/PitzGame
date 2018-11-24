@@ -238,11 +238,6 @@ Prefab:
       propertyPath: m_Name
       value: Goal (Right)
       objectReference: {fileID: 0}
-    - target: {fileID: 114400956597716874, guid: 05df7e79894155745ac41949d7d7e28e,
-        type: 2}
-      propertyPath: side
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
   m_IsPrefabAsset: 0
@@ -398,14 +393,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114086276104603618, guid: a28ab8a0dde347246a25af15304c540c,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1634298237548798, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086276104603618, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_JumpForce
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
@@ -546,6 +541,7 @@ GameObject:
   - component: {fileID: 1870758644}
   - component: {fileID: 1870758643}
   - component: {fileID: 1870758642}
+  - component: {fileID: 1870758645}
   - component: {fileID: 1870758641}
   m_Layer: 12
   m_Name: Tilemap
@@ -567,8 +563,8 @@ Transform:
   m_Father: {fileID: 1252013301}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &1870758641
-PolygonCollider2D:
+--- !u!61 &1870758641
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -579,7 +575,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -4.9997387}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -589,27 +585,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 12.1842, y: 15.028007}
-      - {x: 8.969975, y: 15.015441}
-      - {x: 8.968801, y: 4.973819}
-      - {x: 10.961075, y: 4.9676285}
-      - {x: 11.008485, y: 2.0074759}
-      - {x: 9.014113, y: 2.0091665}
-      - {x: 9.011974, y: -4.0284824}
-      - {x: -9.020153, y: -4.0122504}
-      - {x: -9.02871, y: 2.0230346}
-      - {x: -10.987398, y: 1.966665}
-      - {x: -11.005133, y: 5.0148945}
-      - {x: -8.967071, y: 5.0069723}
-      - {x: -9.000816, y: 4.987808}
-      - {x: -8.97916, y: 15.03108}
-      - {x: -13.068647, y: 15.026274}
-      - {x: -13.121679, y: -5.155212}
-      - {x: 3.919127, y: -5.1462116}
-      - {x: 11.126022, y: -5.1018696}
-      - {x: 12.133777, y: -5.100476}
+  serializedVersion: 2
+  m_Size: {x: 26, y: 1.990139}
+  m_EdgeRadius: 0
 --- !u!50 &1870758642
 Rigidbody2D:
   serializedVersion: 4
@@ -2277,6 +2255,46 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!60 &1870758645
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1870758639}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 13db42594c3182e4a979ed33afae8cd2, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 8.992475, y: 17.17754}
+      - {x: 8.984747, y: 4.9780674}
+      - {x: 10.96285, y: 4.999749}
+      - {x: 10.976281, y: 2.0045075}
+      - {x: 8.990064, y: 2.0151267}
+      - {x: 9.069841, y: -9.613958}
+      - {x: -9.022243, y: -9.437805}
+      - {x: -9.017649, y: 1.9964575}
+      - {x: -10.991961, y: 2.0059247}
+      - {x: -10.986928, y: 5.008916}
+      - {x: -8.983674, y: 4.9903545}
+      - {x: -9.019505, y: 17.797585}
+      - {x: -13.058892, y: 17.808771}
+      - {x: -13.09436, y: -11.129062}
+      - {x: 12.080741, y: -10.652157}
+      - {x: 12.066458, y: 17.170809}
 --- !u!213 &1993468885
 Sprite:
   m_ObjectHideFlags: 0
@@ -2527,6 +2545,11 @@ Prefab:
       propertyPath: m_Name
       value: Goal (Left)
       objectReference: {fileID: 0}
+    - target: {fileID: 1491876610208622, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000,
+        type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
   m_IsPrefabAsset: 0

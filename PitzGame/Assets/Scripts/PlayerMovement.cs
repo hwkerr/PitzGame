@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public CharacterController2D controller;
     public DefaultPlayer player;
     
     protected SpriteRenderer spriteRenderer; // For different colliders on each frame of an animation
@@ -31,10 +30,7 @@ public class PlayerMovement : MonoBehaviour {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         //player.Init_AllColliders();
-        runSpeed = player.runSpeed;
         debug = false;
-
-        player.SetController(controller);
 
         //Debug.Log("Bug: When hit from one Damager to another, player is first in State.hitstun but on second hit is in State.Idle");
 
@@ -42,10 +38,9 @@ public class PlayerMovement : MonoBehaviour {
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
         //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
-        //Debug.Log("Future Task: Create ECB for characters (currently when head is hanging on a ledge, player is grounded)");
-        Debug.Log("Current Task: ?");
-        Debug.Log("Current Issue: Player not recovering upon landing from attack");
-        Debug.Log("Current Issue: Player being sent wrong direction if hit too close to hilt (set most attacks to have fixed direction)");
+        //Debug.Log("Future Task: Add something to prevent player from entering goal");
+        Debug.Log("Current Task: Create ECB for characters (currently when head is hanging on a ledge, player is grounded)");
+        Debug.Log("Current Issue: ?");
     }
 
     // Update is called once per frame
@@ -85,7 +80,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (!inHitstun && !busy)
         {
-            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
+            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL);
             speed = Mathf.Abs(horizontalMove);
 
             if (Input.GetButtonDown(player.BTTN_JUMP))
@@ -94,20 +89,20 @@ public class PlayerMovement : MonoBehaviour {
                 //SetState(STATE_AIR);
             }
 
-            if (!controller.m_Grounded) //Finds out when the player is aerial
+            if (!player.m_Grounded) //Finds out when the player is aerial
             {
                 SetState(DefaultPlayer.State.Air);
             }
-            else //if (controller.m_Grounded)
+            else //if (player.m_Grounded)
             {
                 if (Input.GetButtonDown(player.BTTN_CROUCH))
                 {
-                    player.isCrouching = crouch = true;
+                    crouch = true;
                     SetState(DefaultPlayer.State.Crouch);
                 }
                 else if (Input.GetButtonUp(player.BTTN_CROUCH))
                 {
-                    player.isCrouching = crouch = false;
+                    crouch = false;
                 }
 
                 if (!crouch)
@@ -145,7 +140,7 @@ public class PlayerMovement : MonoBehaviour {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;
                 if (!Input.GetButton(player.BTTN_CROUCH))
-                    player.isCrouching = crouch = false;
+                    crouch = false;
                 //FinishAttack();
             }
         }
@@ -192,11 +187,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnLanding()
     {
-        Debug.Log("PlayerMovement.OnLanding");
-        Debug.Log("inHitstun = " + inHitstun);
+        //Debug.Log("PlayerMovement.OnLanding");
+        //Debug.Log("inHitstun = " + inHitstun);
         if (inHitstun)
         {
-            Debug.Log("PlayerMovement.OnLanding.if(inHitstun)");
             player.GroundedRecovery();
             SetState(DefaultPlayer.State.Idle);
         }
@@ -229,7 +223,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (!busy && !inHitstun)
         {
-            controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+            player.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
             jump = false;
         }
     }

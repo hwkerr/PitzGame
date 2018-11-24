@@ -53,7 +53,6 @@ GameObject:
   - component: {fileID: 212342326368770358}
   - component: {fileID: 50764594721995922}
   - component: {fileID: 114480473737879486}
-  - component: {fileID: 114666363781883610}
   - component: {fileID: 114086276104603618}
   - component: {fileID: 114489488369564168}
   m_Layer: 9
@@ -174,7 +173,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1634298237548798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9, y: -0.54542315, z: 0}
+  m_LocalPosition: {x: -7.87, y: -0.54542315, z: 0}
   m_LocalScale: {x: -2, y: 2, z: 1}
   m_Children:
   - {fileID: 4001469397654268}
@@ -320,6 +319,7 @@ MonoBehaviour:
   m_Angle: 15
   damage: 5
   duration: 100
+  usesRelativeDirection: 0
 --- !u!114 &114086276104603618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,6 +331,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca17d3ae6c3f26e4fba3ac318f605077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_JumpForce: 15
+  m_CrouchSpeed: 0
+  m_RunSpeed: 40
+  m_aerialJumps: 1
+  m_MovementSmoothing: 0.05
+  m_AirControl: 1
+  m_AerialTurning: 1
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 4112
+  m_GroundCheck: {fileID: 4001469397654268}
+  m_CeilingCheck: {fileID: 4786085526846380}
+  m_CrouchDisableCollider: {fileID: 0}
+  m_Grounded: 0
+  m_FacingRight: 1
+  OnLandEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114480473737879486}
+        m_MethodName: OnLanding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnCrouchEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CharacterController2D+BoolEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   AttackPrefab: {fileID: 1828303575979932, guid: f2a38393300197c45ab6ccff7678dd8b,
     type: 2}
   m_Head: {fileID: 1504043357419562}
@@ -350,7 +386,6 @@ MonoBehaviour:
   currentState: 0
   lastState: 0
   health: 100
-  isCrouching: 0
   isJumping: 0
   attackState: 0
   attacking: 0
@@ -382,7 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5f8b3f813f75b41a3b026d15bfaf64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 114666363781883610}
   player: {fileID: 114086276104603618}
   runSpeed: 40
   attack1: {fileID: 0}
@@ -442,51 +476,6 @@ MonoBehaviour:
     spriteArray:
     - sprite: {fileID: 21300000, guid: 7f1fd8500a770aa4c9e638a8a96c6b05, type: 3}
       duration: 0
---- !u!114 &114666363781883610
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1634298237548798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22746bbf6aa2b27449f732e20a7b0df8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JumpForce: 600
-  m_CrouchSpeed: 0
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_AerialTurning: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 4112
-  m_GroundCheck: {fileID: 4001469397654268}
-  m_CeilingCheck: {fileID: 4786085526846380}
-  m_CrouchDisableCollider: {fileID: 0}
-  m_Grounded: 0
-  m_FacingRight: 1
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114480473737879486}
-        m_MethodName: OnLanding
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnCrouchEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: CharacterController2D+BoolEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!212 &212342326368770358
 SpriteRenderer:
   m_ObjectHideFlags: 1

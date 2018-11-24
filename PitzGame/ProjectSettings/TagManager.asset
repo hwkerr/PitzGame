@@ -33,9 +33,9 @@ TagManager:
   - Enemies
   - Pickups
   - Ground
-  - ThrowingPlayer
-  - Obstacle
   - 
+  - Obstacle
+  - Goal
   - 
   - 
   - 

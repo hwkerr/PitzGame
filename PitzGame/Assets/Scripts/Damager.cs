@@ -6,10 +6,12 @@ public class Damager : MonoBehaviour {
 
     Collider2D myHurtbox; //@requires myHurtbox.isTrigger = true
 
-    public float knockback;
-    public float m_Angle;
-    public float damage;
-    public int duration;
+    public float knockback = 10;
+    public float m_Angle = 45;
+    public float damage = 5;
+    public int duration = 100;
+    public bool usesRelativeDirection = false;
+
     private GameObject ignoreObject;
 
     private float force_x,
@@ -33,13 +35,24 @@ public class Damager : MonoBehaviour {
         ignoreObject = obj;
     }
 
+    // @param obj = the transform of the target (is checked for relative x position)
+    // @param useRelativeDirection = whether to use the relative x position of obj (to knock obj away from the center of this object)
+    // @Ensures GetKnockbackVector is this Damager's knockback vector (in the direction the player is facing)
     public Vector2 GetKnockbackVector(Transform obj)
     {
-        float relative_force_x;
-        if (obj.position.x > transform.position.x) // obj is to the right of this Damager
-            relative_force_x = 1 * force_x;
-        else // obj is to the left of this Damager
-            relative_force_x = -1 * force_x;
+        float relative_force_x = force_x;
+        CharacterController2D player = GetComponentInParent<CharacterController2D>();
+        if (player!= null && !player.FacingRight())
+        {
+            relative_force_x *= -1;
+        }
+
+        if (usesRelativeDirection)
+        {
+            if (obj.position.x < transform.position.x) // obj is to the left of this Damager
+                relative_force_x *= -1;
+        }
+
         return new Vector2(relative_force_x, force_y);
     }
 
