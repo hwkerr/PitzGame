@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DefaultPlayer : MonoBehaviour {
+public abstract class DefaultPlayer : CharacterController2D {
 
     public GameObject AttackPrefab;
 
-    protected CharacterController2D controller;
-    protected Rigidbody2D m_Rigidbody2D;
-    protected Grabber m_grabber;
+    [SerializeField] protected GameObject m_Head;
+    [SerializeField] protected GameObject m_Torso;
+    [SerializeField] protected GameObject m_Sword;
 
-    protected Dictionary<State, Collider2D[]> animColliders;
+    protected AnimationController anim;
+    protected Grabber m_grabber;
 
     [HideInInspector]
     public string BTTN_HORIZONTAL,
@@ -20,13 +21,13 @@ public abstract class DefaultPlayer : MonoBehaviour {
         BTTN_INTERACT,
         BTTN_THROW;
 
-    public int playerNum;
+    [Range(1,4)] public int playerNum;
 
     // Character-Specific Stats
     public float runSpeed,
         crouchSpeed,
         jumpForce;
-    public int groundedAttackRecovery;
+    public int groundedHitRecovery;
 
 
     public enum State
@@ -45,12 +46,16 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
     [Range(0, 100)] public float health = 100;
 
-    [SerializeField] private Collider2D[] myHitboxes;
+    [HideInInspector] public bool isJumping = false;
 
-    [HideInInspector] public bool isCrouching = false, isJumping = false;
+    protected int animKeyframe, animCounter;
+
+    public Attack.State attackState;
+    public bool attacking = false;
+    public Attack currentAttack;
 
     [HideInInspector] public bool inHitstun = false;
-    [HideInInspector] public int totalAttackRecovery, attackRecoveryCounter;
+    [HideInInspector] public int totalHitRecovery, hitRecoveryCounter;
     [HideInInspector] public Damager lastDamager;
 
     // Use this for initialization
@@ -60,8 +65,10 @@ public abstract class DefaultPlayer : MonoBehaviour {
 
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
-        m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<AnimationController>();
         m_grabber = GetComponentInChildren<Grabber>();
+
+        m_Sword.GetComponent<Damager>().IgnoreObject(gameObject);
 
         //Init_AllColliders();
         Init_Buttons(playerNum);
@@ -70,13 +77,44 @@ public abstract class DefaultPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (animCounter == anim.GetCurrentDuration())
+        {
+            State_AdvanceSprite();
+            animCounter = 0;
+        }
+        animCounter++;
+
+
         if (inHitstun)
         {
-            //Debug.Log(attackRecoveryCounter);
-            attackRecoveryCounter--;
-            if (attackRecoveryCounter <= 0)
+            //Debug.Log(hitRecoveryCounter);
+            hitRecoveryCounter--;
+            if (hitRecoveryCounter <= 0)
                 RecoverFromHit();
         }
+
+        /*if (attacking && currentAttack != null)
+        {
+            
+            //attackState++;
+            anim.Advance();
+            if (animCounter == currentAttack.GetFrame(Attack.State.Hit))//attackState == Attack.State.Hit)
+            {
+                currentAttack.EnableCollider(true);
+                anim.Advance();
+            }
+            else if (animCounter == currentAttack.GetFrame(Attack.State.Hit))//attackState == Attack.State.Endlag)
+            {
+                currentAttack.EnableCollider(false);
+                anim.Advance();
+            }
+            else if (animCounter == currentAttack.GetFrame(Attack.State.Hit))//if (attackState == Attack.State.Startup)
+            {
+                attacking = false;
+                currentAttack = null;
+            }
+        }*/
     }
 
     // @returns An integer value corresponding to the player's current health
@@ -92,34 +130,41 @@ public abstract class DefaultPlayer : MonoBehaviour {
     {
         if (!(inHitstun && damager.Equals(lastDamager)))
         {
+            ReleaseItem();
             lastDamager = damager;
-
             inHitstun = true;
 
             if (health == 0) DeathSequence();
             health -= damage;
             if (health < 0) health = 0;
-            if (isCrouching)
+
+            if (m_Grounded)
             {
-                attackRecoveryCounter = totalAttackRecovery = groundedAttackRecovery;
+                hitRecoveryCounter = totalHitRecovery = groundedHitRecovery;
                 m_Rigidbody2D.velocity = new Vector2(knockbackVector.x, 0f);
             }
             else
             {
-                attackRecoveryCounter = totalAttackRecovery = duration;
+                hitRecoveryCounter = totalHitRecovery = duration;
                 if (knockbackVector.x > 0)
-                    controller.FaceLeft();
+                    FaceLeft();
                 else
-                    controller.FaceRight();
+                    FaceRight();
                 m_Rigidbody2D.velocity = knockbackVector;
             }
             isJumping = false;
         }
     }
 
+    // @requires inHitstun = true
+    public void GroundedRecovery()
+    {
+        hitRecoveryCounter = groundedHitRecovery;
+    }
+
     public void RecoverFromHit()
     {
-        attackRecoveryCounter = 0;
+        hitRecoveryCounter = 0;
         lastDamager = null;
         inHitstun = false;
     }
@@ -137,10 +182,9 @@ public abstract class DefaultPlayer : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    // @requires inHitstun = true
-    public void GroundedRecovery()
+    public void ResetPlayer()
     {
-        attackRecoveryCounter = groundedAttackRecovery;
+        health = 100;
     }
 
     // Tells m_grabber to pick up an item
@@ -160,18 +204,12 @@ public abstract class DefaultPlayer : MonoBehaviour {
     public void ThrowItem(float force_x, float force_y)
     {
         float dir = -1;
-        if (controller.FacingRight())
+        if (m_FacingRight)
             dir = 1;
         force_x = force_x * dir + m_Rigidbody2D.velocity.x;
         if (m_Rigidbody2D.velocity.y > 0)
             force_y += m_Rigidbody2D.velocity.y / 2;
         m_grabber.ThrowItem(force_x, force_y);
-    }
-    
-    // Sets the controller so that this class can control parameters like speed, jumpForce, etc.
-    public void SetController(CharacterController2D acontroller)
-    {
-        controller = acontroller;
     }
 
     // @returns GetState = currentState
@@ -187,7 +225,8 @@ public abstract class DefaultPlayer : MonoBehaviour {
         lastState = currentState;
         if (newState != currentState)
         {
-            SetStateColliders(newState);
+            SetSpecificState(newState);
+            animCounter = 0;
         }
         currentState = newState;
     }
@@ -207,52 +246,111 @@ public abstract class DefaultPlayer : MonoBehaviour {
         runSpeed = 40f;
         crouchSpeed = 0f;
         jumpForce = 15f;
-        groundedAttackRecovery = 20;
+        groundedHitRecovery = 20;
     }
 
-    // @Requires state < State.MaxState;
-    // @Ensures The Collider2D objects in myHitboxes[] are modified for the specified state
-    protected void SetStateColliders(State state)
+    // @Ensures this DefaultPlayer has a new Damager object
+    public GameObject SpecialAttack(int attackNum)
     {
+        float dir = -1;
+        if (m_FacingRight)
+            dir = 1;
+
+        GameObject AttackPrefabClone = Instantiate(AttackPrefab);
+        Attack theAttack = GetAttackCollider(AttackPrefabClone, attackNum);
+        AttackPrefabClone.GetComponent<Damager>().IgnoreObject(gameObject);
+        Collider2D collider = theAttack.GetCollider();
+        collider.enabled = false;
+        AttackPrefabClone.GetComponent<FollowObject>().Follow(transform, theAttack.GetDirectedOffset(dir));
+
+        currentAttack = theAttack;
+        attacking = true;
+        attackState = Attack.State.Startup;
+
+        return AttackPrefabClone;
+    }
+
+    protected Attack GetAttackCollider(GameObject AttackObject, int attackNum)
+    {
+        return GetAttackStabO1(AttackObject);
+    }
+
+    protected abstract Attack GetAttackStabO1(GameObject AttackObject);
+
+    // @Requires state < State.MaxState;
+    // @Ensures The Head, Torso, and Sword objects are modified for the specified state
+    protected void SetSpecificState(State state)
+    {
+        animKeyframe = 0;
+        anim.Set((int)state);
+        int frame = 0;
         if (state == State.Idle)
-            SetCollidersIdle(myHitboxes);
+            SetStateIdle(frame);
         else if (state == State.Crouch)
-            SetCollidersCrouch(myHitboxes);
+            SetStateCrouch(frame);
         else if (state == State.Walk)
-            SetCollidersWalk(myHitboxes);
+            SetStateWalk(frame);
         else if (state == State.Air)
-            SetCollidersAir(myHitboxes);
+            SetStateAir(frame);
         else if (state == State.Stab)
-            SetCollidersStab(myHitboxes);
+            SetStateStab(frame);
         else if (state == State.Hitstun)
-            SetCollidersHitstun(myHitboxes);
+            SetStateHitstun(frame);
+    }
+
+    protected int State_AdvanceSprite()
+    {
+        anim.Advance();
+        int frame = anim.GetKeyframe();
+        if (currentState == State.Idle)
+            SetStateIdle(frame);
+        else if (currentState == State.Crouch)
+            SetStateCrouch(frame);
+        else if (currentState == State.Walk)
+            SetStateWalk(frame);
+        else if (currentState == State.Air)
+            SetStateAir(frame);
+        else if (currentState == State.Stab)
+            SetStateStab(frame);
+        else if (currentState == State.Hitstun)
+            SetStateHitstun(frame);
+        return anim.GetCurrentDuration();
+    }
+
+    public int GetStateDuration(State state)
+    {
+        return anim.GetStateDuration((int)state);
     }
 
     // @Ensures Initializes collider values for character state: idle
-    // @returns SetCollidersIdle = an array consisting of all colliders for the state: idle
-    protected abstract void SetCollidersIdle(Collider2D[] hitboxColliders);
+    // @returns SetStateIdle = duration of the specified keyframe
+    protected abstract void SetStateIdle(int keyframe);
 
     // @Ensures Initializes collider values for character state: crouch
-    // @returns SetCollidersCrouch = an array consisting of all colliders for the state: crouch
-    protected abstract void SetCollidersCrouch(Collider2D[] hitboxColliders);
+    // @returns SetStateCrouch = duration of the specified keyframe
+    protected abstract void SetStateCrouch(int keyframe);
 
     // @Ensures Initializes collider values for character state: walk
-    // @returns SetCollidersWalk = an array consisting of all colliders for the state: walk
-    protected abstract void SetCollidersWalk(Collider2D[] hitboxColliders);
+    // @returns SetStateWalk = duration of the specified keyframe
+    protected abstract void SetStateWalk(int keyframe);
 
     // @Ensures Initializes collider values for character state: air
-    // @returns SetCollidersAir = an array consisting of all colliders for the state: air
-    protected abstract void SetCollidersAir(Collider2D[] hitboxColliders);
+    // @returns SetStateAir = duration of the specified keyframe
+    protected abstract void SetStateAir(int keyframe);
 
     // @Ensures Initializes collider values for character state: stab
-    // @returns SetCollidersStab = an array consisting of all colliders for the state: stab
-    protected abstract void SetCollidersStab(Collider2D[] hitboxColliders);
+    // @returns SetStateStab = duration of the specified keyframe
+    protected abstract void SetStateStab(int keyframe);
 
     // @Ensures Initializes collider values for character state: hitstun
-    // @returns SetCollidersIdle = an array consisting of all colliders for the state: hitstun
-    protected abstract void SetCollidersHitstun(Collider2D[] hitboxColliders);
+    // @returns SetStateIdle = duration of the specified keyframe
+    protected abstract void SetStateHitstun(int keyframe);
 
-
-    // @Ensures this DefaultPlayer has a new Damager object
-    public abstract GameObject AttackBasic();
+    public void OnGUI()
+    {
+        if (true)
+        {
+            GUI.Label(new Rect(250 + 25 * transform.position.x, 155 + -25 * transform.position.y, 100, 20), (int)health + "HP");
+        }
+    }
 }

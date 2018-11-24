@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public CharacterController2D controller;
-    public Animator animator;
     public DefaultPlayer player;
     
     protected SpriteRenderer spriteRenderer; // For different colliders on each frame of an animation
+    private AnimationController anim;
 
     public float runSpeed;
     private float horizontalMove = 0f;
@@ -19,9 +18,9 @@ public class PlayerMovement : MonoBehaviour {
         jump = false,
         crouch = false;
     protected float speed = 0;
-    protected int duration;
+    protected int minDuration;
 
-    private bool debug;
+    private bool debug, displayText;
 
     public GameObject attack1;
 
@@ -31,20 +30,14 @@ public class PlayerMovement : MonoBehaviour {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         //player.Init_AllColliders();
-        runSpeed = player.runSpeed;
         debug = false;
-
-        player.SetController(controller);
 
         //Debug.Log("Bug: When hit from one Damager to another, player is first in State.hitstun but on second hit is in State.Idle");
 
         //Debug.Log("Future Task: Add a hitbox to the ball when (it is thrown / has a certain speed)?");
         //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
-        //Debug.Log("Future Task: Combine DefaultPlayer and CharacterController2D classes");
         //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
-        //Debug.Log("Future Task: Control attack timer in DefaultPlayer or MalePlayer (not in PlayerMovement)");
-        //Debug.Log("Future Task: Update to use new sprites");
-        Debug.Log("Current Task: ?");
+        Debug.Log("Current Task: Create Environmental Collision Box for characters (for interactions with stage)");
         Debug.Log("Current Issue: ?");
     }
 
@@ -70,6 +63,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // This is the sequence normally executed during the Update function
     protected void NormalUpdate () {
+        displayText = inHitstun;
 
         if (player.inHitstun && !hitstunFirstLoopComplete)
         {
@@ -84,12 +78,8 @@ public class PlayerMovement : MonoBehaviour {
 
         if (!inHitstun && !busy)
         {
-            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL) * runSpeed;
+            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL);
             speed = Mathf.Abs(horizontalMove);
-
-            animator.SetFloat("Speed", speed);
-
-            DefaultPlayer.State myState = player.GetState();
 
             if (Input.GetButtonDown(player.BTTN_JUMP))
             {
@@ -97,20 +87,20 @@ public class PlayerMovement : MonoBehaviour {
                 //SetState(STATE_AIR);
             }
 
-            if (!controller.m_Grounded) //Finds out when the player is aerial
+            if (!player.m_Grounded) //Finds out when the player is aerial
             {
                 SetState(DefaultPlayer.State.Air);
             }
-            else //if (controller.m_Grounded)
+            else //if (player.m_Grounded)
             {
                 if (Input.GetButtonDown(player.BTTN_CROUCH))
                 {
-                    player.isCrouching = crouch = true;
+                    crouch = true;
                     SetState(DefaultPlayer.State.Crouch);
                 }
                 else if (Input.GetButtonUp(player.BTTN_CROUCH))
                 {
-                    player.isCrouching = crouch = false;
+                    crouch = false;
                 }
 
                 if (!crouch)
@@ -127,11 +117,11 @@ public class PlayerMovement : MonoBehaviour {
                 if (Input.GetButtonDown(player.BTTN_FIRE1))
                 {
                     SetState(DefaultPlayer.State.Stab);
-                    if (attack1 != null)
-                        Destroy(attack1);
-                    attack1 = player.AttackBasic();
+                    //if (attack1 != null)
+                    //    Destroy(attack1);
+                    //attack1 = player.SimpleAttack(0);
                     busy = true;
-                    duration = 30;
+                    minDuration = player.GetStateDuration(DefaultPlayer.State.Stab);
                 }
             }
 
@@ -143,20 +133,20 @@ public class PlayerMovement : MonoBehaviour {
         else if (inHitstun)
         {
             // If it has been enough time since player has been hit
-            if (player.attackRecoveryCounter <= 0)
+            if (player.hitRecoveryCounter <= 0)
             {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;
                 if (!Input.GetButton(player.BTTN_CROUCH))
-                    player.isCrouching = crouch = false;
-                FinishAttack();
+                    crouch = false;
+                //FinishAttack();
             }
         }
         else if (busy)
         {
-            Debug.Log(duration);
-            duration--;
-            if (duration <= 0)
+            //Debug.Log(minDuration);
+            minDuration--;
+            if (minDuration <= 0)
             {
                 FinishAttack();
             }
@@ -195,6 +185,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnLanding()
     {
+        //Debug.Log("PlayerMovement.OnLanding");
+        //Debug.Log("inHitstun = " + inHitstun);
         if (inHitstun)
         {
             player.GroundedRecovery();
@@ -219,25 +211,28 @@ public class PlayerMovement : MonoBehaviour {
 
             GUI.Label(new Rect(10, 340, 300, 20), "Player 1: WASD+ZX, Player 2: IJKL+M,");
         }
+        if (displayText)
+        {
+            GUI.Label(new Rect(10, 10, 100, 20), "inHitstun");
+        }
     }
 
     void FixedUpdate()
     {
         if (!busy && !inHitstun)
         {
-            controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+            player.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
             jump = false;
         }
     }
 
     // @Requires newState < State.MaxState
-    // @Ensures player.currentState == #newState && animator.State == #newstate && currentColliders = colliders[newState]
+    // @Ensures player.currentState == #newState && currentColliders = colliders[newState]
     protected void SetState(DefaultPlayer.State newState)
     {
         //Debug.Log("PlayerMovement: State = " + newState);
         if (newState < DefaultPlayer.State.MaxState)
         {
-            animator.SetInteger("State", (int)newState);
             player.SetState(newState);
         }
     }

@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
-    [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
+    [SerializeField] protected float m_JumpForce = 15f;                          // Amount of force added when the player jumps.
+    [Range(0, 1)] [SerializeField] protected float m_CrouchSpeed = 0f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
+    [SerializeField] protected float m_RunSpeed = 40f;                          // Speed to use for movement
+    [SerializeField] protected int m_aerialJumps = 1;                           // Number of jumps available once in the air
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
-    [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
-    [SerializeField] private bool m_AerialTurning = true;                      // Whether or not a player can steer while jumping;
+    [SerializeField] protected bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
+    [SerializeField] protected bool m_AerialTurning = true;                      // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
@@ -17,9 +19,9 @@ public class CharacterController2D : MonoBehaviour
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     public bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
-    private Rigidbody2D m_Rigidbody2D;
-    [SerializeField] private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-    private Vector3 m_Velocity = Vector3.zero;
+    protected Rigidbody2D m_Rigidbody2D;
+    [SerializeField] protected bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    protected Vector3 m_Velocity = Vector3.zero;
 
     [Header("Events")]
     [Space]
@@ -30,15 +32,13 @@ public class CharacterController2D : MonoBehaviour
     public class BoolEvent : UnityEvent<bool> { }
 
     public BoolEvent OnCrouchEvent;
-    private bool m_wasCrouching = false;
-
-    private DefaultPlayer player;
+    protected bool m_isCrouching = false;
+    protected bool m_wasCrouching = false;
+    protected int m_aerialJumpsRemaining;
 
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
-        player = GetComponent<DefaultPlayer>();
 
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
@@ -49,9 +49,6 @@ public class CharacterController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_JumpForce = player.jumpForce;
-        m_CrouchSpeed = player.crouchSpeed;
-
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
 
@@ -72,6 +69,8 @@ public class CharacterController2D : MonoBehaviour
 
     public void Move(float move, bool crouch, bool jump)
     {
+        move *= m_RunSpeed;
+        m_isCrouching = crouch;
         // If crouching, check to see if the character can stand up
         if (!crouch)
         {
@@ -142,6 +141,15 @@ public class CharacterController2D : MonoBehaviour
             // Add a vertical force to the player.
             m_Grounded = false;
             m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce);
+            m_aerialJumpsRemaining = m_aerialJumps;
+        }
+        else if (!m_Grounded && jump)
+        {
+            if (m_aerialJumpsRemaining > 0)
+            {
+                m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce * 0.9f);
+                m_aerialJumpsRemaining--;
+            }
         }
     }
 

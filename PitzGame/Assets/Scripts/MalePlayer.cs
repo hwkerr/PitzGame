@@ -7,122 +7,187 @@ public class MalePlayer : DefaultPlayer {
     /** @Requires myHitboxes[0] is type CircleCollider2D
      *  @Requires myHitboxes[1] is type CapsuleCollider2D
      */
-    
-    // Use this for initialization
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    /*// Update is called once per frame
-    void Update()
-    {
-        
-    }*/
 
     protected override void Init_StatValues()
     {
-        runSpeed = 40f;
-        crouchSpeed = 0f;
-        jumpForce = 20f; //15f if double jump, 16f or 17f if only one jump
-        groundedAttackRecovery = 20;
+        m_RunSpeed = 40f;
+        m_CrouchSpeed = 0f;
+        m_JumpForce = 15f; //15f if double jump, 16f or 17f if only one jump
+        m_aerialJumps = 1;
+        groundedHitRecovery = 20;
     }
 
-    protected override void SetCollidersIdle(Collider2D[] hitboxColliders)
+    protected override void SetStateIdle(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.07f, -0.28f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.15f, 0.30f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Vertical;
+        m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.08f, -0.60f);
-        torso.size = new Vector2(0.15f, 0.30f);
-        torso.direction = CapsuleDirection2D.Vertical;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(0.07f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.08f, -0.60f);
+        }
+        else if (keyframe == 1)
+        {
+            m_Head.transform.localPosition = new Vector2(0.07f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.08f, -0.60f);
+        }
+        else if (keyframe == 2)
+        {
+            m_Head.transform.localPosition = new Vector2(0.07f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.08f, -0.60f);
+        }
+        else
+        {
+            m_Head.transform.localPosition = new Vector2(0.07f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.08f, -0.60f);
+        }
+        
     }
 
-    protected override void SetCollidersCrouch(Collider2D[] hitboxColliders)
+    protected override void SetStateCrouch(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.00f, -0.55f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.30f, 0.15f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
+        m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.16f, -0.68f);
-        torso.size = new Vector2(0.30f, 0.15f);
-        torso.direction = CapsuleDirection2D.Horizontal;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(0.00f, -0.55f);
+            m_Torso.transform.localPosition = new Vector2(0.16f, -0.68f);
+        }
+        else
+        {
+            m_Head.transform.localPosition = new Vector2(0.00f, -0.55f);
+            m_Torso.transform.localPosition = new Vector2(0.16f, -0.68f);
+        }
+        
     }
 
-    protected override void SetCollidersWalk(Collider2D[] hitboxColliders)
+    protected override void SetStateWalk(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.01f, -0.28f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.15f, 0.30f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Vertical;
+        m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.02f, -0.6f);
-        torso.size = new Vector2(0.15f, 0.30f);
-        torso.direction = CapsuleDirection2D.Vertical;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(0.01f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.02f, -0.60f);
+        }
+        else if (keyframe == 1)
+        {
+            m_Head.transform.localPosition = new Vector2(0.01f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.02f, -0.60f);
+        }
+        else if (keyframe == 2)
+        {
+            m_Head.transform.localPosition = new Vector2(0.01f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.02f, -0.60f);
+        }
+        else if (keyframe == 3)
+        {
+            m_Head.transform.localPosition = new Vector2(0.01f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.02f, -0.60f);
+        }
+        else if (keyframe == 4)
+        {
+            m_Head.transform.localPosition = new Vector2(0.01f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.02f, -0.60f);
+            
+        }
     }
 
-    protected override void SetCollidersAir(Collider2D[] hitboxColliders)
+    protected override void SetStateAir(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.05f, -0.28f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.18f, 0.27f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Vertical;
+        m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.05f, -0.57f);
-        torso.size = new Vector2(0.18f, 0.27f);
-        torso.direction = CapsuleDirection2D.Vertical;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(0.05f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.05f, -0.57f);
+        }
+        else
+        {
+            m_Head.transform.localPosition = new Vector2(0.05f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.05f, -0.57f);
+        }
+        
     }
 
-    protected override void SetCollidersStab(Collider2D[] hitboxColliders)
+    protected override void SetStateStab(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(-0.13f, -0.34f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.26f, 0.24f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
+        
+        m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.1f);
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.00f, -0.63f);
-        torso.size = new Vector2(0.26f, 0.24f);
-        torso.direction = CapsuleDirection2D.Horizontal;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
+            
+        }
+        else if (keyframe == 1)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.GetComponent<Transform>().localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+        }
+        else if (keyframe == 2)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+        
     }
 
-    protected override void SetCollidersHitstun(Collider2D[] hitboxColliders)
+    protected override void SetStateHitstun(int keyframe)
     {
-        CircleCollider2D head = hitboxColliders[0] as CircleCollider2D;
-        head.offset = new Vector2(0.05f, -0.28f);
-        head.radius = 0.20f;
-        hitboxColliders[0] = head;
+        
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.18f, 0.27f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Vertical;
+        m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
 
-        CapsuleCollider2D torso = hitboxColliders[1] as CapsuleCollider2D;
-        torso.offset = new Vector2(0.05f, -0.57f);
-        torso.size = new Vector2(0.18f, 0.27f);
-        torso.direction = CapsuleDirection2D.Vertical;
-        hitboxColliders[1] = torso;
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(0.05f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.05f, -0.57f);
+        }
+        else
+        {
+            m_Head.transform.localPosition = new Vector2(0.05f, -0.28f);
+            m_Torso.transform.localPosition = new Vector2(0.05f, -0.57f);
+        }
+        
     }
 
-    public override GameObject AttackBasic()
+    protected override Attack GetAttackStabO1(GameObject AttackObject)
     {
-        float dir = -1;
-        if (controller.FacingRight())
-            dir = 1;
+        CapsuleCollider2D collider = AttackObject.AddComponent<CapsuleCollider2D>();
+        Vector2 offset = new Vector2(0.96f, -1.04f);
+        collider.size = new Vector2(1.16f, 0.28f);
+        collider.direction = CapsuleDirection2D.Horizontal;
 
-        GameObject AttackPrefabClone = Instantiate(AttackPrefab);
-        Collider2D attackBox = AttackPrefabClone.AddComponent<PolygonCollider2D>();
-        attackBox.isTrigger = true;
-        AttackPrefabClone.GetComponent<FollowObject>().Follow(transform, new Vector3(0.7f * dir, 0f));
-        AttackPrefabClone.GetComponent<Damager>().IgnoreObject(gameObject);
-        return AttackPrefabClone;
+        return new Attack(collider, offset);
     }
 }
