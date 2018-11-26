@@ -36,9 +36,12 @@ public class CharacterController2D : MonoBehaviour
     protected bool m_wasCrouching = false;
     protected int m_aerialJumpsRemaining;
 
+    protected SFXController sfx;
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        sfx = GetComponent<SFXController>();
 
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
@@ -136,19 +139,24 @@ public class CharacterController2D : MonoBehaviour
             }
         }
         // If the player should jump...
-        if (m_Grounded && jump)
+        if (jump)
         {
-            // Add a vertical force to the player.
-            m_Grounded = false;
-            m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce);
-            m_aerialJumpsRemaining = m_aerialJumps;
-        }
-        else if (!m_Grounded && jump)
-        {
-            if (m_aerialJumpsRemaining > 0)
+            if (m_Grounded)
             {
-                m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce * 0.9f);
-                m_aerialJumpsRemaining--;
+                // Add a vertical force to the player.
+                m_Grounded = false;
+                m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce);
+                m_aerialJumpsRemaining = m_aerialJumps;
+                sfx.PlayJump();
+            }
+            else if (!m_Grounded)
+            {
+                if (m_aerialJumpsRemaining > 0)
+                {
+                    m_Rigidbody2D.velocity = new Vector2(0f, m_JumpForce * 0.9f);
+                    m_aerialJumpsRemaining--;
+                    sfx.PlayJump();
+                }
             }
         }
     }

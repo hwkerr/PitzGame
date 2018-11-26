@@ -55,6 +55,8 @@ GameObject:
   - component: {fileID: 114480473737879486}
   - component: {fileID: 114086276104603618}
   - component: {fileID: 114489488369564168}
+  - component: {fileID: 114734398632655780}
+  - component: {fileID: 82647773621126716}
   m_Layer: 9
   m_Name: MalePlayer
   m_TagString: Player
@@ -304,6 +306,101 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.15, y: 0.3}
   m_Direction: 0
+--- !u!82 &82647773621126716
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1634298237548798}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114083904680120368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,6 +573,30 @@ MonoBehaviour:
     spriteArray:
     - sprite: {fileID: 21300000, guid: 7f1fd8500a770aa4c9e638a8a96c6b05, type: 3}
       duration: 0
+  - name: StabAir
+    spriteArray:
+    - sprite: {fileID: 21300000, guid: 94e6199046169b84c9376f81ed5a9a14, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300000, guid: fe3c8e07cb12abd4888cb5a995274d35, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300000, guid: 83d070da9d5a7234d90a1b1d471ad79d, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300000, guid: 58324f0080b85314a96e4b18634ffafd, type: 3}
+      duration: 8
+--- !u!114 &114734398632655780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1634298237548798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b12a3bb745c2643af581478ada55c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AudioSource: {fileID: 82647773621126716}
+  swordAttack: {fileID: 8300000, guid: ce648f964ce02084685e009df5dba4a7, type: 3}
+  jump: {fileID: 8300000, guid: 16ed4e5f92c135d469e88278ce4d403e, type: 3}
 --- !u!212 &212342326368770358
 SpriteRenderer:
   m_ObjectHideFlags: 1
