@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     protected void Start () {
         Debug.Log("Press PageUp to enable Debug Mode");
+        player = GetComponent<DefaultPlayer>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         //player.Init_AllColliders();

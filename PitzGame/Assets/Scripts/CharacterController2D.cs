@@ -7,6 +7,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] protected float m_JumpForce = 15f;                          // Amount of force added when the player jumps.
     [Range(0, 1)] [SerializeField] protected float m_CrouchSpeed = 0f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
     [SerializeField] protected float m_RunSpeed = 40f;                          // Speed to use for movement
+    [SerializeField] protected float m_AirSpeed = 40f;                          // Speed to use for movement
     [SerializeField] protected int m_aerialJumps = 1;                           // Number of jumps available once in the air
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
     [SerializeField] protected bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
@@ -72,7 +73,10 @@ public class CharacterController2D : MonoBehaviour
 
     public void Move(float move, bool crouch, bool jump)
     {
-        move *= m_RunSpeed;
+        if (m_Grounded)
+            move *= m_RunSpeed;
+        else
+            move *= m_AirSpeed;
         m_isCrouching = crouch;
         // If crouching, check to see if the character can stand up
         if (!crouch)

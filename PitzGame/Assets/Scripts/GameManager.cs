@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         AddPlayer(1, Character.MalePlayer);
-        AddPlayer(2, Character.MalePlayer);
+        AddPlayer(2, Character.FemPlayer);
 	}
 	
 	// Update is called once per frame
