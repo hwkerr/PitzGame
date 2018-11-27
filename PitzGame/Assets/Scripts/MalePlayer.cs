@@ -128,7 +128,6 @@ public class MalePlayer : DefaultPlayer {
 
     protected override void SetStateStab(int keyframe)
     {
-        
         m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
         m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.26f, 0.24f);
         m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
@@ -149,6 +148,7 @@ public class MalePlayer : DefaultPlayer {
             m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
             m_Sword.GetComponent<Transform>().localPosition = new Vector2(-0.5f, -0.53f);
             m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+            sfx.PlaySwordAttack();
         }
         else if (keyframe == 2)
         {
@@ -157,7 +157,6 @@ public class MalePlayer : DefaultPlayer {
             m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
             m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
         }
-        
     }
 
     protected override void SetStateHitstun(int keyframe)
@@ -178,7 +177,38 @@ public class MalePlayer : DefaultPlayer {
             m_Head.transform.localPosition = new Vector2(0.05f, -0.28f);
             m_Torso.transform.localPosition = new Vector2(0.05f, -0.57f);
         }
-        
+    }
+
+    protected override void SetStateStabAir(int keyframe)
+    {
+        m_Head.GetComponent<CircleCollider2D>().radius = 0.20f;
+        m_Torso.GetComponent<CapsuleCollider2D>().size = new Vector2(0.26f, 0.24f);
+        m_Torso.GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
+
+        m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.1f);
+
+        if (keyframe == 0)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+        else if (keyframe == 1)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.GetComponent<Transform>().localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+            sfx.PlaySwordAttack();
+        }
+        else if (keyframe == 2)
+        {
+            m_Head.transform.localPosition = new Vector2(-0.13f, -0.34f);
+            m_Torso.transform.localPosition = new Vector2(0.00f, -0.63f);
+            m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = false;
+        }
     }
 
     protected override Attack GetAttackStabO1(GameObject AttackObject)

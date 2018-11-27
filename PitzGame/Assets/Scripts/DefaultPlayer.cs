@@ -9,7 +9,7 @@ public abstract class DefaultPlayer : CharacterController2D {
     [SerializeField] protected GameObject m_Head;
     [SerializeField] protected GameObject m_Torso;
     [SerializeField] protected GameObject m_Sword;
-
+    
     protected AnimationController anim;
     protected Grabber m_grabber;
 
@@ -38,6 +38,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         Air,
         Stab,
         Hitstun,
+        StabAir,
         MaxState
     }
 
@@ -65,7 +66,7 @@ public abstract class DefaultPlayer : CharacterController2D {
 
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
-        anim = gameObject.GetComponent<AnimationController>();
+        anim = GetComponent<AnimationController>();
         m_grabber = GetComponentInChildren<Grabber>();
 
         m_Sword.GetComponent<Damager>().IgnoreObject(gameObject);
@@ -314,6 +315,8 @@ public abstract class DefaultPlayer : CharacterController2D {
             SetStateStab(frame);
         else if (currentState == State.Hitstun)
             SetStateHitstun(frame);
+        else if (currentState == State.StabAir)
+            SetStateStabAir(frame);
         return anim.GetCurrentDuration();
     }
 
@@ -345,6 +348,10 @@ public abstract class DefaultPlayer : CharacterController2D {
     // @Ensures Initializes collider values for character state: hitstun
     // @returns SetStateIdle = duration of the specified keyframe
     protected abstract void SetStateHitstun(int keyframe);
+
+    // @Ensures Initializes collider values for character state: stabAir
+    // @returns SetStateStab = duration of the specified keyframe
+    protected abstract void SetStateStabAir(int keyframe);
 
     public void OnGUI()
     {

@@ -124,6 +124,15 @@ public class PlayerMovement : MonoBehaviour {
                     minDuration = player.GetStateDuration(DefaultPlayer.State.Stab);
                 }
             }
+            else if (player.GetState() == DefaultPlayer.State.Air)
+            {
+                if (Input.GetButtonDown(player.BTTN_FIRE1))
+                {
+                    SetState(DefaultPlayer.State.StabAir);
+                    busy = true;
+                    minDuration = player.GetStateDuration(DefaultPlayer.State.StabAir);
+                }
+            }
 
             if (Input.GetButtonDown(player.BTTN_INTERACT))
                 player.PickUpItem();

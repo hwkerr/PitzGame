@@ -33,7 +33,7 @@ TagManager:
   - Enemies
   - Pickups
   - Ground
-  - 
+  - PlayerWall
   - Obstacle
   - Goal
   - 
