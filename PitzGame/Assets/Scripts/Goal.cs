@@ -8,6 +8,7 @@ public class Goal: MonoBehaviour {
     [SerializeField] public Side side;
     [SerializeField] private int score;
 
+
 	// Use this for initialization
 	void Start () {
 		
