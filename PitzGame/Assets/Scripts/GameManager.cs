@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        AddPlayer(MenuValues.GetPlayer(1));
-        AddPlayer(MenuValues.GetPlayer(2));
-        AddPlayer(MenuValues.GetPlayer(3));
-        AddPlayer(MenuValues.GetPlayer(4));
+        AddPlayer(GlobalValues.GetPlayer(1));
+        AddPlayer(GlobalValues.GetPlayer(2));
+        AddPlayer(GlobalValues.GetPlayer(3));
+        AddPlayer(GlobalValues.GetPlayer(4));
     }
 
     // @Requires 1 <= playerNum <= 4

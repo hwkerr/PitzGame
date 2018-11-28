@@ -8,7 +8,7 @@ public enum Character
     Fem
 }
 
-public static class MenuValues {
+public static class GlobalValues {
 
     private static Player[] players = new Player[4];
     public static Player GetPlayer(int num)
