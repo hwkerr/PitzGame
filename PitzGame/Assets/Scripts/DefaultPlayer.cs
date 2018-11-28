@@ -234,6 +234,7 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
+        playerNum += 1;
         BTTN_HORIZONTAL = "Horizontal_P" + playerNum;
         BTTN_JUMP = "Jump_P" + playerNum;
         BTTN_CROUCH = "Crouch_P" + playerNum;
