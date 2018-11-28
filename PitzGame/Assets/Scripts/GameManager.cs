@@ -13,21 +13,19 @@ public class GameManager : MonoBehaviour {
         FemPlayer
     }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     // Use this for initialization
     void Start () {
+        GlobalValues.SetPlayer(0, Character.Male);
+        GlobalValues.SetPlayer(1, Character.Fem);
+
+        AddPlayer(GlobalValues.GetPlayer(0));
         AddPlayer(GlobalValues.GetPlayer(1));
         AddPlayer(GlobalValues.GetPlayer(2));
         AddPlayer(GlobalValues.GetPlayer(3));
-        AddPlayer(GlobalValues.GetPlayer(4));
     }
 
-    // @Requires 1 <= playerNum <= 4
-    // @Ensures Instantiates a 'character' in the slot for player number 'playerNum'
+    // @Requires 0 <= player.playerNum <= 3
+    // @Ensures Instantiates a Character player.character in the slot for player number int player.playerNum
     public void AddPlayer(Player player)
     {
         if (player != null)
@@ -39,12 +37,12 @@ public class GameManager : MonoBehaviour {
             else //if (player.character == Character.Male)
                 character = CharacterPrefab.MalePlayer;
 
-            if (thePlayers[playerNum - 1] != null)
+            if (thePlayers[playerNum] != null)
                 Destroy(thePlayers[playerNum - 1]);
-            thePlayers[playerNum - 1] = Instantiate(characterPrefabs[(int)character]);
-            thePlayers[playerNum - 1].GetComponent<DefaultPlayer>().playerNum = playerNum;
-            float xval = (playerNum * 4f) - 10f; // pick spawn position based on playerNum
-            thePlayers[playerNum - 1].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
+            thePlayers[playerNum] = Instantiate(characterPrefabs[(int)character]);
+            thePlayers[playerNum].GetComponent<DefaultPlayer>().playerNum = playerNum;
+            float xval = ((playerNum+1) * 4f) - 10f; // pick spawn position based on playerNum
+            thePlayers[playerNum].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
         }
     }
 }
