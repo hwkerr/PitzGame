@@ -238,10 +238,6 @@ Prefab:
       propertyPath: m_Name
       value: Goal (Right)
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
   m_IsPrefabAsset: 0
@@ -354,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b3523108319cd4abf6b90376dd9f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winningScore: 2
   characterPrefabs:
   - {fileID: 1634298237548798, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
   - {fileID: 1551047603622824, guid: 90f7e6c943f1dde458ae1f5842b52c57, type: 2}
@@ -476,6 +473,16 @@ Prefab:
       propertyPath: swordAttack
       value: 
       objectReference: {fileID: 8300000, guid: ce648f964ce02084685e009df5dba4a7, type: 3}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: -1783731295
+      objectReference: {fileID: 0}
+    - target: {fileID: 212342326368770358, guid: a28ab8a0dde347246a25af15304c540c,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
   m_IsPrefabAsset: 0
@@ -2624,6 +2631,15 @@ Prefab:
     - target: {fileID: 1491876610208622, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
       propertyPath: m_Name
       value: Goal (Left)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400956597716874, guid: 05df7e79894155745ac41949d7d7e28e,
+        type: 2}
+      propertyPath: side
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799241951845908, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05df7e79894155745ac41949d7d7e28e, type: 2}

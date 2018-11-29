@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public int winningScore = 5;
+
     private GameObject[] thePlayers = new GameObject[4];
     [SerializeField] private GameObject[] characterPrefabs;
 
     private Ball theBall;
+    private Goal goalLeft, goalRight;
 
     private CountdownScript timer;
 
@@ -21,6 +24,14 @@ public class GameManager : MonoBehaviour {
     void Start () {
         timer = GetComponent<CountdownScript>();
         theBall = GameObject.FindGameObjectWithTag("Ball").GetComponent<Ball>();
+
+        GameObject[] theGoalObjects = GameObject.FindGameObjectsWithTag("Goal");
+        for (int i = 0; i < theGoalObjects.Length; i++)
+        {
+            if (theGoalObjects[i].GetComponent<Goal>().side == Goal.Side.Left)
+                goalLeft = theGoalObjects[i].GetComponent<Goal>();
+            else goalRight = theGoalObjects[i].GetComponent<Goal>();
+        }
 
         timer.TogglePause(true);
         timer.ResetTimer();
@@ -38,7 +49,22 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        GetComponent<CountdownScript>().GetTime();
+        if (goalLeft != null && goalRight != null)
+        {
+            if (goalLeft.GetScore() >= winningScore)
+                GameOver("Left Wins");
+            if (goalRight.GetScore() >= winningScore)
+                GameOver("Right Wins");
+            if (timer.GetTime() <= 0)
+            {
+                if (goalLeft.GetScore() > goalRight.GetScore())
+                    GameOver("Left Wins");
+                else if (goalLeft.GetScore() < goalRight.GetScore())
+                    GameOver("Right Wins");
+                else
+                    GameOver("Tie");
+            }
+        }
     }
 
     // @Requires 0 <= player.playerNum <= 3
@@ -61,6 +87,11 @@ public class GameManager : MonoBehaviour {
             float xval = ((playerNum+1) * 4f) - 10f; // pick spawn position based on playerNum
             thePlayers[playerNum].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
         }
+    }
+
+    private void GameOver(string message)
+    {
+        Debug.Log(message);// Do stuff
     }
 
     private void OnGUI()

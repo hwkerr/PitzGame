@@ -16,10 +16,23 @@ public class Ball : Grabbable {
         base.Update();
     }
 
+    public void Score()
+    {
+        Poof();
+        Invoke("ResetBall", 1);
+    }
+
     public void TempFreeze()
     {
         ToggleFreeze(true);
         Invoke("ToggleFreeze", 1);
+    }
+
+    private void Poof()
+    {
+        m_Rigidbody2D.simulated = false;
+        transform.localScale = new Vector3(2f, 2f, 1f);
+        GetComponent<Animator>().SetBool("Poof", true);
     }
 
     // @Ensures this Ball stops all movement
@@ -34,6 +47,8 @@ public class Ball : Grabbable {
     //          transform.position.y = y
     public void ResetBall(float x, float y)
     {
+        GetComponent<Animator>().SetBool("Poof", false);
+        transform.localScale = new Vector3(0.5f, 0.5f, 1f);
         m_Rigidbody2D.angularVelocity = 0;
         m_Rigidbody2D.rotation = 0;
         transform.eulerAngles = Vector3.zero;
