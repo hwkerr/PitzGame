@@ -49,9 +49,14 @@ public class Grabbable : MonoBehaviour
         }
     }
 
-    public void reset()
+    public void ToggleFreeze()
     {
+        m_Rigidbody2D.simulated = !m_Rigidbody2D.simulated;
+    }
 
+    public void ToggleFreeze(bool frozen)
+    {
+        m_Rigidbody2D.simulated = !frozen;
     }
 
     public void OnTakeDamage(Damager damager, Vector2 knockbackVector, int duration)
