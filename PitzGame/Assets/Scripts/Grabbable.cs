@@ -29,7 +29,7 @@ public class Grabbable : MonoBehaviour
     public State currentState;
 
     // Use this for initialization
-    protected virtual void Start()
+    void Start()
     {
         m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_Collider2D = gameObject.GetComponent<Collider2D>();
@@ -39,7 +39,7 @@ public class Grabbable : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    void Update()
     {
         if (inHitstun)
         {

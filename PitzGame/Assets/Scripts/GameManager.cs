@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour {
     private Goal goalLeft, goalRight;
 
     private CountdownScript timer;
+    private bool startSequence = true;
 
     public enum CharacterPrefab
     {
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviour {
         timer.TogglePause(true);
         timer.ResetTimer();
 
-        theBall.ResetBall();
+        //theBall.ResetBall();
 
         GlobalValues.SetPlayer(0, Character.Male);
         GlobalValues.SetPlayer(1, Character.Fem);
@@ -49,6 +51,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        if (startSequence)
+        {
+            theBall.ResetBall();
+            startSequence = false;
+        }
+
         if (goalLeft != null && goalRight != null)
         {
             if (goalLeft.GetScore() >= winningScore)
@@ -92,6 +100,7 @@ public class GameManager : MonoBehaviour {
     private void GameOver(string message)
     {
         Debug.Log(message);// Do stuff
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnGUI()

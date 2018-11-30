@@ -14,7 +14,7 @@ public class FemPlayer : DefaultPlayer
         m_RunSpeed = 50f;
         m_AirSpeed = 25f;
         m_CrouchSpeed = 0f;
-        m_JumpForce = 16f; //15f if double jump, 16f or 17f if only one jump
+        m_JumpForce = 17f; //15f if double jump, 16f or 17f if only one jump
         m_aerialJumps = 1;
         groundedHitRecovery = 20;
     }

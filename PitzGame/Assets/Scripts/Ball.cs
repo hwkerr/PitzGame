@@ -5,16 +5,6 @@ using UnityEngine;
 public class Ball : Grabbable {
 
     private CircleCollider2D m_collider;
-    
-    // Use this for initialization
-	protected override void Start () {
-        base.Start();
-	}
-	
-	// Update is called once per frame
-	protected override void Update () {
-        base.Update();
-    }
 
     public void Score()
     {
