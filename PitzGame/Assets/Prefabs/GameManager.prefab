@@ -49,10 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1815033632146358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a9b683074ad1ef45ab58573f05fafd6, type: 3}
+  m_Script: {fileID: 11500000, guid: fc9721d56d5e2cf468057f4ed8462681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minuteDuration: 5
+  minuteDuration: 3
 --- !u!114 &114660610371657514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b3523108319cd4abf6b90376dd9f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winningScore: 2
+  winningScore: 5
   characterPrefabs:
   - {fileID: 1634298237548798, guid: a28ab8a0dde347246a25af15304c540c, type: 2}
   - {fileID: 1551047603622824, guid: 90f7e6c943f1dde458ae1f5842b52c57, type: 2}

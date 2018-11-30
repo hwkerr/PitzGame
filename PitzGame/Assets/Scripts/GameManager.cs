@@ -24,8 +24,13 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Debug.Log("sceneCountInBuildSettings: " + SceneManager.sceneCountInBuildSettings);
+
+        Time.timeScale = 1.0f;
         timer = GetComponent<CountdownScript>();
         theBall = GameObject.FindGameObjectWithTag("Ball").GetComponent<Ball>();
+
+        timer.TogglePause(true);
 
         GameObject[] theGoalObjects = GameObject.FindGameObjectsWithTag("Goal");
         for (int i = 0; i < theGoalObjects.Length; i++)
@@ -34,11 +39,6 @@ public class GameManager : MonoBehaviour {
                 goalLeft = theGoalObjects[i].GetComponent<Goal>();
             else goalRight = theGoalObjects[i].GetComponent<Goal>();
         }
-
-        timer.TogglePause(true);
-        timer.ResetTimer();
-
-        //theBall.ResetBall();
 
         GlobalValues.SetPlayer(0, Character.Male);
         GlobalValues.SetPlayer(1, Character.Fem);
@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
         {
             theBall.ResetBall();
             startSequence = false;
+            timer.ResetTimer();
+            timer.TogglePause(false);
         }
 
         if (goalLeft != null && goalRight != null)
@@ -99,8 +101,24 @@ public class GameManager : MonoBehaviour {
 
     private void GameOver(string message)
     {
-        Debug.Log(message);// Do stuff
-        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCount)
+        Debug.Log(message);
+        Time.timeScale = 0.5f;
+        for (int i = 0; i < thePlayers.Length; i++)
+        {
+            if (thePlayers[i] != null)
+            {
+                thePlayers[i].GetComponent<AnimationController>().Freeze(true);
+                thePlayers[i].GetComponent<PlayerMovement>().enabled = false;
+            }
+        }
+        theBall.GameOver();
+        Invoke("NextScene", 1);
+    }
+
+    private void NextScene()
+    {
+        Time.timeScale = 1.0f;
+        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else
             SceneManager.LoadScene(0);
@@ -110,7 +128,7 @@ public class GameManager : MonoBehaviour {
     {
         if (true)
         {
-            GUI.Label(new Rect(280, 10, 100, 20), GetComponent<CountdownScript>().GetFormattedTime());
+            GUI.Label(new Rect(280, 10, 100, 20), timer.GetFormattedTime());
         }
     }
 }

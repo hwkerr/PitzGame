@@ -5,11 +5,15 @@ using UnityEngine;
 public class Ball : Grabbable {
 
     private CircleCollider2D m_collider;
+    private bool reset = true;
 
     public void Score()
     {
         Poof();
-        Invoke("ResetBall", 1);
+        if (reset)
+            Invoke("ResetBall", 1);
+        else
+            Invoke("DestroyBall", 1);
     }
 
     public void TempFreeze()
@@ -47,5 +51,15 @@ public class Ball : Grabbable {
         EnableGrabberCollisions(); //Without this, the scorer won't be able to initially touch the ball (unless ball was scored with a rebound)
 
         TempFreeze();
+    }
+
+    public void DestroyBall()
+    {
+        Destroy(gameObject);
+    }
+
+    public void GameOver()
+    {
+        reset = false;
     }
 }
