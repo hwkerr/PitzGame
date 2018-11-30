@@ -100,7 +100,10 @@ public class GameManager : MonoBehaviour {
     private void GameOver(string message)
     {
         Debug.Log(message);// Do stuff
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCount)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            SceneManager.LoadScene(0);
     }
 
     private void OnGUI()
