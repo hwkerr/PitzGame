@@ -25,7 +25,7 @@ public class Goal: MonoBehaviour {
         Ball incomingBall = collision.gameObject.GetComponent<Ball>();
         if (incomingBall != null)
         {
-            incomingBall.ResetBall();
+            incomingBall.Score();
             this.score++;
         }
     }

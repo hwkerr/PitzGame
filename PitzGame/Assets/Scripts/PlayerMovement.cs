@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     protected float speed = 0;
     protected int minDuration;
 
-    private bool debug, displayText;
+    private bool debug = false, displayText;
 
     public GameObject attack1;
 
@@ -29,17 +29,8 @@ public class PlayerMovement : MonoBehaviour {
         Debug.Log("Press PageUp to enable Debug Mode");
         player = GetComponent<DefaultPlayer>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
-
-        //player.Init_AllColliders();
+        
         debug = false;
-
-        //Debug.Log("Bug: When hit from one Damager to another, player is first in State.hitstun but on second hit is in State.Idle");
-
-        //Debug.Log("Future Task: Add a hitbox to the ball when (it is thrown / has a certain speed)?");
-        //Debug.Log("Future Task: Make object retain momentum from Damager even after hitstun");
-        //Debug.Log("Future Task: When attacked, add Damager to a queue that is cleared when out of hitstun");
-        Debug.Log("Current Task: Create Environmental Collision Box for characters (for interactions with stage)");
-        Debug.Log("Current Issue: ?");
     }
 
     // Update is called once per frame

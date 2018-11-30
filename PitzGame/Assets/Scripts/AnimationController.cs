@@ -11,6 +11,8 @@ public class AnimationController : MonoBehaviour {
     [SerializeField] private SpriteAnimation[] animations;
     private int currentState;
     private int frameCounter;
+
+    private bool running = true;
     
     // Use this for initialization
 	void Awake () {
@@ -31,10 +33,13 @@ public class AnimationController : MonoBehaviour {
 
     public void Advance()
     {
-        frameCounter++;
-        if (frameCounter >= animations[currentState].Size())
-            frameCounter = 0;
-        m_SpriteRenderer.sprite = animations[currentState].Get(frameCounter).sprite;
+        if (running)
+        {
+            frameCounter++;
+            if (frameCounter >= animations[currentState].Size())
+                frameCounter = 0;
+            m_SpriteRenderer.sprite = animations[currentState].Get(frameCounter).sprite;
+        }
     }
 
     public int GetCurrentDuration()
@@ -50,6 +55,11 @@ public class AnimationController : MonoBehaviour {
             sumDuration += animations[state].Get(i).duration;
         }
         return sumDuration;
+    }
+
+    public void Freeze(bool frozen)
+    {
+        running = !frozen;
     }
 }
 
