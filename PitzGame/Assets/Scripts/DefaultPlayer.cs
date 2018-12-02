@@ -47,7 +47,7 @@ public abstract class DefaultPlayer : CharacterController2D {
     public State currentState;
     [HideInInspector] public State lastState;
 
-    [Range(0, 10)] public float health = 10;
+    [Range(0, 100)] public float health = 100;
     private bool stateLock = false;
 
     [HideInInspector] public bool isJumping = false;

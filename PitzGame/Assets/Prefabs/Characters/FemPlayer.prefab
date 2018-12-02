@@ -584,7 +584,7 @@ MonoBehaviour:
   groundedHitRecovery: 0
   currentState: 0
   lastState: 0
-  health: 10
+  health: 100
   isJumping: 0
   attackState: 0
   attacking: 0
