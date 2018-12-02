@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour {
             else goalRight = theGoalObjects[i].GetComponent<Goal>();
         }
 
-        GlobalValues.SetPlayer(0, Character.Male);
-        GlobalValues.SetPlayer(1, Character.Fem);
+        if (GlobalValues.GetPlayer(0) == null && GlobalValues.GetPlayer(1) == null)
+        {
+            GlobalValues.SetPlayer(0, Character.Male);
+            GlobalValues.SetPlayer(1, Character.Fem);
+        }
 
         AddPlayer(GlobalValues.GetPlayer(0));
         AddPlayer(GlobalValues.GetPlayer(1));
