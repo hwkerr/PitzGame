@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
     private CountdownScript timer;
     private bool startSequence = true;
 
+    public Transform CameraTarget;
+
     public enum CharacterPrefab
     {
         MalePlayer,
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
         Debug.Log("sceneCountInBuildSettings: " + SceneManager.sceneCountInBuildSettings);
 
         Time.timeScale = 1.0f;
@@ -128,7 +131,12 @@ public class GameManager : MonoBehaviour {
     {
         if (true)
         {
-            GUI.Label(new Rect(280, 10, 100, 20), timer.GetFormattedTime());
+            GUIStyle localStyle = new GUIStyle(GUI.skin.box);
+            localStyle.font = Resources.Load<Font>("BetterPixels");
+            localStyle.normal.textColor = Color.yellow;
+            localStyle.alignment = TextAnchor.MiddleCenter;
+            localStyle.fontSize = 32;
+            GUI.Box(new Rect((Screen.width/2) - 50, 18, 100, 40), timer.GetFormattedTime(), localStyle);
         }
     }
 }

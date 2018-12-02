@@ -78,7 +78,6 @@ public class Grabbable : MonoBehaviour
         lastDamager = null;
         inHitstun = false;
     }
-
     // @Ensures No physics changes result from collisions between newPlayer and this ball
     //          The physics for this ball are frozen
     public void FollowEntity(Grabber newGrabber)

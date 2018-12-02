@@ -7,11 +7,11 @@ public class Goal: MonoBehaviour {
     public enum Side { Left, Right }
     [SerializeField] public Side side;
     [SerializeField] private int score;
-
+    private BoxCollider2D m_goalHitbox;
 
 	// Use this for initialization
 	void Start () {
-		
+        m_goalHitbox = GetComponentInParent<BoxCollider2D>();
 	}
 	
 	// Update is called once per frame
@@ -37,6 +37,14 @@ public class Goal: MonoBehaviour {
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(250 + 21 * transform.position.x, 140 + -25 * transform.position.y, 100, 20), score + " points");
+        GUIStyle localStyle = new GUIStyle(GUI.skin.box)
+        {
+            font = Resources.Load<Font>("BetterPixels")
+        };
+        localStyle.normal.textColor = side == Side.Left ? Color.red : Color.blue;
+        localStyle.fontSize = 36;
+        localStyle.alignment = side == Side.Left ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
+        Vector3 currentLoc = Camera.main.WorldToScreenPoint(m_goalHitbox.transform.position);
+        GUI.Label(new Rect((Screen.width / 2) - 50, Screen.height - currentLoc.y - 65, 100, 40), score.ToString(), localStyle);
     }
 }

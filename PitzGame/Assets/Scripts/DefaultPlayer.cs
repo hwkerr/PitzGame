@@ -21,6 +21,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         BTTN_INTERACT,
         BTTN_THROW;
 
+
     [Range(1,4)] public int playerNum;
 
     // Character-Specific Stats
@@ -59,8 +60,14 @@ public abstract class DefaultPlayer : CharacterController2D {
     [HideInInspector] public int totalHitRecovery, hitRecoveryCounter;
     [HideInInspector] public Damager lastDamager;
 
+    protected GUIStyle localStyle;
+
     // Use this for initialization
     protected virtual void Start () {
+
+        //Load Custom GUI Skin
+
+
         lastState = State.Idle;
         currentState = State.Idle;
 
@@ -356,9 +363,14 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     public void OnGUI()
     {
-        if (true)
+        localStyle = new GUIStyle(GUI.skin.box)
         {
-            GUI.Label(new Rect(250 + 25 * transform.position.x, 155 + -25 * transform.position.y, 100, 20), (int)health + "HP");
-        }
+            font = Resources.Load<Font>("Fipps-Regular")
+        };
+        localStyle.alignment = TextAnchor.MiddleCenter;
+        localStyle.normal.textColor = new Color((100 - health) / health, health / 100, 0, 1);
+        localStyle.fontSize = 10;
+        Vector3 charPixelSpot = Camera.main.WorldToScreenPoint(transform.position);
+        GUI.Box(new Rect(charPixelSpot.x-35, Screen.height - charPixelSpot.y - 20, 35, 20), health.ToString(), localStyle);
     }
 }
