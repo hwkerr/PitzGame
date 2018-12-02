@@ -40,13 +40,15 @@ public abstract class DefaultPlayer : CharacterController2D {
         Stab,
         Hitstun,
         StabAir,
+        Death,
         MaxState
     }
 
     public State currentState;
     [HideInInspector] public State lastState;
 
-    [Range(0, 100)] public float health = 100;
+    [Range(0, 10)] public float health = 10;
+    private bool stateLock = false;
 
     [HideInInspector] public bool isJumping = false;
 
@@ -181,7 +183,9 @@ public abstract class DefaultPlayer : CharacterController2D {
     {
         m_Rigidbody2D.simulated = false;
         ReleaseItem();
-        GetComponent<Animator>().SetBool("Death", true);
+        SetState(State.Death);
+        stateLock = true;
+        //Perish();
         Invoke("Perish", 0.6f);
     }
 
@@ -230,13 +234,16 @@ public abstract class DefaultPlayer : CharacterController2D {
     // @Ensures currentState = #newState
     public void SetState(State newState)
     {
-        lastState = currentState;
-        if (newState != currentState)
+        if (!stateLock)
         {
-            SetSpecificState(newState);
-            animCounter = 0;
+            lastState = currentState;
+            if (newState != currentState)
+            {
+                SetSpecificState(newState);
+                animCounter = 0;
+            }
+            currentState = newState;
         }
-        currentState = newState;
     }
 
     protected virtual void Init_Buttons(int playerNum)
@@ -305,6 +312,10 @@ public abstract class DefaultPlayer : CharacterController2D {
             SetStateStab(frame);
         else if (state == State.Hitstun)
             SetStateHitstun(frame);
+        else if (state == State.StabAir)
+            SetStateStabAir(frame);
+        else if (state == State.Death)
+            SetStateDeath();
     }
 
     protected int State_AdvanceSprite()
@@ -360,6 +371,13 @@ public abstract class DefaultPlayer : CharacterController2D {
     // @Ensures Initializes collider values for character state: stabAir
     // @returns SetStateStab = duration of the specified keyframe
     protected abstract void SetStateStabAir(int keyframe);
+
+    protected void SetStateDeath()
+    {
+        Destroy(m_Head);
+        Destroy(m_Torso);
+        Destroy(m_Sword);
+    }
 
     public void OnGUI()
     {
