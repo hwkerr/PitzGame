@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour {
     {
         Debug.Log(message);
         Time.timeScale = 0.5f;
+        timer.TogglePause(true);
         for (int i = 0; i < thePlayers.Length; i++)
         {
             if (thePlayers[i] != null)
