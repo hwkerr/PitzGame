@@ -7667,7 +7667,12 @@ Prefab:
     - target: {fileID: 114660610371657514, guid: 4a990d1a2e25379449137671c205821a,
         type: 2}
       propertyPath: winningScore
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114408111985927934, guid: 4a990d1a2e25379449137671c205821a,
+        type: 2}
+      propertyPath: minuteDuration
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a990d1a2e25379449137671c205821a, type: 2}
