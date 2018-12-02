@@ -21,6 +21,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         BTTN_INTERACT,
         BTTN_THROW;
 
+
     [Range(1,4)] public int playerNum;
 
     // Character-Specific Stats
@@ -358,7 +359,10 @@ public abstract class DefaultPlayer : CharacterController2D {
     {
         if (true)
         {
-            GUI.Label(new Rect(250 + 25 * transform.position.x, 155 + -25 * transform.position.y, 100, 20), (int)health + "HP");
+            GUIStyle localStyle = new GUIStyle(GUI.skin.label);
+            localStyle.normal.textColor = Color.magenta;
+            Transform charTransform = m_Head.transform;
+            GUI.Label(new Rect(charTransform.position.x, charTransform.position.y, 100, 20), new GUIContent((int)health + "HP"), localStyle);
         }
     }
 }

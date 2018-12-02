@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
     private CountdownScript timer;
     private bool startSequence = true;
 
+    public Transform CameraTarget;
+
     public enum CharacterPrefab
     {
         MalePlayer,
@@ -128,7 +130,9 @@ public class GameManager : MonoBehaviour {
     {
         if (true)
         {
-            GUI.Label(new Rect(280, 10, 100, 20), timer.GetFormattedTime());
+            GUIStyle localStyle = new GUIStyle(GUI.skin.label);
+            localStyle.normal.textColor = Color.magenta;
+            GUI.Label(new Rect(280, 10, 100, 20), timer.GetFormattedTime(), localStyle);
         }
     }
 }

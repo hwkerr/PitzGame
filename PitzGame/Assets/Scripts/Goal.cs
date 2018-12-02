@@ -37,6 +37,8 @@ public class Goal: MonoBehaviour {
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(250 + 21 * transform.position.x, 140 + -25 * transform.position.y, 100, 20), score + " points");
+        GUIStyle localStyle = new GUIStyle(GUI.skin.label);
+        localStyle.normal.textColor = Color.magenta;
+        GUI.Label(new Rect(transform.position.x, transform.position.y, 100, 20), score + " points", localStyle);
     }
 }
