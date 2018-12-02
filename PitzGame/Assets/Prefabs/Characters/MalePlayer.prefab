@@ -584,6 +584,16 @@ MonoBehaviour:
       duration: 8
     - sprite: {fileID: 21300000, guid: 58324f0080b85314a96e4b18634ffafd, type: 3}
       duration: 8
+  - name: Death
+    spriteArray:
+    - sprite: {fileID: 21300000, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300002, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300004, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300006, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
 --- !u!114 &114734398632655780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -631,7 +641,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1783731295
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 283e62beca98b4d4a98c0aad0eba77b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

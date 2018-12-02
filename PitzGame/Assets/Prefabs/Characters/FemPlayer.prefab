@@ -495,6 +495,16 @@ MonoBehaviour:
       duration: 8
     - sprite: {fileID: 21300000, guid: 73eb2adb879b9904c9af31cbd858b078, type: 3}
       duration: 8
+  - name: Death
+    spriteArray:
+    - sprite: {fileID: 21300000, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300002, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300004, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
+    - sprite: {fileID: 21300006, guid: ec8e34c97ef2ee34395623fb7e4b0054, type: 3}
+      duration: 8
 --- !u!114 &114612821115614372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -574,7 +584,7 @@ MonoBehaviour:
   groundedHitRecovery: 0
   currentState: 0
   lastState: 0
-  health: 100
+  health: 10
   isJumping: 0
   attackState: 0
   attacking: 0
@@ -632,7 +642,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1783731295
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: d353575a999864647b7516a2358a7d7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
