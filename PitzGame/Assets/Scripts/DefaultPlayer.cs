@@ -30,6 +30,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         jumpForce;
     public int groundedHitRecovery;
 
+    public ControlScheme m_ControlScheme;
 
     public enum State
     {
@@ -248,12 +249,26 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
-        axisHorizontal = "Horizontal_P" + (playerNum+1);
+        /*if (playerNum == 0)
+            m_ControlScheme = ControlScheme.Joystick;
+        else if (playerNum == 1)
+            m_ControlScheme = ControlScheme.KeyboardRight;*/
+
+        if (m_ControlScheme == ControlScheme.Joystick)
+            JoystickButtons(playerNum);
+        else if (m_ControlScheme == ControlScheme.KeyboardLeft)
+            LeftKeyboardButtons();
+        else if (m_ControlScheme == ControlScheme.KeyboardRight)
+            RightKeyboardButtons();
+    }
+
+    protected void JoystickButtons(int playerNum)
+    {
+        axisHorizontal = "Horizontal_P" + (playerNum + 1);
         axisVertical = "Vertical_P" + (playerNum + 1);
 
         bttnJump1 = KeyCode.Joystick1Button0;
         bttnJump2 = KeyCode.Joystick1Button3;
-        bttnCrouch = KeyCode.Joystick1Button4;
         bttnFire1 = KeyCode.Joystick1Button1;
         bttnInteract = KeyCode.Joystick1Button7;
         bttnThrow = KeyCode.Joystick1Button2;
@@ -262,6 +277,30 @@ public abstract class DefaultPlayer : CharacterController2D {
         bttnFire1 += 20 * playerNum;
         bttnInteract += 20 * playerNum;
         bttnThrow += 20 * playerNum;
+    }
+
+    protected void LeftKeyboardButtons()
+    {
+        axisHorizontal = "HorizontalKeyboardLeft";
+        axisVertical = "VerticalKeyboardLeft";
+
+        bttnJump1 = KeyCode.W;
+        bttnJump2 = bttnJump1;
+        bttnFire1 = KeyCode.LeftAlt;
+        bttnInteract = KeyCode.E;
+        bttnThrow = KeyCode.Q;
+    }
+
+    protected void RightKeyboardButtons()
+    {
+        axisHorizontal = "HorizontalKeyboardRight";
+        axisVertical = "VerticalKeyboardRight";
+
+        bttnJump1 = KeyCode.I;
+        bttnJump2 = bttnJump1;
+        bttnFire1 = KeyCode.RightAlt;
+        bttnInteract = KeyCode.U;
+        bttnThrow = KeyCode.O;
     }
 
     protected virtual void Init_StatValues()

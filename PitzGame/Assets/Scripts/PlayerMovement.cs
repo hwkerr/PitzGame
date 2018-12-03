@@ -160,7 +160,10 @@ public class PlayerMovement : MonoBehaviour {
 
     protected bool CrouchAxisValueReached()
     {
-        return Input.GetAxisRaw(player.axisVertical) >= verticalAxisCrouchPosition;
+        if (player.m_ControlScheme == ControlScheme.Joystick)
+            return Input.GetAxisRaw(player.axisVertical) >= verticalAxisCrouchPosition;
+        else
+            return Input.GetKeyDown(player.bttnCrouch);
     }
 
     protected void FinishAttack()

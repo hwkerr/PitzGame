@@ -27,9 +27,6 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        string[] names = Input.GetJoystickNames();
-        for (int i = 0; i < names.Length; i++)
-            Debug.Log(names[i]);
 
         Time.timeScale = 1.0f;
         timer = GetComponent<CountdownScript>();
@@ -59,11 +56,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        //Log every key pressed
+        /*foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(kcode))
                 Debug.Log("KeyCode down: " + kcode);
-        }
+        }*/
 
         if (startSequence)
         {
@@ -108,6 +106,7 @@ public class GameManager : MonoBehaviour {
                 Destroy(thePlayers[playerNum - 1]);
             thePlayers[playerNum] = Instantiate(characterPrefabs[(int)character]);
             thePlayers[playerNum].GetComponent<DefaultPlayer>().playerNum = playerNum;
+            thePlayers[playerNum].GetComponent<DefaultPlayer>().m_ControlScheme = player.controlScheme;
             float xval = ((playerNum+1) * 4f) - 10f; // pick spawn position based on playerNum
             thePlayers[playerNum].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
         }
