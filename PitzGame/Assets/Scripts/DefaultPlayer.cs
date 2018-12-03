@@ -249,20 +249,23 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
-        /*if (playerNum == 0)
-            m_ControlScheme = ControlScheme.Joystick;
-        else if (playerNum == 1)
-            m_ControlScheme = ControlScheme.KeyboardRight;*/
+        m_ControlScheme = GlobalValues.GetPlayer(playerNum).controlScheme;
 
         if (m_ControlScheme == ControlScheme.Joystick)
         {
             JoystickButtons(playerNum);
-            Debug.Log(playerNum + "Joystick");
+            Debug.Log(playerNum + ": Joystick");
         }
         else if (m_ControlScheme == ControlScheme.KeyboardLeft)
+        {
             LeftKeyboardButtons();
+            Debug.Log(playerNum + ": KeyboardLeft");
+        }
         else if (m_ControlScheme == ControlScheme.KeyboardRight)
+        {
             RightKeyboardButtons();
+            Debug.Log(playerNum + ": KeyboardRight");
+        }
     }
 
     protected void JoystickButtons(int playerNum)

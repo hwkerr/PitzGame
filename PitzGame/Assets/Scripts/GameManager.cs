@@ -42,19 +42,14 @@ public class GameManager : MonoBehaviour {
             else goalRight = theGoalObjects[i].GetComponent<Goal>();
         }
 
-        if (GlobalValues.GetPlayer(0) == null && GlobalValues.GetPlayer(1) == null)
-        {
-            GlobalValues.SetPlayer(0, Character.Male);
-            GlobalValues.SetPlayer(1, Character.Fem);
-
-            GlobalValues.SetControls(0, ControlScheme.KeyboardLeft);
-            GlobalValues.SetControls(1, ControlScheme.KeyboardRight);
-        }
-
-        AddPlayer(GlobalValues.GetPlayer(0));
-        AddPlayer(GlobalValues.GetPlayer(1));
-        AddPlayer(GlobalValues.GetPlayer(2));
-        AddPlayer(GlobalValues.GetPlayer(3));
+        if (GlobalValues.GetPlayer(0) != null)
+            AddPlayer(GlobalValues.GetPlayer(0));
+        if (GlobalValues.GetPlayer(1) != null)
+            AddPlayer(GlobalValues.GetPlayer(1));
+        if (GlobalValues.GetPlayer(2) != null)
+            AddPlayer(GlobalValues.GetPlayer(2));
+        if (GlobalValues.GetPlayer(3) != null)
+            AddPlayer(GlobalValues.GetPlayer(3));
     }
 
     private void Update()
@@ -98,6 +93,7 @@ public class GameManager : MonoBehaviour {
     {
         if (player != null)
         {
+            Debug.Log("Creating player " + player.playerNum + " with Character: " + player.character + " controlled by " + player.controlScheme);
             int playerNum = player.playerNum;
             CharacterPrefab character;
             if (player.character == Character.Fem)
@@ -113,6 +109,7 @@ public class GameManager : MonoBehaviour {
             float xval = ((playerNum+1) * 4f) - 10f; // pick spawn position based on playerNum
             thePlayers[playerNum].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
         }
+        else Debug.Log("Skipped player " + player.playerNum + " with Character: " + player.character + " controlled by " + player.controlScheme);
     }
 
     private void GameOver(string message)

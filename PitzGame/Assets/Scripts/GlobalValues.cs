@@ -28,7 +28,8 @@ public static class GlobalValues {
     }
     public static void SetControls(int num, ControlScheme controlScheme)
     {
-        players[num].controlScheme = controlScheme;
+        if (players[num] != null)
+            players[num].controlScheme = controlScheme;
     }
 }
 

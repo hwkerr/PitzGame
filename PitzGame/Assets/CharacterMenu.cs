@@ -11,7 +11,7 @@ public class CharacterMenu : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        /*if (Input.GetKeyDown(KeyCode.LeftAlt))
             GlobalValues.SetControls(playerNum, ControlScheme.KeyboardLeft);
         else if (Input.GetKeyDown(KeyCode.RightAlt))
             GlobalValues.SetControls(playerNum, ControlScheme.KeyboardRight);
@@ -30,7 +30,7 @@ public class CharacterMenu : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt) || Input.GetKeyDown(KeyCode.Joystick1Button9))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+        }*/
     }
 
     public void PlayGame()
@@ -41,14 +41,31 @@ public class CharacterMenu : MonoBehaviour {
     public void SetMale()
     {
         GlobalValues.SetPlayer(playerNum, Character.Male);
-        GlobalValues.SetControls(playerNum, ControlScheme.Joystick);
-        playerNum++;
+        SetControlsJoystick();
+        Debug.Log(playerNum + ": " + GlobalValues.GetPlayer(playerNum).character);
+        //GlobalValues.SetControls(playerNum, ControlScheme.Joystick);
     }
 
     public void SetFem()
     {
         GlobalValues.SetPlayer(playerNum, Character.Fem);
+        SetControlsKeyboardRight();
+        Debug.Log(playerNum + ": " + GlobalValues.GetPlayer(playerNum).character);
+        //GlobalValues.SetControls(playerNum, ControlScheme.KeyboardRight);
+    }
+
+    public void SetControlsJoystick()
+    {
+        GlobalValues.SetControls(playerNum, ControlScheme.Joystick);
+    }
+
+    public void SetControlsKeyboardLeft()
+    {
+        GlobalValues.SetControls(playerNum, ControlScheme.KeyboardLeft);
+    }
+
+    public void SetControlsKeyboardRight()
+    {
         GlobalValues.SetControls(playerNum, ControlScheme.KeyboardRight);
-        playerNum++;
     }
 }
