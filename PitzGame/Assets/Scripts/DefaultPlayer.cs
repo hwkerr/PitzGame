@@ -14,13 +14,13 @@ public abstract class DefaultPlayer : CharacterController2D {
     protected Grabber m_grabber;
 
     [HideInInspector]
-    public string BTTN_HORIZONTAL,
-        BTTN_JUMP,
-        BTTN_CROUCH,
-        BTTN_FIRE1,
-        BTTN_INTERACT,
-        BTTN_THROW;
-
+    public KeyCode bttnJump1,
+        bttnJump2,
+        bttnFire1,
+        bttnInteract,
+        bttnThrow,
+        bttnCrouch;
+    public string axisHorizontal, axisVertical;
 
     [Range(1,4)] public int playerNum;
 
@@ -30,6 +30,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         jumpForce;
     public int groundedHitRecovery;
 
+    public ControlScheme m_ControlScheme;
 
     public enum State
     {
@@ -248,13 +249,58 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
-        playerNum += 1;
-        BTTN_HORIZONTAL = "Horizontal_P" + playerNum;
-        BTTN_JUMP = "Jump_P" + playerNum;
-        BTTN_CROUCH = "Crouch_P" + playerNum;
-        BTTN_FIRE1 = "Fire1_P" + playerNum;
-        BTTN_INTERACT = "Interact_P" + playerNum;
-        BTTN_THROW = "Throw_P" + playerNum;
+        /*if (playerNum == 0)
+            m_ControlScheme = ControlScheme.Joystick;
+        else if (playerNum == 1)
+            m_ControlScheme = ControlScheme.KeyboardRight;*/
+
+        if (m_ControlScheme == ControlScheme.Joystick)
+            JoystickButtons(playerNum);
+        else if (m_ControlScheme == ControlScheme.KeyboardLeft)
+            LeftKeyboardButtons();
+        else if (m_ControlScheme == ControlScheme.KeyboardRight)
+            RightKeyboardButtons();
+    }
+
+    protected void JoystickButtons(int playerNum)
+    {
+        axisHorizontal = "Horizontal_P" + (playerNum + 1);
+        axisVertical = "Vertical_P" + (playerNum + 1);
+
+        bttnJump1 = KeyCode.Joystick1Button0;
+        bttnJump2 = KeyCode.Joystick1Button3;
+        bttnFire1 = KeyCode.Joystick1Button1;
+        bttnInteract = KeyCode.Joystick1Button7;
+        bttnThrow = KeyCode.Joystick1Button2;
+        bttnJump1 += 20 * playerNum;
+        bttnJump2 += 20 * playerNum;
+        bttnFire1 += 20 * playerNum;
+        bttnInteract += 20 * playerNum;
+        bttnThrow += 20 * playerNum;
+    }
+
+    protected void LeftKeyboardButtons()
+    {
+        axisHorizontal = "HorizontalKeyboardLeft";
+        axisVertical = "VerticalKeyboardLeft";
+
+        bttnJump1 = KeyCode.W;
+        bttnJump2 = bttnJump1;
+        bttnFire1 = KeyCode.LeftAlt;
+        bttnInteract = KeyCode.E;
+        bttnThrow = KeyCode.Q;
+    }
+
+    protected void RightKeyboardButtons()
+    {
+        axisHorizontal = "HorizontalKeyboardRight";
+        axisVertical = "VerticalKeyboardRight";
+
+        bttnJump1 = KeyCode.I;
+        bttnJump2 = bttnJump1;
+        bttnFire1 = KeyCode.RightAlt;
+        bttnInteract = KeyCode.U;
+        bttnThrow = KeyCode.O;
     }
 
     protected virtual void Init_StatValues()
