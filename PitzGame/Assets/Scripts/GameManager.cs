@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,8 +27,9 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        Debug.Log("sceneCountInBuildSettings: " + SceneManager.sceneCountInBuildSettings);
+        string[] names = Input.GetJoystickNames();
+        for (int i = 0; i < names.Length; i++)
+            Debug.Log(names[i]);
 
         Time.timeScale = 1.0f;
         timer = GetComponent<CountdownScript>();
@@ -57,6 +59,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+                Debug.Log("KeyCode down: " + kcode);
+        }
+
         if (startSequence)
         {
             theBall.ResetBall();

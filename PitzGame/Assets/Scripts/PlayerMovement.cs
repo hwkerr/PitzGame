@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool debug = false, displayText;
 
+    private float horizontalAxisRunPosition = 0.5f,
+        verticalAxisCrouchPosition = 0.5f;
+
     public GameObject attack1;
 
     // Use this for initialization
@@ -70,10 +73,11 @@ public class PlayerMovement : MonoBehaviour {
 
         if (!inHitstun && !busy)
         {
-            horizontalMove = Input.GetAxisRaw(player.BTTN_HORIZONTAL);
+            horizontalMove = Input.GetAxisRaw(player.axisHorizontal);
+            if (Mathf.Abs(horizontalMove) < horizontalAxisRunPosition)
+                horizontalMove = 0;
             speed = Mathf.Abs(horizontalMove);
-
-            if (Input.GetButtonDown(player.BTTN_JUMP))
+            if (Input.GetKeyDown(player.bttnJump1) || Input.GetKeyDown(player.bttnJump2))
             {
                 jump = true;
                 //SetState(STATE_AIR);
@@ -85,12 +89,12 @@ public class PlayerMovement : MonoBehaviour {
             }
             else //if (player.m_Grounded)
             {
-                if (Input.GetButtonDown(player.BTTN_CROUCH))
+                if (CrouchAxisValueReached())
                 {
                     crouch = true;
                     SetState(DefaultPlayer.State.Crouch);
                 }
-                else if (Input.GetButtonUp(player.BTTN_CROUCH))
+                else if (!CrouchAxisValueReached())
                 {
                     crouch = false;
                 }
@@ -106,7 +110,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (player.GetState() == DefaultPlayer.State.Idle)
             {
-                if (Input.GetButtonDown(player.BTTN_FIRE1))
+                if (Input.GetKeyDown(player.bttnFire1))
                 {
                     SetState(DefaultPlayer.State.Stab);
                     //if (attack1 != null)
@@ -118,7 +122,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             else if (player.GetState() == DefaultPlayer.State.Air)
             {
-                if (Input.GetButtonDown(player.BTTN_FIRE1))
+                if (Input.GetKeyDown(player.bttnFire1))
                 {
                     SetState(DefaultPlayer.State.StabAir);
                     busy = true;
@@ -126,9 +130,9 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            if (Input.GetButtonDown(player.BTTN_INTERACT))
+            if (Input.GetKeyDown(player.bttnInteract))
                 player.PickUpItem();
-            else if (Input.GetButtonDown(player.BTTN_THROW))
+            else if (Input.GetKeyDown(player.bttnThrow))
                 player.ThrowItem(5, 5);
         }
         else if (inHitstun)
@@ -138,7 +142,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 inHitstun = false;
                 hitstunFirstLoopComplete = false;
-                if (!Input.GetButton(player.BTTN_CROUCH))
+                if (!CrouchAxisValueReached())
                     crouch = false;
                 //FinishAttack();
             }
@@ -152,6 +156,11 @@ public class PlayerMovement : MonoBehaviour {
                 FinishAttack();
             }
         }
+    }
+
+    protected bool CrouchAxisValueReached()
+    {
+        return Input.GetAxisRaw(player.axisVertical) >= verticalAxisCrouchPosition;
     }
 
     protected void FinishAttack()

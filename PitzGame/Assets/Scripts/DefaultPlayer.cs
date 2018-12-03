@@ -14,13 +14,13 @@ public abstract class DefaultPlayer : CharacterController2D {
     protected Grabber m_grabber;
 
     [HideInInspector]
-    public string BTTN_HORIZONTAL,
-        BTTN_JUMP,
-        BTTN_CROUCH,
-        BTTN_FIRE1,
-        BTTN_INTERACT,
-        BTTN_THROW;
-
+    public KeyCode bttnJump1,
+        bttnJump2,
+        bttnFire1,
+        bttnInteract,
+        bttnThrow,
+        bttnCrouch;
+    public string axisHorizontal, axisVertical;
 
     [Range(1,4)] public int playerNum;
 
@@ -248,13 +248,20 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
-        playerNum += 1;
-        BTTN_HORIZONTAL = "Horizontal_P" + playerNum;
-        BTTN_JUMP = "Jump_P" + playerNum;
-        BTTN_CROUCH = "Crouch_P" + playerNum;
-        BTTN_FIRE1 = "Fire1_P" + playerNum;
-        BTTN_INTERACT = "Interact_P" + playerNum;
-        BTTN_THROW = "Throw_P" + playerNum;
+        axisHorizontal = "Horizontal_P" + (playerNum+1);
+        axisVertical = "Vertical_P" + (playerNum + 1);
+
+        bttnJump1 = KeyCode.Joystick1Button0;
+        bttnJump2 = KeyCode.Joystick1Button3;
+        bttnCrouch = KeyCode.Joystick1Button4;
+        bttnFire1 = KeyCode.Joystick1Button1;
+        bttnInteract = KeyCode.Joystick1Button7;
+        bttnThrow = KeyCode.Joystick1Button2;
+        bttnJump1 += 20 * playerNum;
+        bttnJump2 += 20 * playerNum;
+        bttnFire1 += 20 * playerNum;
+        bttnInteract += 20 * playerNum;
+        bttnThrow += 20 * playerNum;
     }
 
     protected virtual void Init_StatValues()
