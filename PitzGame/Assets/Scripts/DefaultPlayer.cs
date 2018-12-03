@@ -286,9 +286,9 @@ public abstract class DefaultPlayer : CharacterController2D {
 
         bttnJump1 = KeyCode.W;
         bttnJump2 = bttnJump1;
-        bttnFire1 = KeyCode.LeftAlt;
-        bttnInteract = KeyCode.E;
-        bttnThrow = KeyCode.Q;
+        bttnFire1 = KeyCode.F;
+        bttnInteract = KeyCode.X;
+        bttnThrow = KeyCode.Z;
     }
 
     protected void RightKeyboardButtons()
@@ -298,9 +298,9 @@ public abstract class DefaultPlayer : CharacterController2D {
 
         bttnJump1 = KeyCode.I;
         bttnJump2 = bttnJump1;
-        bttnFire1 = KeyCode.RightAlt;
-        bttnInteract = KeyCode.U;
-        bttnThrow = KeyCode.O;
+        bttnFire1 = KeyCode.H;
+        bttnInteract = KeyCode.M;
+        bttnThrow = KeyCode.Comma;
     }
 
     protected virtual void Init_StatValues()

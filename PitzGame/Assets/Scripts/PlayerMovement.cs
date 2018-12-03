@@ -226,7 +226,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (displayText)
         {
-            GUI.Label(new Rect(10, 10, 100, 20), "inHitstun");
+            //GUI.Label(new Rect(10, 10, 100, 20), "inHitstun");
         }
     }
 

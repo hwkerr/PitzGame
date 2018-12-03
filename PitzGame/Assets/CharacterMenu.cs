@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class CharacterMenu : MonoBehaviour {
 
-    [SerializeField]
+    [SerializeField] private int playerNum = 0;
 
-    private int playerNum = 0;
+    private string keyDown;
+
+    void Update()
+    {
+        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+                keyDown = "KeyCode down: " + kcode;
+        }
+    }
 
     public void PlayGame()
     {
@@ -37,5 +47,10 @@ public class CharacterMenu : MonoBehaviour {
     public void SetControlsKeyboardRight()
     {
         GlobalValues.SetControls(playerNum, ControlScheme.KeyboardRight);
+    }
+
+    public void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 300, 20), keyDown);
     }
 }
