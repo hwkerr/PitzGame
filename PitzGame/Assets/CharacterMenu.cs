@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CharacterMenu : MonoBehaviour {
 
+    [SerializeField]
+
     private int playerNum = 0;
 
     public void PlayGame()
@@ -16,15 +18,11 @@ public class CharacterMenu : MonoBehaviour {
     {
         GlobalValues.SetPlayer(playerNum, Character.Male);
         playerNum++;
-        if (playerNum >= 2)
-            PlayGame();
     }
 
     public void SetFem()
     {
         GlobalValues.SetPlayer(playerNum, Character.Fem);
         playerNum++;
-        if (playerNum >= 2)
-            PlayGame();
     }
 }
