@@ -471,17 +471,20 @@ MonoBehaviour:
   m_Head: {fileID: 1504043357419562}
   m_Torso: {fileID: 1760701494127222}
   m_Sword: {fileID: 1864386278117052}
-  BTTN_HORIZONTAL: Horizontal_P2
-  BTTN_JUMP: Jump_P2
-  BTTN_CROUCH: Crouch_P2
-  BTTN_FIRE1: Fire1_P2
-  BTTN_INTERACT: Interact_P2
-  BTTN_THROW: Throw_P2
+  bttnJump1: 0
+  bttnJump2: 0
+  bttnFire1: 0
+  bttnInteract: 0
+  bttnThrow: 0
+  bttnCrouch: 0
+  axisHorizontal: HorizontalKeyboardLeft
+  axisVertical: VerticalKeyboardLeft
   playerNum: 1
   runSpeed: 40
   crouchSpeed: 0
   jumpForce: 15
   groundedHitRecovery: 0
+  m_ControlScheme: 0
   currentState: 0
   lastState: 0
   health: 100
