@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour {
         {
             GlobalValues.SetPlayer(0, Character.Male);
             GlobalValues.SetPlayer(1, Character.Fem);
+
+            GlobalValues.SetControls(0, ControlScheme.KeyboardLeft);
+            GlobalValues.SetControls(1, ControlScheme.KeyboardRight);
         }
 
         AddPlayer(GlobalValues.GetPlayer(0));
@@ -57,11 +60,11 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         //Log every key pressed
-        /*foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(kcode))
                 Debug.Log("KeyCode down: " + kcode);
-        }*/
+        }
 
         if (startSequence)
         {

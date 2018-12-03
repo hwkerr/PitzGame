@@ -24,10 +24,11 @@ public static class GlobalValues {
     public static void SetPlayer(int num, Character character)
     {
         players[num] = new Player(num, character);
+        players[num].controlScheme = ControlScheme.Joystick;
     }
     public static void SetControls(int num, ControlScheme controlScheme)
     {
-        players[num].SetControls(controlScheme);
+        players[num].controlScheme = controlScheme;
     }
 }
 
@@ -40,9 +41,5 @@ public class Player
     {
         playerNum = num;
         this.character = character;
-    }
-    public void SetControls(ControlScheme controlScheme)
-    {
-        this.controlScheme = controlScheme;
     }
 }

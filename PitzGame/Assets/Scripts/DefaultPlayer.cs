@@ -255,7 +255,10 @@ public abstract class DefaultPlayer : CharacterController2D {
             m_ControlScheme = ControlScheme.KeyboardRight;*/
 
         if (m_ControlScheme == ControlScheme.Joystick)
+        {
             JoystickButtons(playerNum);
+            Debug.Log(playerNum + "Joystick");
+        }
         else if (m_ControlScheme == ControlScheme.KeyboardLeft)
             LeftKeyboardButtons();
         else if (m_ControlScheme == ControlScheme.KeyboardRight)
