@@ -17,12 +17,25 @@ public class CharacterMenu : MonoBehaviour {
     public void SetMale()
     {
         GlobalValues.SetPlayer(playerNum, Character.Male);
-        playerNum++;
     }
 
     public void SetFem()
     {
         GlobalValues.SetPlayer(playerNum, Character.Fem);
-        playerNum++;
+    }
+
+    public void SetControlsJoystick()
+    {
+        GlobalValues.SetControls(playerNum, ControlScheme.Joystick);
+    }
+
+    public void SetControlsKeyboardLeft()
+    {
+        GlobalValues.SetControls(playerNum, ControlScheme.KeyboardLeft);
+    }
+
+    public void SetControlsKeyboardRight()
+    {
+        GlobalValues.SetControls(playerNum, ControlScheme.KeyboardRight);
     }
 }
