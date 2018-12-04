@@ -583,7 +583,7 @@ MonoBehaviour:
     - sprite: {fileID: 21300000, guid: 94e6199046169b84c9376f81ed5a9a14, type: 3}
       duration: 8
     - sprite: {fileID: 21300000, guid: fe3c8e07cb12abd4888cb5a995274d35, type: 3}
-      duration: 8
+      duration: 24
     - sprite: {fileID: 21300000, guid: 83d070da9d5a7234d90a1b1d471ad79d, type: 3}
       duration: 8
     - sprite: {fileID: 21300000, guid: 58324f0080b85314a96e4b18634ffafd, type: 3}
@@ -601,11 +601,11 @@ MonoBehaviour:
   - name: StabProne
     spriteArray:
     - sprite: {fileID: 21300000, guid: 3e59cd12d3c4c5140b2e031db2295bcb, type: 3}
-      duration: 8
+      duration: 14
     - sprite: {fileID: 21300000, guid: 90a62df05b77d7d46a61a92c1bf3416b, type: 3}
       duration: 8
     - sprite: {fileID: 21300000, guid: 85dbb9a921b547d4ea699a7a73fda624, type: 3}
-      duration: 8
+      duration: 2
 --- !u!114 &114734398632655780
 MonoBehaviour:
   m_ObjectHideFlags: 1
