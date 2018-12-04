@@ -91,13 +91,11 @@ public class PlayerMovement : MonoBehaviour {
             {
                 if (CrouchAxisValueReached())
                 {
-                    Debug.Log("crouch-----------------------------------------------------");
                     crouch = true;
                     SetState(DefaultPlayer.State.Crouch);
                 }
                 else if (!CrouchAxisValueReached())
                 {
-                    Debug.Log("no crouch");
                     crouch = false;
                 }
 
@@ -168,7 +166,9 @@ public class PlayerMovement : MonoBehaviour {
         if (player.m_ControlScheme == ControlScheme.Joystick)
             return Input.GetAxisRaw(player.axisVertical) >= verticalAxisCrouchPosition;
         else
-            return Input.GetKeyDown(player.bttnCrouch);
+        {
+            return Input.GetKey(player.bttnCrouch);
+        }
     }
 
     protected void FinishAttack()

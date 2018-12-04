@@ -81,8 +81,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         m_grabber = GetComponentInChildren<Grabber>();
 
         m_Sword.GetComponent<Damager>().IgnoreObject(gameObject);
-
-        //Init_AllColliders();
+        
         Init_Buttons(playerNum);
         Init_StatValues();
     }
@@ -106,7 +105,8 @@ public abstract class DefaultPlayer : CharacterController2D {
                 RecoverFromHit();
         }
 
-        /*if (attacking && currentAttack != null)
+        //Deprecated
+        {/*if (attacking && currentAttack != null)
         {
             
             //attackState++;
@@ -127,6 +127,7 @@ public abstract class DefaultPlayer : CharacterController2D {
                 currentAttack = null;
             }
         }*/
+        }
     }
 
     // @returns An integer value corresponding to the player's current health
@@ -142,6 +143,8 @@ public abstract class DefaultPlayer : CharacterController2D {
     {
         if (!(inHitstun && damager.Equals(lastDamager)))
         {
+            Debug.Log(damager.m_Angle);
+
             ReleaseItem();
             lastDamager = damager;
             inHitstun = true;
@@ -150,10 +153,11 @@ public abstract class DefaultPlayer : CharacterController2D {
             health -= damage;
             if (health < 0) health = 0;
 
-            if (m_Grounded)
+            if (m_Grounded && damager.m_Angle <= 30)
             {
                 hitRecoveryCounter = totalHitRecovery = groundedHitRecovery;
                 m_Rigidbody2D.velocity = new Vector2(knockbackVector.x, 0f);
+
             }
             else
             {
@@ -241,7 +245,7 @@ public abstract class DefaultPlayer : CharacterController2D {
             lastState = currentState;
             if (newState != currentState)
             {
-                SetSpecificState(newState);
+                SetStateStart(newState);
                 animCounter = 0;
             }
             currentState = newState;
@@ -250,11 +254,6 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected virtual void Init_Buttons(int playerNum)
     {
-        /*if (playerNum == 0)
-            m_ControlScheme = ControlScheme.Joystick;
-        else if (playerNum == 1)
-            m_ControlScheme = ControlScheme.KeyboardRight;*/
-
         if (m_ControlScheme == ControlScheme.Joystick)
             JoystickButtons(playerNum);
         else if (m_ControlScheme == ControlScheme.KeyboardLeft)
@@ -314,6 +313,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         groundedHitRecovery = 20;
     }
 
+    // Deprecated
     // @Ensures this DefaultPlayer has a new Damager object
     public GameObject SpecialAttack(int attackNum)
     {
@@ -335,6 +335,8 @@ public abstract class DefaultPlayer : CharacterController2D {
         return AttackPrefabClone;
     }
 
+    // Deprecated
+    //
     protected Attack GetAttackCollider(GameObject AttackObject, int attackNum)
     {
         return GetAttackStabO1(AttackObject);
@@ -344,35 +346,22 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     // @Requires state < State.MaxState;
     // @Ensures The Head, Torso, and Sword objects are modified for the specified state
-    protected void SetSpecificState(State state)
+    protected void SetStateStart(State state)
     {
         animKeyframe = 0;
         anim.Set((int)state);
-        int frame = 0;
-        if (state == State.Idle)
-            SetStateIdle(frame);
-        else if (state == State.Crouch)
-            SetStateCrouch(frame);
-        else if (state == State.Walk)
-            SetStateWalk(frame);
-        else if (state == State.Air)
-            SetStateAir(frame);
-        else if (state == State.Stab)
-            SetStateStab(frame);
-        else if (state == State.Hitstun)
-            SetStateHitstun(frame);
-        else if (state == State.StabAir)
-            SetStateStabAir(frame);
-        else if (state == State.Death)
-            SetStateDeath();
-        else if (state == State.StabProne)
-            SetStateStabProne(frame);
+        SetSpecificState(0);
     }
 
     protected int State_AdvanceSprite()
     {
         anim.Advance();
-        int frame = anim.GetKeyframe();
+        SetSpecificState(anim.GetKeyframe());
+        return anim.GetCurrentDuration();
+    }
+
+    protected void SetSpecificState(int frame)
+    {
         if (currentState == State.Idle)
             SetStateIdle(frame);
         else if (currentState == State.Crouch)
@@ -387,7 +376,10 @@ public abstract class DefaultPlayer : CharacterController2D {
             SetStateHitstun(frame);
         else if (currentState == State.StabAir)
             SetStateStabAir(frame);
-        return anim.GetCurrentDuration();
+        else if (currentState == State.StabProne)
+            SetStateStabProne(frame);
+        else
+            Debug.Log("Need to add condition for state <" + currentState + "> to function DefaultPlayer.SetSpecificState(int frame)");
     }
 
     public int GetStateDuration(State state)

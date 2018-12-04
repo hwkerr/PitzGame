@@ -32,6 +32,12 @@ public class FemPlayer : DefaultPlayer {
         m_Torso.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         m_Sword.transform.localPosition = new Vector2(0.00f, -0.638f);
         m_Sword.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 15f;
+        sword.knockback = 10f;
+        sword.damage = 10f;
+        sword.duration = 100;
     }
 
     protected override void SetStateIdle(int keyframe)
@@ -152,7 +158,16 @@ public class FemPlayer : DefaultPlayer {
 
     protected override void SetStateStabProne(int keyframe)
     {
-        throw new System.NotImplementedException();
+        SetStateCrouch(keyframe);
+        // Is just MalePlayer's values
+        m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.2f);
+        m_Sword.transform.localPosition = new Vector2(-0.32f, -0.72f);
+
+        if (keyframe == 1)
+        {
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+            sfx.PlaySwordAttack();
+        }
     }
 
     protected override Attack GetAttackStabO1(GameObject AttackObject)

@@ -16,19 +16,24 @@ public class Damager : MonoBehaviour {
 
     private float force_x,
         force_y;
+
+    private List<GameObject> targets;
     
     // Use this for initialization
 	void Start () {
         myHurtbox = gameObject.GetComponent<Collider2D>();
-        
-        force_x = knockback * Mathf.Cos(m_Angle * Mathf.Deg2Rad);
-        force_y = knockback * Mathf.Sin(m_Angle * Mathf.Deg2Rad);
+        targets = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        
+    }
+
+    public void ResetTargets()
+    {
+
+    }
 
     public void IgnoreObject(GameObject obj)
     {
@@ -58,6 +63,7 @@ public class Damager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        UpdateAngle();
         bool isIgnoredObject = false;
         if (ignoreObject != null)
         {
@@ -67,12 +73,13 @@ public class Damager : MonoBehaviour {
                     isIgnoredObject = true;
         }
         GameObject incoming = collision.gameObject;
-        if (!isIgnoredObject)
+        if (!isIgnoredObject && !AlreadyHit(collision))
         {
+            targets.Add(collision.gameObject);
             DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
             if (incomingPlayer == null)
                 incomingPlayer = incoming.GetComponentInParent<DefaultPlayer>();
-            
+
             if (incomingPlayer != null)
                 incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), damage, duration);
             else
@@ -82,5 +89,16 @@ public class Damager : MonoBehaviour {
                     grabbable.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
             }
         }
+    }
+
+    private bool AlreadyHit(Collider2D collision)
+    {
+        return false;
+    }
+
+    private void UpdateAngle()
+    {
+        force_x = knockback * Mathf.Cos(m_Angle * Mathf.Deg2Rad);
+        force_y = knockback * Mathf.Sin(m_Angle * Mathf.Deg2Rad);
     }
 }

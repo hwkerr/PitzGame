@@ -30,6 +30,12 @@ public class MalePlayer : DefaultPlayer {
         m_Torso.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         m_Sword.transform.localPosition = new Vector2(-0.5f, -0.53f);
         m_Sword.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 15f;
+        sword.knockback = 10f;
+        sword.damage = 10f;
+        sword.duration = 100;
     }
 
     protected override void SetStateIdle(int keyframe)
@@ -136,9 +142,15 @@ public class MalePlayer : DefaultPlayer {
         m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.2f);
         m_Sword.transform.localPosition = new Vector2(-0.32f, -0.72f);
 
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 85f;
+        sword.knockback = 15f;
+        sword.damage = 6f;
+
         if (keyframe == 1)
         {
             m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+            sfx.PlaySwordAttack();
         }
     }
 
