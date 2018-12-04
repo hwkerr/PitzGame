@@ -163,6 +163,11 @@ public class FemPlayer : DefaultPlayer {
         m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.2f);
         m_Sword.transform.localPosition = new Vector2(-0.32f, -0.72f);
 
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 85f;
+        sword.knockback = 15f;
+        sword.damage = 6f;
+
         if (keyframe == 1)
         {
             m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;

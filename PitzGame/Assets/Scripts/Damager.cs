@@ -32,7 +32,7 @@ public class Damager : MonoBehaviour {
 
     public void ResetTargets()
     {
-
+        targets.Clear();
     }
 
     public void IgnoreObject(GameObject obj)
@@ -75,25 +75,36 @@ public class Damager : MonoBehaviour {
         GameObject incoming = collision.gameObject;
         if (!isIgnoredObject && !AlreadyHit(collision))
         {
-            targets.Add(collision.gameObject);
-            DefaultPlayer incomingPlayer = incoming.GetComponent<DefaultPlayer>();
-            if (incomingPlayer == null)
-                incomingPlayer = incoming.GetComponentInParent<DefaultPlayer>();
-
-            if (incomingPlayer != null)
-                incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), damage, duration);
-            else
+            if (collision.gameObject.name == "Head" || collision.gameObject.name == "Torso")
             {
+                targets.Add(collision.transform.parent.gameObject);
+                DefaultPlayer incomingPlayer = incoming.GetComponentInParent<DefaultPlayer>();
+                if (incomingPlayer != null)
+                    incomingPlayer.OnTakeDamage(this, GetKnockbackVector(incoming.transform), damage, duration);
+                else
+                    Debug.Log("Damager.OnTriggerEnter2D could not apply to incomingPlayer");
+            }
+            else if (collision.gameObject.name == "Ball")
+            {
+                targets.Add(collision.gameObject);
                 Grabbable grabbable = incoming.GetComponent<Grabbable>();
                 if (grabbable != null)
                     grabbable.OnTakeDamage(this, GetKnockbackVector(incoming.transform), duration);
+                else
+                    Debug.Log("Damager.OnTriggerEnter2D could not apply to incoming object");
             }
         }
+
+        if (AlreadyHit(collision))
+            Debug.Log("Already Hit");
     }
 
     private bool AlreadyHit(Collider2D collision)
     {
-        return false;
+        if (collision.gameObject.name == "Head" || collision.gameObject.name == "Torso")
+            return targets.Contains(collision.transform.parent.gameObject);
+        else
+            return targets.Contains(collision.gameObject);
     }
 
     private void UpdateAngle()

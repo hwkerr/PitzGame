@@ -141,10 +141,8 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     public void OnTakeDamage(Damager damager, Vector2 knockbackVector, float damage, int duration)
     {
-        if (!(inHitstun && damager.Equals(lastDamager)))
+        if (true /*!(inHitstun && damager.Equals(lastDamager))*/)
         {
-            Debug.Log(damager.m_Angle);
-
             ReleaseItem();
             lastDamager = damager;
             inHitstun = true;
@@ -249,6 +247,7 @@ public abstract class DefaultPlayer : CharacterController2D {
                 animCounter = 0;
             }
             currentState = newState;
+            m_Sword.GetComponent<Damager>().ResetTargets();
         }
     }
 
