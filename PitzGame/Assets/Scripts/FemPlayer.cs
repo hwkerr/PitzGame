@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FemPlayer : DefaultPlayer
-{
+public class FemPlayer : DefaultPlayer {
 
     /** @Requires Head has component CircleCollider2D
      *  @Requires Torso has component CapsuleCollider2D
@@ -14,7 +13,7 @@ public class FemPlayer : DefaultPlayer
         m_RunSpeed = 50f;
         m_AirSpeed = 25f;
         m_CrouchSpeed = 0f;
-        m_JumpForce = 17f; //15f if double jump, 16f or 17f if only one jump
+        m_JumpForce = 17f;
         m_aerialJumps = 1;
         groundedHitRecovery = 20;
     }
@@ -33,6 +32,12 @@ public class FemPlayer : DefaultPlayer
         m_Torso.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         m_Sword.transform.localPosition = new Vector2(0.00f, -0.638f);
         m_Sword.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 15f;
+        sword.knockback = 10f;
+        sword.damage = 10f;
+        sword.duration = 100;
     }
 
     protected override void SetStateIdle(int keyframe)
@@ -148,6 +153,25 @@ public class FemPlayer : DefaultPlayer
 
             m_Sword.transform.localPosition = new Vector2(0.31f, -0.275f);
             m_Sword.transform.eulerAngles = new Vector3(0f, 0f, 70.4f);
+        }
+    }
+
+    protected override void SetStateStabProne(int keyframe)
+    {
+        SetStateCrouch(keyframe);
+        // Is just MalePlayer's values
+        m_Sword.GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.2f);
+        m_Sword.transform.localPosition = new Vector2(-0.32f, -0.72f);
+
+        Damager sword = m_Sword.GetComponent<Damager>();
+        sword.m_Angle = 85f;
+        sword.knockback = 15f;
+        sword.damage = 6f;
+
+        if (keyframe == 1)
+        {
+            m_Sword.GetComponent<CapsuleCollider2D>().enabled = true;
+            sfx.PlaySwordAttack();
         }
     }
 

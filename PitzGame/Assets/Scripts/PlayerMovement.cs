@@ -108,9 +108,9 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            if (player.GetState() == DefaultPlayer.State.Idle)
+            if (Input.GetKeyDown(player.bttnFire1))
             {
-                if (Input.GetKeyDown(player.bttnFire1))
+                if (player.GetState() == DefaultPlayer.State.Idle)
                 {
                     SetState(DefaultPlayer.State.Stab);
                     //if (attack1 != null)
@@ -119,14 +119,17 @@ public class PlayerMovement : MonoBehaviour {
                     busy = true;
                     minDuration = player.GetStateDuration(DefaultPlayer.State.Stab);
                 }
-            }
-            else if (player.GetState() == DefaultPlayer.State.Air)
-            {
-                if (Input.GetKeyDown(player.bttnFire1))
+                else if (player.GetState() == DefaultPlayer.State.Air)
                 {
                     SetState(DefaultPlayer.State.StabAir);
                     busy = true;
                     minDuration = player.GetStateDuration(DefaultPlayer.State.StabAir);
+                }
+                else if (player.GetState() == DefaultPlayer.State.Crouch)
+                {
+                    SetState(DefaultPlayer.State.StabProne);
+                    busy = true;
+                    minDuration = player.GetStateDuration(DefaultPlayer.State.StabProne);
                 }
             }
 
@@ -163,7 +166,9 @@ public class PlayerMovement : MonoBehaviour {
         if (player.m_ControlScheme == ControlScheme.Joystick)
             return Input.GetAxisRaw(player.axisVertical) >= verticalAxisCrouchPosition;
         else
-            return Input.GetKeyDown(player.bttnCrouch);
+        {
+            return Input.GetKey(player.bttnCrouch);
+        }
     }
 
     protected void FinishAttack()
