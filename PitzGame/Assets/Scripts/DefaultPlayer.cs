@@ -42,6 +42,7 @@ public abstract class DefaultPlayer : CharacterController2D {
         Hitstun,
         StabAir,
         Death,
+        StabProne,
         MaxState
     }
 
@@ -286,6 +287,7 @@ public abstract class DefaultPlayer : CharacterController2D {
 
         bttnJump1 = KeyCode.W;
         bttnJump2 = bttnJump1;
+        bttnCrouch = KeyCode.S;
         bttnFire1 = KeyCode.F;
         bttnInteract = KeyCode.X;
         bttnThrow = KeyCode.Z;
@@ -298,6 +300,7 @@ public abstract class DefaultPlayer : CharacterController2D {
 
         bttnJump1 = KeyCode.I;
         bttnJump2 = bttnJump1;
+        bttnCrouch = KeyCode.K;
         bttnFire1 = KeyCode.H;
         bttnInteract = KeyCode.M;
         bttnThrow = KeyCode.Comma;
@@ -362,6 +365,8 @@ public abstract class DefaultPlayer : CharacterController2D {
             SetStateStabAir(frame);
         else if (state == State.Death)
             SetStateDeath();
+        else if (state == State.StabProne)
+            SetStateStabProne(frame);
     }
 
     protected int State_AdvanceSprite()
@@ -417,6 +422,10 @@ public abstract class DefaultPlayer : CharacterController2D {
     // @Ensures Initializes collider values for character state: stabAir
     // @returns SetStateStab = duration of the specified keyframe
     protected abstract void SetStateStabAir(int keyframe);
+
+    // @Ensures Initializes collider values for character state: stabProne
+    // @returns SetStateStab = duration of the specified keyframe
+    protected abstract void SetStateStabProne(int keyframe);
 
     protected void SetStateDeath()
     {

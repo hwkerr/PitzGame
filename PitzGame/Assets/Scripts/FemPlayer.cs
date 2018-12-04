@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FemPlayer : DefaultPlayer
-{
+public class FemPlayer : DefaultPlayer {
 
     /** @Requires Head has component CircleCollider2D
      *  @Requires Torso has component CapsuleCollider2D
@@ -14,7 +13,7 @@ public class FemPlayer : DefaultPlayer
         m_RunSpeed = 50f;
         m_AirSpeed = 25f;
         m_CrouchSpeed = 0f;
-        m_JumpForce = 17f; //15f if double jump, 16f or 17f if only one jump
+        m_JumpForce = 17f;
         m_aerialJumps = 1;
         groundedHitRecovery = 20;
     }
@@ -149,6 +148,11 @@ public class FemPlayer : DefaultPlayer
             m_Sword.transform.localPosition = new Vector2(0.31f, -0.275f);
             m_Sword.transform.eulerAngles = new Vector3(0f, 0f, 70.4f);
         }
+    }
+
+    protected override void SetStateStabProne(int keyframe)
+    {
+        throw new System.NotImplementedException();
     }
 
     protected override Attack GetAttackStabO1(GameObject AttackObject)
