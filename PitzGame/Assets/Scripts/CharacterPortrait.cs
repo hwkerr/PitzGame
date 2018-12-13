@@ -120,9 +120,9 @@ public class CharacterPortrait : MonoBehaviour {
 
     public void LockSelection(bool locked)
     {
-        if (locked)
+        if (locked && !IsLocked())
             sfx.PlaySelection();
-        else
+        else if (!locked && IsLocked())
             sfx.PlayDeselection();
         selector.GetComponent<Animator>().SetBool("Locked", locked);
     }
