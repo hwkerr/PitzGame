@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MainMenu : MonoBehaviour {
 
@@ -16,17 +17,15 @@ public class MainMenu : MonoBehaviour {
         Application.Quit();
     }
     
-    
-    
-    
     /*
     // Use this for initialization
 	void Start () {
 		
-	}
+	}*/
 	
 	// Update is called once per frame
 	void Update () {
-    */
-		
+        if (Input.GetKeyDown(KeyCode.JoystickButton9))
+            PlayGame();
+    }	
 }

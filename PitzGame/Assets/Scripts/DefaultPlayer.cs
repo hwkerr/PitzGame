@@ -31,6 +31,7 @@ public abstract class DefaultPlayer : CharacterController2D {
     public int groundedHitRecovery;
 
     public ControlScheme m_ControlScheme;
+    public int port = 0;
 
     public enum State
     {
@@ -55,6 +56,7 @@ public abstract class DefaultPlayer : CharacterController2D {
     [HideInInspector] public bool isJumping = false;
 
     protected int animKeyframe, animCounter;
+    protected bool frozen = false;
 
     public Attack.State attackState;
     public bool attacking = false;
@@ -89,13 +91,15 @@ public abstract class DefaultPlayer : CharacterController2D {
 	// Update is called once per frame
 	void Update () {
 
-        if (animCounter == anim.GetCurrentDuration())
+        if (!frozen)
         {
-            State_AdvanceSprite();
-            animCounter = 0;
+            if (animCounter == anim.GetCurrentDuration())
+            {
+                State_AdvanceSprite();
+                animCounter = 0;
+            }
+            animCounter++;
         }
-        animCounter++;
-
 
         if (inHitstun)
         {
@@ -128,6 +132,12 @@ public abstract class DefaultPlayer : CharacterController2D {
             }
         }*/
         }
+    }
+
+    // Stops animations
+    public void Freeze(bool frozen)
+    {
+        this.frozen = frozen;
     }
 
     // @returns An integer value corresponding to the player's current health
@@ -263,19 +273,14 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected void JoystickButtons(int playerNum)
     {
-        axisHorizontal = "Horizontal_P" + (playerNum + 1);
-        axisVertical = "Vertical_P" + (playerNum + 1);
+        axisHorizontal = "Horizontal_P" + port;
+        axisVertical = "Vertical_P" + port;
 
-        bttnJump1 = KeyCode.Joystick1Button0;
-        bttnJump2 = KeyCode.Joystick1Button3;
-        bttnFire1 = KeyCode.Joystick1Button1;
-        bttnInteract = KeyCode.Joystick1Button7;
-        bttnThrow = KeyCode.Joystick1Button2;
-        bttnJump1 += 20 * playerNum;
-        bttnJump2 += 20 * playerNum;
-        bttnFire1 += 20 * playerNum;
-        bttnInteract += 20 * playerNum;
-        bttnThrow += 20 * playerNum;
+        bttnJump1 = KeyCode.JoystickButton0 + (20 * port);
+        bttnJump2 = KeyCode.JoystickButton3 + (20 * port);
+        bttnFire1 = KeyCode.JoystickButton1 + (20 * port);
+        bttnInteract = KeyCode.JoystickButton7 + (20 * port);
+        bttnThrow = KeyCode.JoystickButton2 + (20 * port);
     }
 
     protected void LeftKeyboardButtons()

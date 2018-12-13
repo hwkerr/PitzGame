@@ -63,6 +63,9 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("KeyCode down: " + kcode);
         }*/
 
+        if (Input.GetKeyDown(KeyCode.JoystickButton9))
+            PauseGame();
+
         if (startSequence)
         {
             theBall.ResetBall();
@@ -89,6 +92,34 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void PauseGame()
+    {
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+            foreach (GameObject p in thePlayers)
+            {
+                if (p != null)
+                {
+                    p.GetComponent<DefaultPlayer>().Freeze(false);
+                    p.GetComponent<PlayerMovement>().running = true;
+                }
+            }
+        }
+        else if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f;
+            foreach (GameObject p in thePlayers)
+            {
+                if (p != null)
+                {
+                    p.GetComponent<DefaultPlayer>().Freeze(true);
+                    p.GetComponent<PlayerMovement>().running = false;
+                }
+            }
+        }
+    }
+
     // @Requires 0 <= player.playerNum <= 3
     // @Ensures Instantiates a Character player.character in the slot for player number int player.playerNum
     public void AddPlayer(Player player)
@@ -107,7 +138,16 @@ public class GameManager : MonoBehaviour {
             thePlayers[playerNum] = Instantiate(characterPrefabs[(int)character]);
             thePlayers[playerNum].GetComponent<DefaultPlayer>().playerNum = playerNum;
             thePlayers[playerNum].GetComponent<DefaultPlayer>().m_ControlScheme = player.controlScheme;
-            float xval = ((playerNum+1) * 4f) - 10f; // pick spawn position based on playerNum
+            thePlayers[playerNum].GetComponent<DefaultPlayer>().port = player.port;
+            float xval = 0; // pick spawn position based on playerNum
+            if (playerNum == 0)
+                xval = -6;
+            else if (playerNum == 1)
+                xval = 6;
+            else if (playerNum == 2)
+                xval = -2;
+            else if (playerNum == 3)
+                xval = 2;
             thePlayers[playerNum].GetComponent<Transform>().position = new Vector3(xval, -0.5f, 0f);
         }
     }

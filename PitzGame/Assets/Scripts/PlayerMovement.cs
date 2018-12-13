@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour {
     public float runSpeed;
     private float horizontalMove = 0f;
 
+    public bool running = true;
+
     protected bool busy = false,
         inHitstun = false,
         hitstunFirstLoopComplete = false,
@@ -23,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool debug = false, displayText;
 
     private float horizontalAxisRunPosition = 0.5f,
-        verticalAxisCrouchPosition = 0.5f;
+        verticalAxisCrouchPosition = 0.8f;
 
     public GameObject attack1;
 
@@ -52,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (debug)
             TestUpdate();
-        else
+        else if (running)
             NormalUpdate();
     }
 
