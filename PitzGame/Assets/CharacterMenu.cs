@@ -61,7 +61,7 @@ public class CharacterMenu : MonoBehaviour {
             }
         }
 
-        if (nextPortrait >= 2 && Input.GetKeyUp(KeyCode.JoystickButton9))
+        if (canAdvance && (Input.GetKeyUp(KeyCode.JoystickButton9) || Input.GetKeyUp(KeyCode.Return)))
             PlayGame();
 
         foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode))) //Set the controller port that is being used for each player
@@ -83,12 +83,51 @@ public class CharacterMenu : MonoBehaviour {
                         if (nextPortrait < characterPortraits.Length)
                         {
                             Debug.Log("port " + port + " for player " + characterPortraits[nextPortrait].playerNum);
+                            characterPortraits[nextPortrait].SetController(ControlScheme.Joystick);
                             characterPortraits[nextPortrait].SetPort(port);
                             nextPortrait++;
                         }
                         else
                             Debug.Log("Too many controllers");
                     }
+                }
+            }
+        }
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.E))
+        {
+            bool alreadyTaken = false;
+            foreach (CharacterPortrait cp in characterPortraits)
+            {
+                if (cp.GetController() == ControlScheme.KeyboardLeft)
+                    alreadyTaken = true;
+            }
+            if (!alreadyTaken)
+            {
+                if (nextPortrait < characterPortraits.Length)
+                {
+                    Debug.Log("Keyboard Left for player " + characterPortraits[nextPortrait].playerNum);
+                    characterPortraits[nextPortrait].SetController(ControlScheme.KeyboardLeft);
+                    characterPortraits[nextPortrait].SetPort(-1);
+                    nextPortrait++;
+                }
+            }
+        }
+        else if (Input.GetKey(KeyCode.U) && Input.GetKey(KeyCode.O))
+        {
+            bool alreadyTaken = false;
+            foreach (CharacterPortrait cp in characterPortraits)
+            {
+                if (cp.GetController() == ControlScheme.KeyboardRight)
+                    alreadyTaken = true;
+            }
+            if (!alreadyTaken)
+            {
+                if (nextPortrait < characterPortraits.Length)
+                {
+                    Debug.Log("Keyboard Right for player " + characterPortraits[nextPortrait].playerNum);
+                    characterPortraits[nextPortrait].SetController(ControlScheme.KeyboardRight);
+                    characterPortraits[nextPortrait].SetPort(-2);
+                    nextPortrait++;
                 }
             }
         }

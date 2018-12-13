@@ -48,7 +48,13 @@ public class CharacterPortrait : MonoBehaviour {
         if (selecting)
         {
             //string verticalAxis = "Vertical_P" + port;
-            string horizontalAxis = "Horizontal_P" + port;
+            string horizontalAxis = "Horizontal";
+            if (port > 0)
+                horizontalAxis = "Horizontal_P" + port;
+            else if (controller == ControlScheme.KeyboardLeft)
+                horizontalAxis = "HorizontalKeyboardLeft";
+            else if (controller == ControlScheme.KeyboardRight)
+                horizontalAxis = "HorizontalKeyboardRight";
 
             if (!IsLocked())
             {
@@ -58,10 +64,27 @@ public class CharacterPortrait : MonoBehaviour {
                     IncrementSelector(-1);
             }
 
-            if (Input.GetKeyDown(KeyCode.JoystickButton1 + (20 * port)))
-                LockSelection(true);
-            else if (Input.GetKeyDown(KeyCode.JoystickButton2 + (20 * port)))
-                LockSelection(false);
+            if (controller == ControlScheme.Joystick)
+            {
+                if (Input.GetKeyDown(KeyCode.JoystickButton1 + (20 * port)))
+                    LockSelection(true);
+                else if (Input.GetKeyDown(KeyCode.JoystickButton2 + (20 * port)))
+                    LockSelection(false);
+            }
+            else if (controller == ControlScheme.KeyboardLeft)
+            {
+                if (Input.GetKeyDown(KeyCode.X))
+                    LockSelection(true);
+                else if (Input.GetKeyDown(KeyCode.Z))
+                    LockSelection(false);
+            }
+            else if (controller == ControlScheme.KeyboardRight)
+            {
+                if (Input.GetKeyDown(KeyCode.M))
+                    LockSelection(true);
+                else if (Input.GetKeyDown(KeyCode.Comma))
+                    LockSelection(false);
+            }
 
             counter--;
         }
@@ -107,6 +130,11 @@ public class CharacterPortrait : MonoBehaviour {
             return 0;
     }
 
+    public void SetController(ControlScheme controlScheme)
+    {
+        controller = controlScheme;
+    }
+
     public ControlScheme GetController()
     {
         return controller;
@@ -121,7 +149,7 @@ public class CharacterPortrait : MonoBehaviour {
     public void SetPort(int port)
     {
         this.port = port;
-        anim.SetInteger("State", (int)controller+1);
+        anim.SetInteger("State", ((int)controller)+1);
         SetPlayerColor();
         selector.GetComponent<Image>().enabled = true;
         selecting = true;

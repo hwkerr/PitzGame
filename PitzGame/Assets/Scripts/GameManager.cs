@@ -118,8 +118,6 @@ public class GameManager : MonoBehaviour {
                 }
             }
         }
-
-        
     }
 
     // @Requires 0 <= player.playerNum <= 3
