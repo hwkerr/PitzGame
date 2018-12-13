@@ -58,6 +58,9 @@ public class CharacterMenu : MonoBehaviour {
             {
                 doneButton.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 doneButton.GetComponent<Button>().interactable = false;
+                if (Input.GetKeyUp(KeyCode.Return))
+                    for (int i = 0; i < nextPortrait; i++)
+                        characterPortraits[i].LockSelection(true);
             }
         }
 
@@ -174,6 +177,6 @@ public class CharacterMenu : MonoBehaviour {
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 300, 20), keyDown);
+        //GUI.Label(new Rect(10, 10, 300, 20), keyDown);
     }
 }

@@ -21,11 +21,14 @@ public class CharacterPortrait : MonoBehaviour {
     private int selectorPosition = 1;
     private int selectorDelay = 15;
     private int counter = 0;
-    
+
+    private MenuSFX sfx;
+
     // Use this for initialization
-	void Start () {
+    void Start () {
         anim = GetComponent<Animator>();
         image = GetComponent<Image>();
+        sfx = GameObject.Find("MenuSFX").GetComponent<MenuSFX>();
         foreach (Transform child in transform)
         {
             if (child.tag == "CharacterSelector")
@@ -115,8 +118,12 @@ public class CharacterPortrait : MonoBehaviour {
         return selector.GetComponent<Animator>().GetBool("Locked");
     }
 
-    private void LockSelection(bool locked)
+    public void LockSelection(bool locked)
     {
+        if (locked)
+            sfx.PlaySelection();
+        else
+            sfx.PlayDeselection();
         selector.GetComponent<Animator>().SetBool("Locked", locked);
     }
 
