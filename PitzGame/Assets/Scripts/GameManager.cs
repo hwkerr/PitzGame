@@ -63,6 +63,9 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("KeyCode down: " + kcode);
         }*/
 
+        if (Input.GetKeyDown(KeyCode.JoystickButton9))
+            PauseGame();
+
         if (startSequence)
         {
             theBall.ResetBall();
@@ -87,6 +90,11 @@ public class GameManager : MonoBehaviour {
                     GameOver("Tie");
             }
         }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
     }
 
     // @Requires 0 <= player.playerNum <= 3
