@@ -9,8 +9,8 @@ public abstract class Damageable : MonoBehaviour {
     public Damager lastDamager;
 
     // Use this for initialization
-    void Start () {
-        m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+    void Awake () {
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame

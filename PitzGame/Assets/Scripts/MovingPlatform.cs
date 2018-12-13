@@ -8,7 +8,8 @@ public class MovingPlatform : MonoBehaviour {
     Transform tf;
     bool movingRight;
     Rigidbody2D rigidb;
-    float moveSpeed = 1f; 
+    float moveSpeed = 1f;
+    public float midpoint = 0f;
 	// Use this for initialization
 	void Start () {
 
@@ -40,12 +41,12 @@ public class MovingPlatform : MonoBehaviour {
     {
         tf = GetComponent<Transform>();
         rigidb = GetComponent<Rigidbody2D>();
-        if (tf.position.x > 5)
+        if (tf.position.x > (5 + midpoint))
         {
             movingRight = false;
             rigidb.velocity = new Vector2(getMoveSpeed(), 0f);
         }
-        else if (GetComponent<Transform>().position.x < -5)
+        else if (GetComponent<Transform>().position.x < (-5 + midpoint))
         {
             movingRight = true;
             rigidb.velocity = new Vector2(getMoveSpeed(), 0f);

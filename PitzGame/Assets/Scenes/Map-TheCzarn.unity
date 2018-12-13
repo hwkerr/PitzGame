@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c390f90aa85a77d4baacb5fba2d21187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  midpoint: -0.6
 --- !u!1 &312288928
 GameObject:
   m_ObjectHideFlags: 0
@@ -12477,36 +12478,13 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.36246765
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153933455001928, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114913344817097458, guid: 7336ebb0ebc975d40b1a07fec45495e1,
+        type: 2}
+      propertyPath: resetPosition.x
+      value: -0.51
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7336ebb0ebc975d40b1a07fec45495e1, type: 2}

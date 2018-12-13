@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour {
     protected void Start () {
         Debug.Log("Press PageUp to enable Debug Mode");
         player = GetComponent<DefaultPlayer>();
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
         debug = false;
     }
@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour {
             GUI.Label(new Rect(10, 25, 200, 20), "Press PageDown to exit");
             GUI.Label(new Rect(10, 40, 400, 20), "Press a number key to switch to its corresponding state");
 
-            GUI.Label(new Rect(10, 340, 300, 20), "Player 1: WASD+ZX, Player 2: IJKL+M,");
+            GUI.Label(new Rect(10, 340, 300, 20), "Player 1: WASD+ZX, Player 2: IJKL+MComma");
         }
         if (displayText)
         {

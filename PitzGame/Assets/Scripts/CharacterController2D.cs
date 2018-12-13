@@ -39,7 +39,7 @@ public class CharacterController2D : MonoBehaviour
 
     protected SFXController sfx;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         sfx = GetComponent<SFXController>();

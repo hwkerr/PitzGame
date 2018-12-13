@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ball : Grabbable {
 
+    [SerializeField] private Vector2 resetPosition;
+
     private CircleCollider2D m_collider;
     private bool reset = true;
 
@@ -33,7 +35,7 @@ public class Ball : Grabbable {
     //          this Ball resets its position to the position (0, 5)
     public void ResetBall()
     {
-        ResetBall(0, 5);
+        ResetBall(resetPosition.x, resetPosition.y);
     }
 
     // @Ensures this Ball resets all momentum

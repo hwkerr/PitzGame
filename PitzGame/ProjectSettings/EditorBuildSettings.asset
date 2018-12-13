@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Pitz.unity
     guid: 12d923453282fdd42a352a63aa8afc15
   - enabled: 1
-    path: Assets/Scenes/New Level.unity
+    path: Assets/Scenes/Map-TheCzarn.unity
     guid: d7d5a042774f0f246a6657a0d73f9096
   - enabled: 1
     path: Assets/Scenes/VictoryScreen.unity

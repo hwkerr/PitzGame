@@ -20,8 +20,8 @@ public class Damager : MonoBehaviour {
     private List<GameObject> targets;
     
     // Use this for initialization
-	void Start () {
-        myHurtbox = gameObject.GetComponent<Collider2D>();
+	void Awake () {
+        myHurtbox = GetComponent<Collider2D>();
         targets = new List<GameObject>();
 	}
 	
@@ -94,11 +94,9 @@ public class Damager : MonoBehaviour {
                     Debug.Log("Damager.OnTriggerEnter2D could not apply to incoming object");
             }
         }
-
-        if (AlreadyHit(collision))
-            Debug.Log("Already Hit");
     }
 
+    // @returns AlreadyHit = true if this damager has already damaged collision.gameObject
     private bool AlreadyHit(Collider2D collision)
     {
         if (collision.gameObject.name == "Head" || collision.gameObject.name == "Torso")

@@ -147,7 +147,8 @@ public class CharacterMenu : MonoBehaviour {
                 GlobalValues.SetControls(i, characterPortraits[i].GetController());
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(2);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void SetMale()

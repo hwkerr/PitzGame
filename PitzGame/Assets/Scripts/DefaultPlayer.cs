@@ -68,22 +68,24 @@ public abstract class DefaultPlayer : CharacterController2D {
 
     protected GUIStyle localStyle;
 
-    // Use this for initialization
-    protected virtual void Start () {
+    protected override void Awake () {
+        base.Awake();
 
+        anim = GetComponent<AnimationController>();
+        m_grabber = GetComponentInChildren<Grabber>();
+    }
+
+    protected virtual void Start()
+    {
         //Load Custom GUI Skin
 
+        GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
 
         lastState = State.Idle;
         currentState = State.Idle;
 
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 14 - playerNum;
-
-        anim = GetComponent<AnimationController>();
-        m_grabber = GetComponentInChildren<Grabber>();
-
         m_Sword.GetComponent<Damager>().IgnoreObject(gameObject);
-        
+
         Init_Buttons(playerNum);
         Init_StatValues();
     }

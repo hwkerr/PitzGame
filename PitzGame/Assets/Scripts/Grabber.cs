@@ -12,16 +12,6 @@ public class Grabber : MonoBehaviour {
 
     private Grabbable targetInRange;
     
-    // Use this for initialization
-	void Start () {
-        //grabBox = gameObject.AddComponent<CircleCollider2D>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     // Picks up any item that is within range
     public void PickUpItem()
     {

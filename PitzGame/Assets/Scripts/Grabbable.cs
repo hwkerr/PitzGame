@@ -29,7 +29,7 @@ public class Grabbable : MonoBehaviour
     public State currentState;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         m_Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_Collider2D = gameObject.GetComponent<Collider2D>();
