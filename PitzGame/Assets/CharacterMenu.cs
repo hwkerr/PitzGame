@@ -13,6 +13,7 @@ public class CharacterMenu : MonoBehaviour {
     private CharacterPortrait[] characterPortraits;
     private int nextPortrait = 0;
 
+    private bool canAdvance = false;
     private GameObject doneButton;
 
     private string keyDown;
@@ -42,8 +43,22 @@ public class CharacterMenu : MonoBehaviour {
 
         if (nextPortrait >= 2)
         {
-            doneButton.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
-            doneButton.GetComponent<Button>().interactable = true;
+            canAdvance = true;
+            for (int i = 0; i < nextPortrait; i++)
+            {
+                if (!characterPortraits[i].IsLocked())
+                    canAdvance = false;
+            }
+            if (canAdvance)
+            {
+                doneButton.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
+                doneButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                doneButton.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+                doneButton.GetComponent<Button>().interactable = false;
+            }
         }
 
         if (nextPortrait >= 2 && Input.GetKeyUp(KeyCode.JoystickButton9))
@@ -81,6 +96,15 @@ public class CharacterMenu : MonoBehaviour {
 
     public void PlayGame()
     {
+        for (int i = 0; i < nextPortrait; i++)
+        {
+            GlobalValues.SetPlayer(i, characterPortraits[i].GetCharacter());
+            if (characterPortraits[i].GetController() == ControlScheme.Joystick)
+                GlobalValues.SetController(i, characterPortraits[i].GetPort());
+            else
+                GlobalValues.SetControls(i, characterPortraits[i].GetController());
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

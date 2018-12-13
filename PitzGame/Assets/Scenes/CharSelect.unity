@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 191925759}
   - component: {fileID: 191925758}
   - component: {fileID: 191925760}
+  - component: {fileID: 191925761}
   m_Layer: 5
   m_Name: P4Selector
   m_TagString: CharacterSelector
@@ -203,6 +204,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_TargetDisplay: 0
+--- !u!95 &191925761
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 191925756}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb5c05790a196f1448407ddad0c2a40d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &235103627
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +942,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 3
-  selecting: 0
 --- !u!95 &1123316416
 Animator:
   serializedVersion: 3
@@ -1022,6 +1040,7 @@ GameObject:
   - component: {fileID: 1281276448}
   - component: {fileID: 1281276447}
   - component: {fileID: 1281276449}
+  - component: {fileID: 1281276450}
   m_Layer: 5
   m_Name: P2Selector
   m_TagString: CharacterSelector
@@ -1101,6 +1120,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_TargetDisplay: 0
+--- !u!95 &1281276450
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1281276445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ed03abb6426c0bd43a4aed0adea26b14, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1377380010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1149,7 @@ GameObject:
   - component: {fileID: 1377380013}
   - component: {fileID: 1377380012}
   - component: {fileID: 1377380014}
+  - component: {fileID: 1377380015}
   m_Layer: 5
   m_Name: P3Selector
   m_TagString: CharacterSelector
@@ -1191,6 +1229,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_TargetDisplay: 0
+--- !u!95 &1377380015
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377380010}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4e81f2769f1f0864daefb42e8a3c2f72, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1549109010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1537,7 @@ GameObject:
   - component: {fileID: 1731248516}
   - component: {fileID: 1731248515}
   - component: {fileID: 1731248517}
+  - component: {fileID: 1731248518}
   m_Layer: 5
   m_Name: P1Selector
   m_TagString: CharacterSelector
@@ -1560,6 +1617,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_TargetDisplay: 0
+--- !u!95 &1731248518
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1731248513}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 01b162646c265764caf5a78c8766b672, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1746976758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,7 +1899,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
-  selecting: 0
 --- !u!95 &1810665909
 Animator:
   serializedVersion: 3
@@ -1927,7 +2001,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 2
-  selecting: 0
 --- !u!95 &1828576937
 Animator:
   serializedVersion: 3
@@ -2030,7 +2103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
-  selecting: 0
 --- !u!95 &2005401785
 Animator:
   serializedVersion: 3

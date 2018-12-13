@@ -17,7 +17,7 @@ public class CharacterPortrait : MonoBehaviour {
 
     private GameObject[] characters;
 
-    [SerializeField] private bool selecting = false;
+    private bool selecting = false;
     private int selectorPosition = 1;
     private int selectorDelay = 15;
     private int counter = 0;
@@ -47,24 +47,23 @@ public class CharacterPortrait : MonoBehaviour {
 	void Update () {
         if (selecting)
         {
-            Debug.Log("selecting: " + selectorPosition);
-            string verticalAxis = "Vertical_P" + port;
+            //string verticalAxis = "Vertical_P" + port;
             string horizontalAxis = "Horizontal_P" + port;
-            //Debug.Log(horizontalAxis + ": " + Input.GetAxisRaw(horizontalAxis));
-            //if (Input.GetAxisRaw(horizontalAxis) > 0.8)
 
-            /*if (Input.GetKeyDown(KeyCode.JoystickButton13 + (20 * port)))
-                IncrementSelector(1);
-            if (Input.GetKeyDown(KeyCode.JoystickButton15 + (20 * port)))
-                IncrementSelector(-1);*/
+            if (!IsLocked())
+            {
+                if (Input.GetKeyDown(KeyCode.JoystickButton13 + (20 * port)) || Input.GetAxisRaw(horizontalAxis) > 0.5)
+                    IncrementSelector(1);
+                else if (Input.GetKeyDown(KeyCode.JoystickButton15 + (20 * port)) || Input.GetAxisRaw(horizontalAxis) < -0.5)
+                    IncrementSelector(-1);
+            }
 
-            if (Input.GetAxisRaw(horizontalAxis) > 0.5)
-                IncrementSelector(1);
-            if (Input.GetAxisRaw(horizontalAxis) < -0.5)
-                IncrementSelector(-1);
+            if (Input.GetKeyDown(KeyCode.JoystickButton1 + (20 * port)))
+                LockSelection(true);
+            else if (Input.GetKeyDown(KeyCode.JoystickButton2 + (20 * port)))
+                LockSelection(false);
 
             counter--;
-            //Debug.Log(counter);
         }
     }
 
@@ -77,8 +76,7 @@ public class CharacterPortrait : MonoBehaviour {
                 selectorPosition = 0;
             if (selectorPosition < 0)
                 selectorPosition = characters.Length - 1;
-
-            //selector.transform.SetParent(characters[selectorPosition].transform);
+            
             if (characters[selectorPosition].name.Equals("Male"))
                 selector.transform.localPosition = new Vector2(10f, -55f);
             else if (characters[selectorPosition].name.Equals("Female"))
@@ -87,6 +85,31 @@ public class CharacterPortrait : MonoBehaviour {
 
             counter = selectorDelay;
         }
+    }
+
+    public bool IsLocked()
+    {
+        return selector.GetComponent<Animator>().GetBool("Locked");
+    }
+
+    private void LockSelection(bool locked)
+    {
+        selector.GetComponent<Animator>().SetBool("Locked", locked);
+    }
+
+    public Character GetCharacter()
+    {
+        if (selectorPosition == 1)
+            return Character.Male;
+        else if (selectorPosition == 0)
+            return Character.Fem;
+        else
+            return 0;
+    }
+
+    public ControlScheme GetController()
+    {
+        return controller;
     }
 
     // @returns GetPort = [Range(1, 8)] int

@@ -29,6 +29,14 @@ public static class GlobalValues {
     {
         players[num].SetControls(controlScheme);
     }
+    public static void SetController(int playerNum, int port)
+    {
+        players[playerNum].SetController(port);
+    }
+    public static void ResetValues()
+    {
+        players = new Player[4];
+    }
 }
 
 public class Player
@@ -36,6 +44,7 @@ public class Player
     public int playerNum;
     public Character character;
     public ControlScheme controlScheme;
+    public int port = 0;
     public Player(int num, Character character)
     {
         playerNum = num;
@@ -44,5 +53,10 @@ public class Player
     public void SetControls(ControlScheme controlScheme)
     {
         this.controlScheme = controlScheme;
+    }
+    public void SetController(int port)
+    {
+        controlScheme = ControlScheme.Joystick;
+        this.port = port;
     }
 }
